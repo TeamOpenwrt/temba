@@ -1,0 +1,41 @@
+
+config bmx6 'general'
+	option dbgMuteTimeout '1000000'
+	option tunOutTimeout '100000'
+	option configSync '0'
+	option syslog '0'
+
+config plugin 'bmx6_config_plugin'
+	option plugin 'bmx6_config.so'
+
+config plugin 'bmx6_json_plugin'
+	option plugin 'bmx6_json.so'
+
+config plugin 'bmx6_sms_plugin'
+	option plugin 'bmx6_sms.so'
+
+config ipVersion 'ipVersion'
+	option ipVersion '6'
+
+config dev 'mesh_1'
+	option dev 'wif0_t'
+	option linklayer '2'
+
+config tunDev 'main'
+	option tunDev 'main'
+	option tun4Address '10.1.71.97/27'
+#	option tun6Address 'fde4:cf9e:40f9::1/64'
+
+config tunOut 'inet6'
+	option tunOut 'inet6'
+	option network '::/0'
+	option maxPrefixLen '0'
+
+config tunOut 'inner_zone'
+	option tunOut 'inner_zone'
+	option network '10.0.0.0/8'
+
+#config tunIn 'border_zone'
+#	option tunIn 'border_zone'
+#	option network '10.0.0.0/8'
+
