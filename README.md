@@ -37,7 +37,7 @@ Sometimes the commits are not done by the original authors
 
 The following templates contributed by @dyangol
 
-- template__regular-nanostation-m5
-- template__border-nanostation-m5
+- template__regular-nanostation-m5-xw
+- template__border-nanostation-m5-xw
 
 The original idea is from @yanosz and its repository https://github.com/yanosz/mesh_testbed_generator
