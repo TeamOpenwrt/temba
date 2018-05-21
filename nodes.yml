@@ -1,0 +1,63 @@
+# all variables explained
+
+# device:
+#   profile: openwrt profile base
+#   packages: packages to include in default firmware
+#   filebase: (templated) files to add to the specific device
+#   nodename: name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
+#   ipv4: ask to guifi.net website
+#   netmask4: we usually use a netmask of /27 (30 hosts)
+#   wifi_channel: do a wifi scan or ask your community
+#   wifi_mode: bandwidth of 20 MHz, 40 Mhz, secondary channel is up (+) or down (-)? do a wifi scan or ask your community
+
+# original author: dyangol
+regular-nanostation-m5:
+  profile: 'ubnt-nano-m-xw'
+  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini'
+  filebase: 'template__regular-nanostation-m5'
+  nodename: 'fill'
+  ipv4: 'fill'
+  netmask4: '255.255.255.224'
+  wifi_channel: '132'
+  wifi_mode: 'HT40+'
+
+#  regular-old-nanostation-m5:
+#    profile: 'ubnt-nano-m'
+#    packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini'
+#    filebase: 'template__regular-nanostation-m5'
+#    nodename: 'fixme'
+#    ipv4: 'fixme'
+#    netmask4: '255.255.255.224'
+#    wifi_channel: '132'
+#    wifi_mode: 'HT40+'
+#  
+
+#  # TODO
+#  # original author: dyangol
+#  border-nanostation-m5:
+#    profile: 'TODO'
+#    packages: 'TODO'
+#    filebase: 'template__border-nanostation-m5'
+#    nodename: 'fixme'
+#    ipv4: 'fixme'
+#    netmask4: '255.255.255.224'
+#  
+#  # TODO
+#  border-alix:
+#    profile: 'TODO'
+#    packages: 'TODO'
+#    filebase: 'template__border-nanostation-m5'
+#    nodename: 'fixme'
+#    ipv4: 'fixme'
+#    netmask4: '255.255.255.224'
+
+# orig
+
+#  node-router-2:
+#    profile: 'tl-wr841-v9'
+#    hostname: 'group-4-node-2'
+#    packages: 'olsrd iperf tcpdump-mini olsrd-mod-httpinfo olsrd-mod-jsoninfo'
+#    ipv4: '192.168.2.2'
+#    ipv4_lan: '192.168.102.'
+#    ipv6: 'fc00:2::'
+#    ipv6_ll: 'fe80::2'
