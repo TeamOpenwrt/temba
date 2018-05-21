@@ -1,8 +1,8 @@
 # Temba
 
-status: work in progress / not working
+status: work in progress / works but everything is manual
 
-Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network
+Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network. You require to use external image builder, my recomendation is to use [lime-sdk](https://github.com/libremesh/lime-sdk). [Instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
 
 ## Motivation
 
