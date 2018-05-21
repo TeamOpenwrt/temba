@@ -35,6 +35,13 @@ config tunOut 'inner_zone'
 	option tunOut 'inner_zone'
 	option network '10.0.0.0/8'
 
+  # Internet, please
+config tunOut 'inet4'
+        option tunOut 'inet4'
+        option network '0.0.0.0/0'
+        option maxPrefixLen '0'
+        option tableRule '32767/253'
+
 # I offer
 config tunIn 'border_zone'
 	option tunIn 'border_zone'

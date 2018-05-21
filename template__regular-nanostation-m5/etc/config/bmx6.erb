@@ -26,6 +26,7 @@ config tunDev 'main'
 	option tun4Address '<%= @node['bmx6_tun4'] %>'
 #	option tun6Address 'fde4:cf9e:40f9::1/64'
 
+# I demand
 config tunOut 'inet6'
 	option tunOut 'inet6'
 	option network '::/0'
@@ -35,6 +36,14 @@ config tunOut 'inner_zone'
 	option tunOut 'inner_zone'
 	option network '10.0.0.0/8'
 
+  # Internet, please
+config tunOut 'inet4'
+        option tunOut 'inet4'
+        option network '0.0.0.0/0'
+        option maxPrefixLen '0'
+        option tableRule '32767/253'
+
+# I offer
 #config tunIn 'border_zone'
 #	option tunIn 'border_zone'
 #	option network '10.0.0.0/8'
