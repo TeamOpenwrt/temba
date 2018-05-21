@@ -8,10 +8,10 @@ PLATFORM="ar71xx"
 PLATFORM_TYPE="generic"
 
 # DOWNLOAD_BASE="https://downloads.lede-project.org/releases/#{LEDE_VERSION}/targets/#{PLATFORM}/#{PLATFORM_TYPE}/"
-# SDK_BASE="lede-imagebuilder-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}.Linux-x86_64"
+# IMAGE_BASE="lede-imagebuilder-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}.Linux-x86_64"
 # assumes files is already downloaded
 DOWNLOAD_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz"
-SDK_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64"
+IMAGE_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64"
 
 task :default => :generate_all
 task :generate_all => :install_sdk do
@@ -32,7 +32,7 @@ end
 #there are no secrets at the moment
 #def generate_node(node_cfg,secrets)
 def generate_node(node_cfg)
-  dir_name = "#{SDK_BASE}/files_generated"
+  dir_name = "#{IMAGE_BASE}/files_generated"
   
   prepare_directory(dir_name,node_cfg['filebase'] || 'files')
   #Evaluate templates
@@ -65,19 +65,19 @@ end
 # TODO add firmware generation
 #
 def generate_firmware(node_name,profile,packages)
-  system("make -C #{SDK_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
+  system("make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
   FileUtils.mv(
-    "#{SDK_BASE}/bin/targets/#{PLATFORM}/#{PLATFORM_TYPE}/lede-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}-#{profile}-squashfs-sysupgrade.bin",
+    "#{IMAGE_BASE}/bin/targets/#{PLATFORM}/#{PLATFORM_TYPE}/lede-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}-#{profile}-squashfs-sysupgrade.bin",
     "bin/#{node_name}-sysupgrade.bin")
   FileUtils.mv(
-    "#{SDK_BASE}/bin/targets/#{PLATFORM}/#{PLATFORM_TYPE}/lede-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}-#{profile}-squashfs-factory.bin",
+    "#{IMAGE_BASE}/bin/targets/#{PLATFORM}/#{PLATFORM_TYPE}/lede-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}-#{profile}-squashfs-factory.bin",
     "bin/#{node_name}-factory.bin")
 end
 
 task :install_sdk do 
-  sdk_archive = "#{SDK_BASE}.tar.xz"
-  unless File.exists? SDK_BASE 
+  sdk_archive = "#{IMAGE_BASE}.tar.xz"
+  unless File.exists? IMAGE_BASE
     # assumed file is already downloaded
     #system("wget #{DOWNLOAD_BASE}#{sdk_archive}") unless File.exists? sdk_archive
     system("tar xf #{sdk_archive}")
