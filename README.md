@@ -1,6 +1,6 @@
 # Temba
 
-status: work in progress / works but everything is manual
+status: work in progress / works but requires several manual operations
 
 Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network. You require to use external image builder, my recomendation is to use [lime-sdk](https://github.com/libremesh/lime-sdk). [Instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
 
@@ -28,3 +28,14 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 3. Run `rake`
 
 OpenWRT Release (Chaos Calmer) and Platform (TL-WR842nd v2) is hardcoded in `Rakefile`. You have to change it to support other platforms.
+
+## Invisible credits
+
+Sometimes the commits are not done by the original authors
+
+The following templates contributed by @dyangol
+
+- template__regular-nanostation-m5
+- template__border-nanostation-m5
+
+The original idea is from @yanosz and its repository https://github.com/yanosz/mesh_testbed_generator
