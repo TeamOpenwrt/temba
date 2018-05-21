@@ -9,7 +9,7 @@ PLATFORM_TYPE="generic"
 
 # DOWNLOAD_BASE="https://downloads.lede-project.org/releases/#{LEDE_VERSION}/targets/#{PLATFORM}/#{PLATFORM_TYPE}/"
 # IMAGE_BASE="lede-imagebuilder-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}.Linux-x86_64"
-# assumes files is already downloaded
+# assumes files are already downloaded
 DOWNLOAD_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz"
 IMAGE_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64"
 
@@ -65,6 +65,7 @@ end
 # TODO add firmware generation
 #
 def generate_firmware(node_name,profile,packages)
+  puts("\n\n\n\n\n    >>> make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
   FileUtils.mv(
