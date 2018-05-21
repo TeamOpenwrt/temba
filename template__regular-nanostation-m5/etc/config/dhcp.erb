@@ -11,7 +11,7 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/tmp/resolv.conf.auto'
 	option localservice '1'
-	list server '10.228.203.104'
+	list server '<%= @node['dns_server'] %>'
 	option nonwildcard '0'
 	option rebind_protection '0'
 
