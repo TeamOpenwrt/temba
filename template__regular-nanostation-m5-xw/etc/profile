@@ -2,8 +2,8 @@
 [ -f /etc/banner ] && cat /etc/banner
 [ -e /tmp/.failsafe ] && cat /etc/banner.failsafe
 fgrep -sq '/ overlay ro,' /proc/mounts && {
-	echo 'Your JFFS2-partition seems full and overlayfs is mounted read-only.'
-	echo 'Please try to remove files from /overlay/upper/... and reboot!'
+    echo 'Your JFFS2-partition seems full and overlayfs is mounted read-only.'
+    echo 'Please try to remove files from /overlay/upper/... and reboot!'
 }
 
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
@@ -24,10 +24,10 @@ alias ll='ls -alF --color=auto'
 [ -x /usr/bin/ldd ] || ldd() { LD_TRACE_LOADED_OBJECTS=1 $*; }
 
 [ -n "$FAILSAFE" ] || {
-	for FILE in /etc/profile.d/*.sh; do
-		[ -e "$FILE" ] && . "$FILE"
-	done
-	unset FILE
+    for FILE in /etc/profile.d/*.sh; do
+        [ -e "$FILE" ] && . "$FILE"
+    done
+    unset FILE
 }
 
 if ( grep -qs '^root::' /etc/shadow && \
@@ -43,12 +43,12 @@ EOF
 fi
 
 service() {
-	[ -f "/etc/init.d/$1" ] || {
-		echo "service "'"'"$1"'"'" not found, the following services are available:"
-		ls "/etc/init.d"
-		return 1
-	}
-	/etc/init.d/$@
+    [ -f "/etc/init.d/$1" ] || {
+        echo "service "'"'"$1"'"'" not found, the following services are available:"
+        ls "/etc/init.d"
+        return 1
+    }
+    /etc/init.d/$@
 }
 
 # nice coloured prompt
