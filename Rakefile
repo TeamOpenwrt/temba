@@ -14,7 +14,8 @@ DOWNLOAD_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz"
 IMAGE_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64"
 
 task :default => :generate_all
-task :generate_all => :install_sdk do
+# IB (Image Builder)
+task :generate_all => :install_ib do
 #task :generate_all do
 
   # #there are no secrets at the moment
@@ -74,11 +75,11 @@ def generate_firmware(node_name,profile,packages)
     "bin/#{node_name}-factory.bin")
 end
 
-task :install_sdk do 
-  sdk_archive = "#{IMAGE_BASE}.tar.xz"
+task :install_ib do 
+  ib_archive = "#{IMAGE_BASE}.tar.xz"
   unless File.exists? IMAGE_BASE
     # assumed file is already downloaded
-    #system("wget #{DOWNLOAD_BASE}#{sdk_archive}") unless File.exists? sdk_archive
-    system("tar xf #{sdk_archive}")
+    #system("wget #{DOWNLOAD_BASE}#{ib_archive}") unless File.exists? ib_archive
+    system("tar xf #{ib_archive}")
   end
 end
