@@ -15,13 +15,26 @@ status: work in progress / works but requires several manual operations
 
 - regular-nanostation-m5-xw
 
-    - note: template is based on a node running in production
+    - note: template is based on a node running in production (10.1.71.97)
     - [x] template
+    - [ ] tested
+
+- regular-nanostation-loco-m5-xw
+
+    - note: template is based on a node running in production (10.1.73.65)
+    - [ ] template
+    - [ ] tested
+
+- regular-rocket-m5-xw
+
+    - note: template is based on a node running in production (10.1.72.1)
+        - observeu que en el cas de la Rocket, he afegit una nova iface WAN per connectar a un router ADSL (per exemple) a través d'una VLAN
+    - [ ] template
     - [ ] tested
 
 - border-nanostation-m5-xw
 
-    - note: template is based on a node running in production
+    - note: template is based on a node running in production (10.1.66.161)
     - [ ] template
     - [ ] tested
 
