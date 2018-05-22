@@ -62,8 +62,6 @@ def process_erb(node,erb,base)
   FileUtils.rm erb
 end
 
-# TODO add firmware generation
-#
 def generate_firmware(node_name,profile,packages)
   puts("\n\n\n\n\n    >>> make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
