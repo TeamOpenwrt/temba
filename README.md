@@ -1,10 +1,29 @@
 # Temba
 
-status: work in progress / works but requires several manual operations
-
 Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network.
 
 If you want to control the build system my recomendation is to use [lime-sdk](https://github.com/libremesh/lime-sdk). [Instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
+
+## Status
+
+status: work in progress / works but requires several manual operations
+
+regular-nanostation-m5
+
+- [x] template
+- [x] tested
+
+regular-nanostation-m5-xw
+
+- note: template is based on a node running in production
+- [x] template
+- [ ] tested
+
+border-nanostation-m5-xw
+
+- note: template is based on a node running in production
+- [ ] template
+- [ ] tested
 
 ## Motivation
 
