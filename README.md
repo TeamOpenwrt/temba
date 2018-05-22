@@ -29,8 +29,6 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 2. Adapt templates in `files`
 3. Run `rake`
 
-OpenWRT Release (Chaos Calmer) and Platform (TL-WR842nd v2) is hardcoded in `Rakefile`. You have to change it to support other platforms.
-
 ## Invisible credits
 
 Sometimes the commits are not done by the original authors
