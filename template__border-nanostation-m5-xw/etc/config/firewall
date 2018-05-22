@@ -140,3 +140,6 @@ config forwarding
 	option dest 'bmxtun'
 	option src 'lan'
 
+config forwarding             
+    option dest 'wan'   
+    option src 'bmxtun'
