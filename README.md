@@ -8,22 +8,22 @@ If you want to control the build system my recomendation is to use [lime-sdk](ht
 
 status: work in progress / works but requires several manual operations
 
-regular-nanostation-m5
+- regular-nanostation-m5
 
-- [x] template
-- [x] tested
+    - [x] template
+    - [x] tested
 
-regular-nanostation-m5-xw
+- regular-nanostation-m5-xw
 
-- note: template is based on a node running in production
-- [x] template
-- [ ] tested
+    - note: template is based on a node running in production
+    - [x] template
+    - [ ] tested
 
-border-nanostation-m5-xw
+- border-nanostation-m5-xw
 
-- note: template is based on a node running in production
-- [ ] template
-- [ ] tested
+    - note: template is based on a node running in production
+    - [ ] template
+    - [ ] tested
 
 ## Motivation
 
