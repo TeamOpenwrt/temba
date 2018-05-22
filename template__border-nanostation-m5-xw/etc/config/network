@@ -1,57 +1,57 @@
 
 config interface 'loopback'
-    option ifname 'lo'
-    option proto 'static'
-    option ipaddr '127.0.0.1'
-    option netmask '255.0.0.0'
+  option ifname 'lo'
+  option proto 'static'
+  option ipaddr '127.0.0.1'
+  option netmask '255.0.0.0'
 
 config globals 'globals'
 
 config interface 'lan'
-    option type 'bridge'
-    option proto 'static'
-    option ifname 'eth0.1'
-    option netmask '255.255.255.224'
-    option ipaddr '10.1.66.161'
-    option ip6assign '64'
+  option type 'bridge'
+  option proto 'static'
+  option ifname 'eth0.1'
+  option netmask '255.255.255.224'
+  option ipaddr '10.1.66.161'
+  option ip6assign '64'
 
 config interface 'wan'
-    option ifname 'eth0.2'
-    option proto 'dhcp'
+  option ifname 'eth0.2'
+  option proto 'dhcp'
 
 config interface 'wan6'
-    option ifname 'eth0.2'
-    option proto 'dhcpv6'
+  option ifname 'eth0.2'
+  option proto 'dhcpv6'
 
 config switch
-    option name 'switch0'
-    option reset '1'
-    option enable_vlan '1'
+  option name 'switch0'
+  option reset '1'
+  option enable_vlan '1'
 
 config switch_vlan
-    option device 'switch0'
-    option vlan '1'
-    option ports '5 0t'
+  option device 'switch0'
+  option vlan '1'
+  option ports '5 0t'
 
 config switch_vlan
-    option device 'switch0'
-    option vlan '2'
-    option ports '1 0t'
+  option device 'switch0'
+  option vlan '2'
+  option ports '1 0t'
 
 # standard mesh guifi bcn (bmx6 runs on vlan 12)
 config device 'wif0_t'
-    option type '8021q'
-    option name 'wif0_t'
-    option ifname '@wif0'
-    option vid '12'
+  option type '8021q'
+  option name 'wif0_t'
+  option ifname '@wif0'
+  option vid '12'
 
 # avoid MTU problems
 config interface 'wif0'
-    option proto 'none'
-    option mtu '1540'
+  option proto 'none'
+  option mtu '1540'
 
 # trick to activate wif0_t
 config interface 'mesh'
-    option ifname 'wif0_t'
-    option auto '1'
+  option ifname 'wif0_t'
+  option auto '1'
 

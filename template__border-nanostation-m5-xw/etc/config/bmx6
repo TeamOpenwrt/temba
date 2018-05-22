@@ -1,47 +1,47 @@
 config bmx6 'general'
-    option dbgMuteTimeout '1000000'
-    option tunOutTimeout '100000'
-    option configSync '0'
-    option syslog '0'
+  option dbgMuteTimeout '1000000'
+  option tunOutTimeout '100000'
+  option configSync '0'
+  option syslog '0'
 
 config plugin 'bmx6_config_plugin'
-    option plugin 'bmx6_config.so'
+  option plugin 'bmx6_config.so'
 
 config plugin 'bmx6_json_plugin'
-    option plugin 'bmx6_json.so'
+  option plugin 'bmx6_json.so'
 
 config plugin 'bmx6_sms_plugin'
-    option plugin 'bmx6_sms.so'
+  option plugin 'bmx6_sms.so'
 
 config ipVersion 'ipVersion'
-    option ipVersion '6'
+  option ipVersion '6'
 
 config dev 'mesh_1'
-    option dev 'wif0_t'
-    option linklayer '2'
+  option dev 'wif0_t'
+  option linklayer '2'
 
 config tunDev 'main'
-    option tunDev 'main'
-    option tun4Address '10.1.66.161/27'
-#    option tun6Address 'fdfc:1c4c:da9d::1/64'
+  option tunDev 'main'
+  option tun4Address '10.1.66.161/27'
+#  option tun6Address 'fdfc:1c4c:da9d::1/64'
 
 # I demand
 config tunOut 'inet6'
-    option tunOut 'inet6'
-    option network '::/0'
-    option maxPrefixLen '0'
+  option tunOut 'inet6'
+  option network '::/0'
+  option maxPrefixLen '0'
 
 config tunOut 'inner_zone'
-    option tunOut 'inner_zone'
-    option network '10.0.0.0/8'
+  option tunOut 'inner_zone'
+  option network '10.0.0.0/8'
 
   # Internet, please
 config tunOut 'inet4'
-        option tunOut 'inet4'
-        option network '0.0.0.0/0'
-        option maxPrefixLen '0'
+    option tunOut 'inet4'
+    option network '0.0.0.0/0'
+    option maxPrefixLen '0'
 
 # I offer
 config tunIn 'border_zone'
-    option tunIn 'border_zone'
-    option network '10.0.0.0/8'
+  option tunIn 'border_zone'
+  option network '10.0.0.0/8'
