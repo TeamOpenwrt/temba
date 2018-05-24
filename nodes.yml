@@ -18,7 +18,7 @@
 # nanostation m5 and nanostation loco m5 xm series
 regular-nanostation-m5:
   profile: 'ubnt-nano-m'
-  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini'
+  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3'
   dns_server: '8.8.8.8' # bcn.guifi.net = 10.228.203.104
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
   filebase: 'template__regular-nanostation-m5'
@@ -34,7 +34,7 @@ regular-nanostation-m5-xw:
   profile: 'ubnt-nano-m-xw'
 # TODO loco
 #  profile: 'ubnt-loco-m-xw'
-  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini'
+  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3'
   dns_server: '8.8.8.8' # bcn.guifi.net = 10.228.203.104
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
   filebase: 'template__regular-nanostation-m5'
