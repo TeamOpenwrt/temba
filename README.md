@@ -12,6 +12,7 @@ status: work in progress / works but requires several manual operations
 
     - [x] template
     - [x] tested
+    - [x] in production (10.1.58.65)
 
 - regular-nanostation-m5-xw
 
