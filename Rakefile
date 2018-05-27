@@ -1,23 +1,23 @@
-require "erb"
-require "rake"
+require 'erb'
+# how it works rake: http://www.stuartellis.name/articles/rake/
+require 'rake'
 require 'yaml'
 
-LEDE_VERSION="17.01.4"
-# TODO this variables go to the devices.yml
-PLATFORM="ar71xx"
-PLATFORM_TYPE="generic"
+# global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
-# DOWNLOAD_BASE="https://downloads.lede-project.org/releases/#{LEDE_VERSION}/targets/#{PLATFORM}/#{PLATFORM_TYPE}/"
-# IMAGE_BASE="lede-imagebuilder-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}.Linux-x86_64"
-# assumes files are already downloaded
-DOWNLOAD_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz"
-IMAGE_BASE="./lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64"
+# variables usually in 10-globals.yml
+$lede_version=''
+$download_base=''
+$image_base=''
+
+# variables usually in 10-globals.yml
+$platform=''
+$platform_type=''
 
 task :default => :generate_all
 # IB (Image Builder)
-task :generate_all => :install_ib do
-#task :generate_all do
-
+#task :generate_all => :install_ib do
+task :generate_all do
   # file that merges all yaml files
   allfile = 'all.yml'
   if File.exists? allfile
@@ -35,11 +35,42 @@ task :generate_all => :install_ib do
 
   nodes = YAML.load_file(allfile)
 
-  nodes.values.each {|v| generate_node(v)}
+  nodes['network'].values.each {|v|
+    prepare_global_variables(v)
+    generate_node(v)
+  }
+end
+
+def prepare_global_variables(nodes)
+  $lede_version = nodes['lede_version']
+  check_variable('lede_version', $lede_version)
+  $platform = nodes['platform']
+  check_variable('platform', $platform)
+  $platform_type = nodes['platform_type']
+  check_variable('platform_type', $platform_type)
+  if nodes['image_base_type'] == 'lime-sdk'
+    # this is the path given by lime-sdk
+    $image_base = nodes['image_base_limesdk'] + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
+    puts('this test: ' + $image_base)
+  elsif nodes['image_base_type'] == 'path'
+    $image_base = nodes['image_base']
+  elsif nodes['image_base_type'] == 'official'
+    $download_base="https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
+    $image_base="lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
+    puts('image base ' + $image_base)
+    prepare_official_ib()
+  end
+  check_variable('image_base', $image_base)
+end
+
+def check_variable(varname, var)
+  if var == '' || var.nil?
+    raise varname + ' variable is empty'
+  end
 end
 
 def generate_node(node_cfg)
-  dir_name = "#{IMAGE_BASE}/files_generated"
+  dir_name = "#{$image_base}/files_generated"
   
   prepare_directory(dir_name,node_cfg['filebase'] || 'files')
   #Evaluate templates
@@ -47,7 +78,15 @@ def generate_node(node_cfg)
     basename = erb_file.gsub '.erb',''
     process_erb(node_cfg,erb_file,basename)
   end
-  generate_firmware(node_cfg['node_name'], node_cfg['profile'], node_cfg['packages'])
+
+  # TODO check all node_name are unique
+  node_name = node_cfg['node_name']
+  check_variable('node_name', node_name)
+  profile = node_cfg['profile']
+  check_variable('profile', profile)
+  packages = node_cfg['packages']
+  check_variable('packages', packages)
+  generate_firmware(node_name, profile, packages)
   
 end
 
@@ -59,7 +98,7 @@ def prepare_directory(dir_name,filebase)
   FileUtils.cp_r filebase, dir_name, :preserve => true
 
   # Test,debug
-  FileUtils.cp_r filebase, "./test", :preserve => true
+  FileUtils.cp_r filebase, './test', :preserve => true
 end
 
 def process_erb(node,erb,base)
@@ -70,22 +109,28 @@ def process_erb(node,erb,base)
 end
 
 def generate_firmware(node_name,profile,packages)
-  puts("\n\n\n\n\n    >>> make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
-  system("make -C #{IMAGE_BASE}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
+  puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
+  system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
+
+  # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
+  unless File.exists? "bin"
+    Dir.mkdir 'bin'
+  end
 
   FileUtils.mv(
-    "#{IMAGE_BASE}/bin/targets/#{PLATFORM}/#{PLATFORM_TYPE}/lede-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}-#{profile}-squashfs-sysupgrade.bin",
+    "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
     "bin/#{node_name}-sysupgrade.bin")
   FileUtils.mv(
-    "#{IMAGE_BASE}/bin/targets/#{PLATFORM}/#{PLATFORM_TYPE}/lede-#{LEDE_VERSION}-#{PLATFORM}-#{PLATFORM_TYPE}-#{profile}-squashfs-factory.bin",
+    "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
     "bin/#{node_name}-factory.bin")
 end
 
-task :install_ib do 
-  ib_archive = "#{IMAGE_BASE}.tar.xz"
-  unless File.exists? IMAGE_BASE
+def prepare_official_ib()
+  ib_archive = "#{$image_base}.tar.xz"
+  puts('i39242j3942938j')
+  unless File.exists? $image_base
     # assumed file is already downloaded
-    #system("wget #{DOWNLOAD_BASE}#{ib_archive}") unless File.exists? ib_archive
+    system("wget #{$download_base}#{ib_archive}") unless File.exists? ib_archive
     system("tar xf #{ib_archive}")
   end
 end

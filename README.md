@@ -51,7 +51,9 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 
 ## Structure
 
-* `nodes.yml` - inventory of all nodes. A firmware-file is generated per node
+* `10-globals.yml` - default variables that are generic for a specific community network like DNS or NTP server, what kind of Image Builder you want to use
+* `20-devices.yml` - default variables that are part of a device like its packages, architecture
+* `30-nodes.yml` - inventory of all nodes. A firmware-file is generated per node. You probably don't want to share this file because contains sensitive information like IP, geolocalization of node, etc.
 * `files` - Directory of .ERB-templates. After processing all ERB-templates, it is integrated into the firmware files
 * `bin` - Output folder for firmware files
 * `Rakefile` - Central build file

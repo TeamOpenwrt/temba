@@ -1,82 +1,31 @@
 # all variables explained
 
-# device:
-#   profile: openwrt profile base
-#   packages: packages to include in default firmware. depending on your build environment they are generated locally or remotely
-#   filebase: (templated) files to add to the specific device
-#   dns_server: name services
-#   ntp_server: sync clock
-#   filebase: specifies what template directory are you using
-#   node_name: name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
-#   ip4: ask to guifi.net website
-#   netmask4: we usually use a netmask of /27 (30 hosts)
-#   bmx6_tun4: ip4 in cidr format for bmx6 file
-#   wifi_channel: do a wifi scan or ask your community
-#   wifi_htmode: bandwidth of 20 MHz, 40 Mhz, secondary channel is up (+) or down (-)? do a wifi scan or ask your community
-#   wifi_country: choose your closest country to renounce to your freedom
+# network: a firmware will be generated for each child
+#   device: devices.yml is inherited
+#     node_name: name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
+#     ip4: ask to guifi.net website
+#     netmask4: we usually use a netmask of /27 (30 hosts)
+#     bmx6_tun4: ip4 in cidr format for bmx6 file
+#     wifi_channel: do a wifi scan or ask your community
+#     wifi_htmode: bandwidth of 20 MHz, 40 Mhz, secondary channel is up (+) or down (-)? do a wifi scan or ask your community
 
 # nanostation m5 and nanostation loco m5 xm series
-regular-nanostation-m5:
-  <<: *ubnt-nano-m
-  node_name: 'hostnametest'
-  ip4: '10.x.x.x' # ip of dead rooftop antenna
-  netmask4: '255.255.255.224'
-  bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
-  wifi_channel: 'x'
-  wifi_htmode: 'HT40+' # example
+network:
 
-regular-nanostation-m5-xw:
-  profile: 'ubnt-nano-m-xw'
-# TODO loco
-#  profile: 'ubnt-loco-m-xw'
-  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3'
-  dns_server: '8.8.8.8' # bcn.guifi.net = 10.228.203.104
-  ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
-  filebase: 'template__regular-nanostation-m5'
-  node_name: 'hostnametest-xw'
-  ip4: '10.x.x.x' # ip of dead rooftop antenna
-  netmask4: '255.255.255.224'
-  bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
-  wifi_channel: 'x'
-  wifi_mode: 'HT40+' # example
-  wifi_country: 'ES'
+  regular-nanostation-m5:
+    <<: *ubnt-nano-m
+    node_name: 'hostnametest'
+    ip4: '10.x.x.x' # fill IP
+    netmask4: '255.255.255.224' # usually is this /27
+    bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+    wifi_channel: 'x'
+    wifi_htmode: 'HT40+' # example
 
-#  regular-old-nanostation-m5:
-#    profile: 'ubnt-nano-m'
-#    packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini'
-#    filebase: 'template__regular-nanostation-m5'
-#    node_name: 'fixme'
-#    ipv4: 'fixme'
-#    netmask4: '255.255.255.224'
-#    wifi_channel: '132'
-#    wifi_mode: 'HT40+'
-#  
-
-#  # TODO
-#  border-nanostation-m5:
-#    profile: 'TODO'
-#    packages: 'TODO'
-#    filebase: 'template__border-nanostation-m5'
-#    node_name: 'fixme'
-#    ipv4: 'fixme'
-#    netmask4: '255.255.255.224'
-#  
-#  # TODO
-#  border-alix:
-#    profile: 'TODO'
-#    packages: 'TODO'
-#    filebase: 'template__border-nanostation-m5'
-#    node_name: 'fixme'
-#    ipv4: 'fixme'
-#    netmask4: '255.255.255.224'
-
-# orig
-
-#  node-router-2:
-#    profile: 'tl-wr841-v9'
-#    hostname: 'group-4-node-2'
-#    packages: 'olsrd iperf tcpdump-mini olsrd-mod-httpinfo olsrd-mod-jsoninfo'
-#    ipv4: '192.168.2.2'
-#    ipv4_lan: '192.168.102.'
-#    ipv6: 'fc00:2::'
-#    ipv6_ll: 'fe80::2'
+  regular-nanostation-m5-xw:
+    <<: *ubnt-nano-m
+    node_name: 'hostnametest2'
+    ip4: '10.x.x.x'
+    netmask4: '255.255.255.224'
+    bmx6_tun4: '10.x.x.x/27'
+    wifi_channel: 'x'
+    wifi_htmode: 'HT40+'
