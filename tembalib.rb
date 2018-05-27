@@ -47,13 +47,11 @@ def prepare_global_variables(nodes)
   if nodes['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
     $image_base = nodes['image_base_limesdk'] + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
-    puts('this test: ' + $image_base)
   elsif nodes['image_base_type'] == 'path'
     $image_base = nodes['image_base']
   elsif nodes['image_base_type'] == 'official'
     $download_base="https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
     $image_base="lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
-    puts('image base ' + $image_base)
     prepare_official_ib()
   end
   check_variable('image_base', $image_base)
@@ -92,9 +90,6 @@ def prepare_directory(dir_name,filebase)
   
   # Prepare
   FileUtils.cp_r filebase, dir_name, :preserve => true
-
-  # Test,debug
-  FileUtils.cp_r filebase, './test', :preserve => true
 end
 
 def process_erb(node,erb,base)
@@ -123,7 +118,6 @@ end
 
 def prepare_official_ib()
   ib_archive = "#{$image_base}.tar.xz"
-  puts('i39242j3942938j')
   unless File.exists? $image_base
     # assumed file is already downloaded
     system("wget #{$download_base}#{ib_archive}") unless File.exists? ib_archive
