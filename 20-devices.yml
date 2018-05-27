@@ -1,4 +1,41 @@
+# all variables explained
+
+# profile: this is a specific profile, global.yml is inherited
+#     profile: openwrt profile base
+#     packages: packages to include in default firmware. depending on your build environment they are generated locally or remotely
+#     filebase: (templated) files to add to the specific device
+#     filebase: specifies what template directory are you using
+
 ubnt-nano-m: &ubnt-nano-m
   <<: *globals
+  profile: ubnt-nano-m
+  platform: ar71xx
+  platform_type: generic
   packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3'
   filebase: 'template__regular-nanostation-m5'
+
+ubnt-nano-m: &ubnt-nano-m-xw
+  <<: *globals
+  profile: ubnt-nano-m-xw
+  platform: ar71xx
+  platform_type: generic
+  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3'
+  filebase: 'template__regular-nanostation-m5-xw'
+
+#  # TODO
+#  border-nanostation-m5: &border-nanostation-m5
+#    <<: *globals
+#    profile: border-nanostation-m5
+#    platform: 'TODO'
+#    platform_type: 'TODO'
+#    packages: 'TODO'
+#    filebase: 'template__border-nanostation-m5'
+
+#  # TODO
+#  border-alix: &border-alix
+#    <<: *globals
+#    profile: border-alix
+#    platform: 'TODO'
+#    platform_type: 'TODO'
+#    packages: 'TODO'
+#    filebase: 'template__border-nanostation-m5'

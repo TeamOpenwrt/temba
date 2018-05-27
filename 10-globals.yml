@@ -1,4 +1,19 @@
+# all variables explained
+
+# globals:
+#   lede_version: what version is going to use your base firmware
+#   image_base_type: select between lime-sdk, custom path for image builder or official openwrt image builder
+#   image_base_limesdk: if image_base_type is 'lime-sdk' put the path to the lime-sdk git repository
+#   image_
+#   dns_server: name services
+#   ntp_server: sync clock
+#   wifi_country: choose your closest country to renounce to your freedom
+
 globals: &globals
+  lede_version: '17.01.4'
+  image_base_type: 'official'
+  # image_base_limesdk: '/root/lime-sdk/'
+  # image_base: '/root/lime-sdk/'
   dns_server: '8.8.8.8' # bcn.guifi.net = 10.228.203.104
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
-  wifi_country: 'ES'
+  wifi_country: 'TZ'
