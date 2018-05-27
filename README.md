@@ -6,7 +6,14 @@ If you want to control the build system my recomendation is to use [lime-sdk](ht
 
 ## Status
 
-status: work in progress / works but requires several manual operations
+### General
+
+Work in progress
+
+- with official openwrt should work by default, just `rake`
+- with custom firmware requires manual operations and the documentation is not clean/finished
+
+### Device status
 
 - regular-nanostation-m5
 
