@@ -113,7 +113,7 @@ def generate_firmware(node_name,profile,packages)
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
   # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
-  unless File.exists? "bin"
+  unless File.exists? 'bin'
     Dir.mkdir 'bin'
   end
 
