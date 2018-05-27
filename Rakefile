@@ -18,20 +18,26 @@ task :default => :generate_all
 task :generate_all => :install_ib do
 #task :generate_all do
 
-  # #there are no secrets at the moment
-  # if (! (File.exists? 'secrets.yml'))
-  #   raise "\n \t >>> Please decrypt secrets.yml.gpg first \n\n\n"
-  # end
-  # secrets = YAML.load_file("secrets.yml")
+  # file that merges all yaml files
+  allfile = 'all.yml'
+  if File.exists? allfile
+    File.delete(allfile)
+  end
+  all_f = File.open(allfile, 'a')
 
-  # Default Generate config for all nodes
-  nodes = YAML.load_file("nodes.yml")
-  #nodes.values.each {|v| generate_node(v,secrets)}
+  Dir['*.yml'].sort.each {|file|
+    # read file -> src https://stackoverflow.com/a/131001
+    temp = File.open(file, 'r').read
+    all_f.write(temp)
+  }
+
+  all_f.close
+
+  nodes = YAML.load_file(allfile)
+
   nodes.values.each {|v| generate_node(v)}
 end
 
-#there are no secrets at the moment
-#def generate_node(node_cfg,secrets)
 def generate_node(node_cfg)
   dir_name = "#{IMAGE_BASE}/files_generated"
   
@@ -39,7 +45,6 @@ def generate_node(node_cfg)
   #Evaluate templates
   Dir.glob("#{dir_name}/**/*.erb").each do |erb_file|
     basename = erb_file.gsub '.erb',''
-    #process_erb(node_cfg,erb_file,basename,secrets)
     process_erb(node_cfg,erb_file,basename)
   end
   generate_firmware(node_cfg['node_name'], node_cfg['profile'], node_cfg['packages'])
@@ -52,12 +57,13 @@ def prepare_directory(dir_name,filebase)
   
   # Prepare
   FileUtils.cp_r filebase, dir_name, :preserve => true
+
+  # Test,debug
+  FileUtils.cp_r filebase, "./test", :preserve => true
 end
 
-#def process_erb(node,erb,base,secrets)
 def process_erb(node,erb,base)
   @node = node
-  # @secrets = secrets
   template = ERB.new File.new(erb).read
   File.open(base, 'w') { |file| file.write(template.result) }
   FileUtils.rm erb
