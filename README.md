@@ -67,8 +67,8 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 
 ## Usage
 
-1. Adapt `nodes.yml`
-2. Adapt templates in `files`
+1. Adapt yml files
+2. Adapt templates accordingly. They start with `template__`
 3. Run `rake`
 
 ## Invisible credits
