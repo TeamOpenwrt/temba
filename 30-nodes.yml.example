@@ -4,7 +4,8 @@
 # all variables explained
 
 # network: a firmware will be generated for each child
-#   device: devices.yml is inherited
+#   node: a particular node with its custom firmware that will be generated
+#     device: 20-devices.yml is inherited
 #     node_name: name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
 #     ip4: ask to guifi.net website
 #     netmask4: we usually use a netmask of /27 (30 hosts)
