@@ -3,15 +3,12 @@ require 'yaml'
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
-# variables usually in 10-globals.yml
+# initialize variables that are usually set in 10-globals.yml
 $lede_version=''
 $download_base=''
 $image_base=''
-
-# variables usually in 10-globals.yml
 $platform=''
 $platform_type=''
-
 
 def generate_all()
   # file that merges all yaml files
@@ -21,6 +18,7 @@ def generate_all()
   end
   all_f = File.open(allfile, 'a')
 
+  # look for all yml files
   Dir['*.yml'].sort.each {|file|
     # read file -> src https://stackoverflow.com/a/131001
     temp = File.open(file, 'r').read
