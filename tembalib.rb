@@ -46,7 +46,7 @@ def prepare_global_variables(nodes)
   check_variable('platform_type', $platform_type)
   if nodes['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
-    $image_base = nodes['image_base_limesdk'] + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
+    $image_base = nodes['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
   elsif nodes['image_base_type'] == 'path'
     $image_base = nodes['image_base']
   elsif nodes['image_base_type'] == 'official'
