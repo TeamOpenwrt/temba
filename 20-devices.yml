@@ -6,20 +6,24 @@
 #     filebase: (templated) files to add to the specific device
 #     filebase: specifies what template directory are you using
 
+# at the moment we only have one set of packages
+default-packages: &default-packages
+  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3 netperf ip-full iwinfo'
+
 ubnt-nano-m: &ubnt-nano-m
   <<: *globals
+  <<: *default-packages
   profile: ubnt-nano-m
   platform: ar71xx
   platform_type: generic
-  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3 netperf ip-full iwinfo'
   filebase: 'template__regular-nanostation-m5'
 
 ubnt-nano-m: &ubnt-nano-m-xw
   <<: *globals
+  <<: *default-packages
   profile: ubnt-nano-m-xw
   platform: ar71xx
   platform_type: generic
-  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3 netperf ip-full iwinfo'
   filebase: 'template__regular-nanostation-m5-xw'
 
 #  # TODO
