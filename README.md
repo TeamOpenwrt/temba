@@ -19,7 +19,11 @@ Work in progress
 
     - [x] template
     - [x] tested
-    - [x] in production (10.1.58.65 with temba commit d4f4256)
+    - [x] in production
+        - 10.1.58.65 with temba commit d4f4256
+        - 10.1.56.161
+        - 10.1.57.33
+        - 10.1.57.225
 
 - regular-nanostation-m5-xw
 
