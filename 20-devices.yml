@@ -18,7 +18,7 @@ ubnt-nano-m: &ubnt-nano-m
   platform_type: generic
   filebase: 'template__regular-nanostation-m5'
 
-ubnt-nano-m: &ubnt-nano-m-xw
+ubnt-nano-m-xw: &ubnt-nano-m-xw
   <<: *globals
   <<: *default-packages
   profile: ubnt-nano-m-xw
