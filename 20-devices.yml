@@ -16,7 +16,7 @@ ubnt-nano-m: &ubnt-nano-m
   profile: ubnt-nano-m
   platform: ar71xx
   platform_type: generic
-  filebase: 'template__regular-nanostation-m5'
+  filebase: 'template__regular-ubnt-nano-m'
 
 ubnt-nano-m-xw: &ubnt-nano-m-xw
   <<: *globals
@@ -24,7 +24,7 @@ ubnt-nano-m-xw: &ubnt-nano-m-xw
   profile: ubnt-nano-m-xw
   platform: ar71xx
   platform_type: generic
-  filebase: 'template__regular-nanostation-m5-xw'
+  filebase: 'template__regular-ubnt-nano-m-xw'
 
 #  # TODO
 #  border-nanostation-m5: &border-nanostation-m5
