@@ -26,7 +26,7 @@ ubnt-nano-m-xw: &ubnt-nano-m-xw
   platform_type: generic
   filebase: 'template__regular-ubnt-nano-m-xw'
 
-ubnt-nano-m-xw: &ubnt-loco-m-xw
+ubnt-loco-m-xw: &ubnt-loco-m-xw
   <<: *globals
   <<: *default-packages
   profile: ubnt-loco-m-xw
