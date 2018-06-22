@@ -48,8 +48,8 @@ def prepare_global_variables(nodes)
   elsif nodes['image_base_type'] == 'path'
     $image_base = nodes['image_base']
   elsif nodes['image_base_type'] == 'official'
-    $download_base="https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
-    $image_base="lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
+    $download_base = "https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
+    $image_base = "lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
     prepare_official_ib()
   end
   check_variable('image_base', $image_base)
