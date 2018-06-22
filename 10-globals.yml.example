@@ -13,7 +13,6 @@ globals: &globals
   lede_version: '17.01.4'
   image_base_type: 'official'
   # image_base_limesdk: '/root/lime-sdk/'
-  # image_base: '/root/lime-sdk/'
   dns_server: '8.8.8.8' # bcn.guifi.net = 10.228.203.104
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
   wifi_country: 'TZ'
