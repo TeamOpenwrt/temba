@@ -34,7 +34,7 @@ Work in progress
 - regular-nanostation-loco-m5-xw
 
     - note: template is based on a node running in production (10.1.73.65)
-    - [ ] template
+    - [x] template
     - [ ] tested
 
 - regular-rocket-m5-xw
@@ -71,7 +71,7 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 
 ## Usage
 
-1. Adapt yml files
+1. Adapt yml files (you have 2 examples you can rename files or create on your own)
 2. Adapt templates accordingly. They start with `template__`
 3. Run `rake`
 
