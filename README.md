@@ -35,7 +35,7 @@ Work in progress
 
     - note: template is based on a node running in production (10.1.73.65)
     - [x] template
-    - [ ] tested
+    - [x] tested
 
 - regular-rocket-m5-xw
 
