@@ -1,10 +1,11 @@
 # all variables explained
-
-# profile: this is a specific profile, global.yml is inherited
+# profile: this is a specific profile,
+#     globals: inherited from 10-globals.yml
+#     default-packages: inherited from packages (at the moment there are no categories like tiny,medium,big)
 #     profile: openwrt profile base
-#     packages: packages to include in default firmware. depending on your build environment they are generated locally or remotely
-#     filebase: (templated) files to add to the specific device
-#     filebase: specifies what template directory are you using
+#     platform: architecture of the device
+#     platform_type: more detail about architecture of the device (right now looks redundant)
+#     filebase: specifies what template directory are you going to insert in the specific device
 
 # at the moment we only have one set of packages
 default-packages: &default-packages
@@ -33,21 +34,3 @@ ubnt-loco-m-xw: &ubnt-loco-m-xw
   platform: ar71xx
   platform_type: generic
   filebase: 'template__regular-ubnt-loco-m-xw'
-
-#  # TODO
-#  border-nanostation-m5: &border-nanostation-m5
-#    <<: *globals
-#    profile: border-nanostation-m5
-#    platform: 'TODO'
-#    platform_type: 'TODO'
-#    packages: 'TODO'
-#    filebase: 'template__border-nanostation-m5'
-
-#  # TODO
-#  border-alix: &border-alix
-#    <<: *globals
-#    profile: border-alix
-#    platform: 'TODO'
-#    platform_type: 'TODO'
-#    packages: 'TODO'
-#    filebase: 'template__border-nanostation-m5'
