@@ -23,6 +23,7 @@ default-packages: &default-packages
     netperf
     ip-full
     iwinfo
+    telnet
 
 ubnt-nano-m: &ubnt-nano-m
   <<: *globals
