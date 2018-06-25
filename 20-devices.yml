@@ -9,7 +9,20 @@
 
 # at the moment we only have one set of packages
 default-packages: &default-packages
-  packages: 'bmx6-json bmx6-sms bmx6-uci-config bmx6-table luci luci-ssl luci-app-bmx6 tcpdump-mini iperf3 netperf ip-full iwinfo'
+  # break string in multilines -> src https://stackoverflow.com/questions/3790454/in-yaml-how-do-i-break-a-string-over-multiple-lines
+  packages: >-
+    bmx6-json
+    bmx6-sms
+    bmx6-uci-config
+    bmx6-table
+    luci
+    luci-ssl
+    luci-app-bmx6
+    tcpdump-mini
+    iperf3
+    netperf
+    ip-full
+    iwinfo
 
 ubnt-nano-m: &ubnt-nano-m
   <<: *globals
