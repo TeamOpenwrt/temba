@@ -23,10 +23,8 @@ default-packages: &default-packages
     netperf
     ip
     iwinfo
-    telnet
     netcat
     mtr
-    mini-snmpd
 
 ubnt-nano-m: &ubnt-nano-m
   <<: *globals
