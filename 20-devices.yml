@@ -21,9 +21,12 @@ default-packages: &default-packages
     tcpdump-mini
     iperf3
     netperf
-    ip-full
+    ip
     iwinfo
     telnet
+    netcat
+    mtr
+    mini-snmpd
 
 ubnt-nano-m: &ubnt-nano-m
   <<: *globals
