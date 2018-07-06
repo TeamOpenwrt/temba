@@ -86,8 +86,8 @@ def prepare_directory(dir_name,filebase)
   # Clean up
   FileUtils.rm_r dir_name if File.exists? dir_name
   
-  # Prepare
-  FileUtils.cp_r filebase, dir_name, :preserve => true
+  # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
+  system("cp -rpL " + filebase + " " + dir_name)
 end
 
 def process_erb(node,erb,base)
