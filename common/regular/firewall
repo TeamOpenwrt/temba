@@ -118,6 +118,7 @@ config rule
 config include
   option path '/etc/firewall.user'
 
+# totes les ifaces que comencen per bmx son part de bmx
 config zone
   option input 'ACCEPT'
   option output 'ACCEPT'
@@ -139,6 +140,6 @@ config forwarding
   option dest 'bmxtun'
   option src 'lan'
 
-config forwarding       
-  option dest 'wan'   
+config forwarding
+  option dest 'wan'
   option src 'bmxtun'
