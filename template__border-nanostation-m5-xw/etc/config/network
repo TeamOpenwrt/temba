@@ -1,4 +1,3 @@
-
 config interface 'loopback'
   option ifname 'lo'
   option proto 'static'
@@ -54,4 +53,3 @@ config interface 'wif0'
 config interface 'mesh'
   option ifname 'wif0_t'
   option auto '1'
-

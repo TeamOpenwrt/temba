@@ -1,4 +1,3 @@
-
 config bird 'bird'
   option UCI_config_file '/tmp/bird4.conf'
   option use_UCI_config '1'
@@ -39,4 +38,3 @@ config bgp 'BCNHangarST2'
   option export 'filter ebgp_out'
   option neighbor_address '10.1.66.163'
   option neighbor_as '15624'
-
