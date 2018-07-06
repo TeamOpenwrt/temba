@@ -72,7 +72,7 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 ## Usage
 
 1. Adapt yml files (you have 2 examples you can rename files or create on your own)
-2. Adapt templates accordingly. They start with `template__`
+2. Adapt templates accordingly. They start with `template__`. `template__common` is a directory to share common files across different devices through relative symlinks
 3. Run `rake`
 
 ## Invisible credits
