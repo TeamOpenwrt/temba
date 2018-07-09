@@ -5,13 +5,13 @@ config system
   option log_proto 'udp'
   option conloglevel '8'
   option cronloglevel '8'
-  option hostname '<%= @node['ntp_server'] %>1'
+  option hostname '<%= @node['node_name'] %>'
   option zonename 'Europe/Andorra'
   option timezone 'CET-1CEST,M3.5.0,M10.5.0/3'
 
 config timeserver 'ntp'
   option enabled '1'
-  list server '<%= @node['ntp_server'] %>1'
+  list server '<%= @node['ntp_server'] %>'
 
 config gpio_switch 'poe_passthrough'
   option name 'PoE Passthrough'
