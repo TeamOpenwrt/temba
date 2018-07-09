@@ -10,6 +10,7 @@ config zone
   option output 'ACCEPT'
   option forward 'ACCEPT'
   option network 'lan mesh wif0'
+  option mtu_fix '1'
 
 config zone
   option name 'wan'
@@ -17,8 +18,8 @@ config zone
   option output 'ACCEPT'
   option forward 'REJECT'
   option masq '1'
-  option mtu_fix '1'
   option network 'wan wan6'
+  option mtu_fix '1'
 
 config rule
   option name 'Allow-DHCP-Renew'
@@ -127,6 +128,7 @@ config zone
   option device 'bmx+'
   option family 'ipv4'
   option network ' '
+  option mtu_fix '1'
 
 config forwarding
   option dest 'wan'
