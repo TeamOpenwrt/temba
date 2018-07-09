@@ -8,10 +8,11 @@ config globals 'globals'
 
 config interface 'lan'
   option type 'bridge'
+  option ifname 'eth0'
   option proto 'static'
-  option ifname 'eth0.1'
-  option netmask '255.255.255.224'
-  option ipaddr '10.1.66.161'
+  option ipaddr '<%= @node['ip4'] %>'
+  option netmask '<%= @node['netmask4'] %>'
+  option dns '<%= @node['dns_server'] %>'
   option ip6assign '64'
 
 config interface 'wan'
@@ -44,10 +45,10 @@ config device 'wif0_t'
   option ifname '@wif0'
   option vid '12'
 
-# avoid MTU problems
+# configurable MTU
 config interface 'wif0'
   option proto 'none'
-  option mtu '1540'
+  option mtu '<%= @node['wifi_mtu'] %>'
 
 # trick to activate wif0_t
 config interface 'mesh'
