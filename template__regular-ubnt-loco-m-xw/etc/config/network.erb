@@ -15,16 +15,19 @@ config interface 'lan'
   option dns '<%= @node['dns_server'] %>'
   option ip6assign '64'
 
+# standard mesh guifi bcn (bmx6 runs on vlan 12)
 config device 'wif0_t'
   option type '8021q'
   option name 'wif0_t'
   option ifname '@wif0'
   option vid '12'
 
+# configurable MTU
 config interface 'wif0'
   option proto 'none'
   option mtu '<%= @node['wifi_mtu'] %>'
 
+# trick to activate wif0_t
 config interface 'mesh'
   option ifname 'wif0_t'
   option auto '1'
