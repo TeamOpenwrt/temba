@@ -11,7 +11,6 @@
 #     netmask4: we usually use a netmask of /27 (30 hosts)
 #     bmx6_tun4: ip4 in cidr format for bmx6 file
 #     wifi_channel: do a wifi scan or ask your community
-#     wifi_htmode: bandwidth of 20 MHz, 40 Mhz, secondary channel is up (+) or down (-)? do a wifi scan or ask your community
 
 # nanostation m5 and nanostation loco m5 xm series
 network:

@@ -8,6 +8,9 @@
 #   dns_server: name services
 #   ntp_server: sync clock
 #   wifi_country: choose your closest country to renounce to your freedom
+#   wifi_mtu: default wifi MTU proposed for your network (warning: don't play with this variable if you don't know what you are doing)
+#   wifi_htmode: HT40 means 2x 20Mz channels, auto selection of upper or lower secondary channel on versions 14.07 and above -> src https://wiki.openwrt.org/doc/uci/wireless
+#   wifi_txpower: default proposed txpower is the default transmission power in vanilla openwrt
 
 globals: &globals
   lede_version: '17.01.4'
