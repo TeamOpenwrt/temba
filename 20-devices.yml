@@ -49,3 +49,4 @@ ubnt-loco-m-xw: &ubnt-loco-m-xw
   platform: ar71xx
   platform_type: generic
   filebase: 'template__regular-ubnt-loco-m-xw'
+  # wifi_txpower: 22 # max value
