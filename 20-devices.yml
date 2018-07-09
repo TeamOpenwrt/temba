@@ -6,6 +6,7 @@
 #     platform: architecture of the device
 #     platform_type: more detail about architecture of the device (right now looks redundant)
 #     filebase: specifies what template directory are you going to insert in the specific device
+#     wifi_txpower: here we can specify for example maximum transmission power for this known device
 
 # at the moment we only have one set of packages
 default-packages: &default-packages
