@@ -46,7 +46,7 @@ config device 'wif0_t'
 
 config interface 'wif0'
   option proto 'none'
-  option mtu '1540'
+  option mtu '<%= @node['wifi_mtu'] %>'
 
 config interface 'mesh'
   option ifname 'wif0_t'
