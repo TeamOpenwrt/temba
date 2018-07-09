@@ -17,3 +17,5 @@ globals: &globals
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
   wifi_country: 'TZ'
   wifi_mtu: 1500
+  wifi_htmode: 'HT40' # HT40 (2x 20Mz channels, auto selection of upper or lower secondary channel on versions 14.07 and above) -> src https://wiki.openwrt.org/doc/uci/wireless
+  wifi_txpower: 17
