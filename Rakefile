@@ -4,5 +4,10 @@ load 'tembalib.rb'
 
 task :default => :generate_all
 task :generate_all do
-  generate_all()
+  generate_all(debug_erb = FALSE)
+end
+
+# apply only configuration template for the last node and copy it to debug directory
+task :debug do
+  generate_all(debug_erb = TRUE)
 end
