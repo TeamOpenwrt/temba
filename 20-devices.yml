@@ -9,7 +9,7 @@
 #     wifi_txpower: here we can specify for example maximum transmission power for this known device
 
 # at the moment we only have one set of packages
-default-packages: &default-packages
+regular-packages: &regular-packages
   # break string in multilines -> src https://stackoverflow.com/questions/3790454/in-yaml-how-do-i-break-a-string-over-multiple-lines
   packages: >-
     bmx6-json
@@ -27,25 +27,41 @@ default-packages: &default-packages
     netcat
     mtr
 
-ubnt-nano-m: &ubnt-nano-m
+ubnt-nano-m: &regular-ubnt-nano-m
   <<: *globals
-  <<: *default-packages
+  <<: *regular-packages
   profile: ubnt-nano-m
   platform: ar71xx
   platform_type: generic
   filebase: 'template__regular-ubnt-nano-m'
 
-ubnt-nano-m-xw: &ubnt-nano-m-xw
+regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   <<: *globals
-  <<: *default-packages
+  <<: *regular-packages
   profile: ubnt-nano-m-xw
   platform: ar71xx
   platform_type: generic
   filebase: 'template__regular-ubnt-nano-m-xw'
 
-ubnt-loco-m-xw: &ubnt-loco-m-xw
+border-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   <<: *globals
-  <<: *default-packages
+  <<: *regular-packages
+  profile: ubnt-nano-m-xw
+  platform: ar71xx
+  platform_type: generic
+  filebase: 'template__border-ubnt-nano-m-xw'
+
+regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
+  <<: *globals
+  <<: *regular-packages
+  profile: ubnt-nano-m-xw
+  platform: ar71xx
+  platform_type: generic
+  filebase: 'template__regular-ubnt-nano-m-xw'
+
+regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
+  <<: *globals
+  <<: *regular-packages
   profile: ubnt-loco-m-xw
   platform: ar71xx
   platform_type: generic
