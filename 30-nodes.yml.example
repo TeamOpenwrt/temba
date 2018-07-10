@@ -24,7 +24,7 @@ network:
     wifi_channel: 120
 
   regular-nanostation-m5-xw:
-    <<: *ubnt-nano-m
+    <<: *ubnt-nano-m-xw
     node_name: 'hostnametest2'
     ip4: '10.x.x.x'
     netmask4: '255.255.255.224'
