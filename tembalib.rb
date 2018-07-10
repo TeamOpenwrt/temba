@@ -10,7 +10,7 @@ $image_base=''
 $platform=''
 $platform_type=''
 
-def generate_all()
+def generate_all(debug_erb)
   # file that merges all yaml files
   allfile = 'all.yml'
   if File.exists? allfile
@@ -31,7 +31,11 @@ def generate_all()
 
   nodes['network'].values.each {|v|
     prepare_global_variables(v)
-    generate_node(v)
+    if debug_erb == TRUE
+      debug_erb(v)
+    else
+      generate_node(v)
+    end
   }
 end
 
@@ -61,15 +65,21 @@ def check_variable(varname, var)
   end
 end
 
+def debug_erb(node_cfg)
+  dir_name = "./debug"
+
+  prepare_directory(dir_name,node_cfg['filebase'] || 'files')
+  #Evaluate templates
+  locate_erb(dir_name, node_cfg)
+  print("  Done! Check debug directory\n")
+end
+
 def generate_node(node_cfg)
   dir_name = "#{$image_base}/files_generated"
   
   prepare_directory(dir_name,node_cfg['filebase'] || 'files')
   #Evaluate templates
-  Dir.glob("#{dir_name}/**/*.erb").each do |erb_file|
-    basename = erb_file.gsub '.erb',''
-    process_erb(node_cfg,erb_file,basename)
-  end
+  locate_erb(dir_name, node_cfg)
 
   # TODO check all node_name are unique
   node_name = node_cfg['node_name']
@@ -79,7 +89,6 @@ def generate_node(node_cfg)
   packages = node_cfg['packages']
   check_variable('packages', packages)
   generate_firmware(node_name, profile, packages)
-  
 end
 
 def prepare_directory(dir_name,filebase)
@@ -88,6 +97,13 @@ def prepare_directory(dir_name,filebase)
   
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
   system("cp -rpL " + filebase + " " + dir_name)
+end
+
+def locate_erb(dir_name, node_cfg)
+  Dir.glob("#{dir_name}/**/*.erb").each do |erb_file|
+    basename = erb_file.gsub '.erb',''
+    process_erb(node_cfg,erb_file,basename)
+  end
 end
 
 def process_erb(node,erb,base)
