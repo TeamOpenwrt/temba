@@ -108,7 +108,8 @@ end
 
 def process_erb(node,erb,base)
   @node = node
-  template = ERB.new File.new(erb).read
+  # enable trim mode -> src https://stackoverflow.com/questions/4632879/erb-template-removing-the-trailing-line
+  template = ERB.new(File.new(erb).read, nil, '-')
   File.open(base, 'w') { |file| file.write(template.result) }
   FileUtils.rm erb
 end
