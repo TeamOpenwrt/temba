@@ -141,7 +141,7 @@ def generate_firmware(node_name,profile,packages)
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
       "bin/#{node_name}-combined-ext4.img.gz")
-    system("gunzip bin/#{node_name}-combined-ext4.img.gz")
+    system("gunzip -k bin/#{node_name}-combined-ext4.img.gz")
   else
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
