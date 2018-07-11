@@ -48,7 +48,7 @@ border-packages: &border-packages
     birdc4
     luci-app-bird4
 
-ubnt-nano-m: &regular-ubnt-nano-m
+regular-ubnt-nano-m: &regular-ubnt-nano-m
   <<: *globals
   <<: *regular-packages
   profile: ubnt-nano-m
