@@ -9,9 +9,8 @@ function match_guifi_prefix() {
 function match_zone_prefix() {
 
   return net ~ [
-    <% @node['bgp_agg_prefix'].each do |line| -%>
-    <%= line %>
-    <% end -%>
+    <%# inspired by https://ask.puppet.com/question/4195/joining-array-from-hieraconcat-other-value-in-erb/ %>
+    <%= @node['bgp_agg_prefix'].map{ |agg| "#{agg}" }.join(",\n    ") %>
   ];
 
 }
