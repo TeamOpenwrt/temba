@@ -31,7 +31,7 @@ def generate_all(debug_erb)
 
   nodes['network'].values.each {|v|
     prepare_global_variables(v)
-    if debug_erb == true
+    if debug_erb
       debug_erb(v)
     else
       generate_node(v)
