@@ -66,12 +66,12 @@ def check_variable(varname, var)
 end
 
 def debug_erb(node_cfg)
-  dir_name = "./debug"
+  dir_name = "./debug-" + node_cfg['node_name']
 
   prepare_directory(dir_name,node_cfg['filebase'] || 'files')
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
-  print("  Done! Check debug directory\n")
+  print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
 end
 
 def generate_node(node_cfg)
