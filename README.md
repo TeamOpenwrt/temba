@@ -79,7 +79,9 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 1. Adapt yml files (you have 2 examples you can rename files or create on your own)
 2. Adapt templates accordingly. They start with `template__`. `template__common` is a directory to share common files across different devices through relative symlinks
-3. Run `rake`
+3. Run
+    - `rake` if you want to generate firmwares
+    - `rake debug` if you want to debug only templates
 
 ## Invisible credits
 
