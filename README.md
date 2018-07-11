@@ -83,6 +83,12 @@ To avoid redundancy of information we use different yaml files, you can test yam
     - `rake` if you want to generate firmwares
     - `rake debug` if you want to debug only templates
 
+## Run x86_64 in qemu
+
+    qemu-system-x86_64 -M q35 -drive file=bin/hostname-x86_64-combined-ext4.img,id=d0,if=none,bus=0,unit=0 -device ide-hd,drive=d0,bus=ide.0
+
+src https://openwrt.org/docs/guide-user/virtualization/qemu#openwrt_in_qemu_x86-64
+
 ## Invisible credits
 
 Sometimes the commits are not done by the original authors

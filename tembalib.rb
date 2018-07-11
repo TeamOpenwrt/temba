@@ -106,7 +106,7 @@ def prepare_directory(dir_name,filebase)
   # get branch -> src https://stackoverflow.com/a/12142066
   # get rid of new line -> src https://stackoverflow.com/questions/7533318/get-rid-of-newline-from-shell-commands-in-ruby
   current_branch = `git rev-parse --abbrev-ref HEAD`.chop
-  temba_content = "temba " + current_branch + " " + current_commit
+  temba_content = "temba " + current_branch + " " + current_commit + "\n"
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_content)
 
@@ -136,12 +136,20 @@ def generate_firmware(node_name,profile,packages)
     Dir.mkdir 'bin'
   end
 
-  FileUtils.mv(
-    "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
-    "bin/#{node_name}-sysupgrade.bin")
-  FileUtils.mv(
-    "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
-    "bin/#{node_name}-factory.bin")
+  # different platforms different names
+  if "#{$platform}-#{$platform_type}" == "x86-64"
+    FileUtils.mv(
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
+      "bin/#{node_name}-combined-ext4.img.gz")
+    system("gunzip bin/#{node_name}-combined-ext4.img.gz")
+  else
+    FileUtils.mv(
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
+      "bin/#{node_name}-sysupgrade.bin")
+    FileUtils.mv(
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
+      "bin/#{node_name}-factory.bin")
+  end
 end
 
 def prepare_official_ib()
