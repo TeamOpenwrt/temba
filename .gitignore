@@ -1,4 +1,12 @@
 *~
 *swp
 # in general the following file is personal
+10-globals.yml
 30-nodes.yml
+all.yml
+# temp things
+debug-*
+do_rename_symlinks.sh
+bin
+lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz
+lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/
