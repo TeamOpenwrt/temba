@@ -1,0 +1,17 @@
+function match_guifi_prefix() {
+
+  return net ~ [
+    10.0.0.0/8{9,32}
+  ];
+
+}
+
+function match_zone_prefix() {
+
+  return net ~ [
+    <% @node['bgp_agg_prefix'].each do |line| -%>
+    <%= line %>
+    <% end -%>
+  ];
+
+}

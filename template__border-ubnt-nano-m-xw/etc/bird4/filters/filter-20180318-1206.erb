@@ -1,0 +1,14 @@
+filter ebgp_in {                           
+
+        krt_prefsrc = <%= @node['bgp_local_addr'] %>;
+
+        if match_guifi_prefix() then accept;
+        else reject;
+}                                          
+                     
+filter ebgp_out {
+
+        if match_zone_prefix() then accept;
+        else reject;         
+
+}
