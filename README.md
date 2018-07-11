@@ -24,12 +24,16 @@ Work in progress
         - 10.1.56.161
         - 10.1.57.33
         - 10.1.57.225
+        - etc.
 
 - regular-nanostation-m5-xw
 
     - note: template is based on a node running in production (10.1.71.97)
     - [x] template
-    - [ ] tested
+    - [x] tested
+    - [x] in production
+      - 10.1.57.193
+      - 10.1.58.161
 
 - regular-nanostation-loco-m5-xw
 
@@ -47,7 +51,7 @@ Work in progress
 - border-nanostation-m5-xw
 
     - note: template is based on a node running in production (10.1.66.161)
-    - [ ] template
+    - [x] template
     - [ ] tested
 
 ## Motivation
