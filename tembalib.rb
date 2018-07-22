@@ -106,7 +106,7 @@ def prepare_directory(dir_name,filebase)
   # get branch -> src https://stackoverflow.com/a/12142066
   # get rid of new line -> src https://stackoverflow.com/questions/7533318/get-rid-of-newline-from-shell-commands-in-ruby
   current_branch = `git rev-parse --abbrev-ref HEAD`.chop
-  temba_content = "temba " + current_branch + " " + current_commit + "\n"
+  temba_content = "temba " + current_commit + "\n"
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_content)
 
