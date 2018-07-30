@@ -8,7 +8,7 @@ config globals 'globals'
 
 config interface 'lan'
   option type 'bridge'
-  option ifname 'eth0'
+  option ifname 'eth0.1'
   option proto 'static'
   option ipaddr '<%= @node['ip4'] %>'
   option netmask '<%= @node['netmask4'] %>'
