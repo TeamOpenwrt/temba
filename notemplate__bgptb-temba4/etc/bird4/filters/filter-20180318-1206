@@ -1,0 +1,17 @@
+filter ebgp_in {                           
+
+  krt_prefsrc = 10.2.0.1;
+
+  if match_guifi_prefix() then accept;
+  else reject;
+
+}                                          
+                     
+filter ebgp_out {
+
+  krt_prefsrc = 10.2.0.1;
+
+  if match_guifi_prefix() then accept;
+  else reject;         
+
+}

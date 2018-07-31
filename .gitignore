@@ -3,6 +3,7 @@
 # in general the following file is personal
 10-globals.yml
 30-nodes.yml
+31-testbed-nodes.yml
 all.yml
 # temp things
 debug-*
