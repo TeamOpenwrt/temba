@@ -89,6 +89,12 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 src https://openwrt.org/docs/guide-user/virtualization/qemu#openwrt_in_qemu_x86-64
 
+## Testbed
+
+Temba facilitates the creation of testbed to improve the network. `tb` refers to be used in a testbed
+
+More details to come
+
 ## Invisible credits
 
 Sometimes the commits are not done by the original authors
