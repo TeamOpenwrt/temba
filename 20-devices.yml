@@ -48,14 +48,15 @@ border-packages: &border-packages
     birdc4
     luci-app-bird4
 
+# TODO check
 regular-x86_64: &regular-x86_64
   <<: *globals
   <<: *regular-packages
   profile: Generic
   platform: x86
   platform_type: 64
-  # TODO: use its own template file (not from nanostation)
-  filebase: 'template__regular-ubnt-nano-m'
+  bmx6_main_iface: 'mesh_12'
+  filebase: 'template__regular-x86_64'
 
 regular-ubnt-nano-m: &regular-ubnt-nano-m
   <<: *globals
