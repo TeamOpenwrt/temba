@@ -17,7 +17,7 @@ config ipVersion 'ipVersion'
   option ipVersion '6'
 
 config dev 'mesh_1'
-  option dev 'wif0_t'
+  option dev '<%= @node['bmx6_main_iface'] %>'
   option linklayer '2'
 
 config tunDev 'main'
