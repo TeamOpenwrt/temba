@@ -8,7 +8,7 @@
 #   dns_server: name services
 #   ntp_server: sync clock
 #   wifi_country: choose your closest country to renounce to your freedom
-#   wifi_mtu: default wifi MTU proposed for your network (warning: don't play with this variable if you don't know what you are doing)
+#   wifi_mtu: default MTU proposed for your network (don't change it if you don't know what are you doing)
 #   wifi_htmode: HT40 means 2x 20Mz channels, auto selection of upper or lower secondary channel on versions 14.07 and above -> src https://wiki.openwrt.org/doc/uci/wireless
 #   wifi_txpower: default proposed txpower is the default transmission power in vanilla openwrt
 
@@ -20,5 +20,6 @@ globals: &globals
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
   wifi_country: 'TZ'
   wifi_mtu: 1500
-  wifi_htmode: 'HT40' # HT40 (2x 20Mz channels, auto selection of upper or lower secondary channel on versions 14.07 and above) -> src https://wiki.openwrt.org/doc/uci/wireless
+  wifi_htmode: 'HT40'
   wifi_txpower: 17
+  bmx_main_iface: 'wif0_t'
