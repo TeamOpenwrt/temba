@@ -93,15 +93,14 @@ src https://openwrt.org/docs/guide-user/virtualization/qemu#openwrt_in_qemu_x86-
 
 Temba facilitates the creation of testbed to improve the network. `tb` refers to be used in a testbed
 
+![testbed](./tesbed-temba-qemunet.png)
+
 More details to come
 
 ## Invisible credits
 
 Sometimes the commits are not done by the original authors
 
-The following templates contributed by @dyangol
-
-- template__regular-nanostation-m5-xw
-- template__border-nanostation-m5-xw
+@dyangol provided great help contributing with templates, configurations, bugfix and reviewing ideas here implemented
 
 The original idea is from @yanosz and its repository https://github.com/yanosz/mesh_testbed_generator
