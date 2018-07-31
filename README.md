@@ -93,7 +93,9 @@ src https://openwrt.org/docs/guide-user/virtualization/qemu#openwrt_in_qemu_x86-
 
 Temba facilitates the creation of testbed to improve the network. `tb` refers to be used in a testbed
 
-![testbed](./tesbed-temba-qemunet.png)
+The images of the following diagram can be generated running `31-testbed-nodes.yml.example`. With that images you can run qemunet with a particular topology to run the testbed. Green (left) and blue (right) squares represent bmx6 mesh networks and red square is a bgp zone where routes are propagated . This is a common scenario in Barcelona.
+
+![](./testbed-temba-qemunet.png)
 
 More details to come
 
