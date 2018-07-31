@@ -50,7 +50,7 @@ Work in progress
 
 - border-nanostation-m5-xw
 
-    - note: template is based on a node running in production (10.1.66.161)
+    - note: template is based on a node running in production (strange bgp: 10.1.66.161, normal bgp: 10.1.71.161)
     - [x] template
     - [ ] tested
 
