@@ -11,6 +11,7 @@
 #   wifi_mtu: default MTU proposed for your network (don't change it if you don't know what are you doing)
 #   wifi_htmode: HT40 means 2x 20Mz channels, auto selection of upper or lower secondary channel on versions 14.07 and above -> src https://wiki.openwrt.org/doc/uci/wireless
 #   wifi_txpower: default proposed txpower is the default transmission power in vanilla openwrt
+#   bmx_main_iface: bmx6 interface used for mesh (by default is the wifi interface wif0_t)
 
 globals: &globals
   lede_version: '17.01.4'
@@ -22,4 +23,4 @@ globals: &globals
   wifi_mtu: 1500
   wifi_htmode: 'HT40'
   wifi_txpower: 17
-  bmx_main_iface: 'wif0_t'
+  bmx6_main_iface: 'wif0_t'
