@@ -99,6 +99,14 @@ The images of the following diagram can be generated running `31-testbed-nodes.y
 
 More details to come
 
+## Notation & coding style
+
+wifN means wireless N=0,1,2,...
+
+cifN means cable N=0,1,2,...
+
+instead of tab, configurations are indented by 2 spaces (as in [GNU style](https://en.wikipedia.org/wiki/Indentation_style#GNU_style))
+
 ## Invisible credits
 
 Sometimes the commits are not done by the original authors
