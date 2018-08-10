@@ -2,7 +2,8 @@ config defaults
   option syn_flood '1'
   option input 'ACCEPT'
   option output 'ACCEPT'
-  option forward 'REJECT'
+  # originally forward was reject in our approach, help us fix the firewall -> https://gitlab.com/guifi-exo/temba/issues/48
+  option forward 'ACCEPT'
 
 config zone
   option name 'lan'
