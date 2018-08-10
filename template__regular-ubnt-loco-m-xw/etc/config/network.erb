@@ -31,3 +31,15 @@ config interface 'wif0'
 config interface 'mesh'
   option ifname 'wif0_t'
   option auto '1'
+
+<% if @node['bmx6_over_eth0'] == true -%>
+config device 'cif0_t'
+  option type '8021q'
+  option name 'cif0_t'
+  option ifname 'eth0'
+  option vid '12'
+
+config interface 'cif0_m'
+  option ifname 'cif0_t'
+  option auto '1'
+<% end -%>
