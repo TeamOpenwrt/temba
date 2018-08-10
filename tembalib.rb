@@ -29,7 +29,10 @@ def generate_all(debug_erb)
 
   nodes = YAML.load_file(allfile)
 
-  nodes['network'].values.each {|v|
+  # src https://stackoverflow.com/a/32230037
+  nodes['network'].each {|k, v|
+    # convert key of the entire subarray as value node_name
+    v['node_name'] = k
     prepare_global_variables(v)
     if debug_erb
       debug_erb(v)
