@@ -84,7 +84,6 @@ def generate_node(node_cfg)
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
 
-  # TODO check all node_name are unique
   node_name = node_cfg['node_name']
   check_variable('node_name', node_name)
   profile = node_cfg['profile']
