@@ -123,6 +123,7 @@ def process_erb(node,erb,base)
 end
 
 def generate_firmware(node_cfg)
+
   node_name = node_cfg['node_name']
   check_variable('node_name', node_name)
   profile = node_cfg['profile']
@@ -135,6 +136,9 @@ def generate_firmware(node_cfg)
   else
     notes = ''
   end
+
+  # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
+  node_cfg['ssid'] = ('guifi.net/' + node_name).slice(0,32)
 
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
