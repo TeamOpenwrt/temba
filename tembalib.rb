@@ -83,7 +83,6 @@ def generate_node(node_cfg)
   prepare_directory(dir_name,node_cfg['filebase'] || 'files')
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
-
   generate_firmware(node_cfg)
 end
 
@@ -123,7 +122,6 @@ def process_erb(node,erb,base)
   FileUtils.rm erb
 end
 
-#def generate_firmware(node_name,profile,packages)
 def generate_firmware(node_cfg)
   node_name = node_cfg['node_name']
   check_variable('node_name', node_name)
