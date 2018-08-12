@@ -84,13 +84,7 @@ def generate_node(node_cfg)
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
 
-  node_name = node_cfg['node_name']
-  check_variable('node_name', node_name)
-  profile = node_cfg['profile']
-  check_variable('profile', profile)
-  packages = node_cfg['packages']
-  check_variable('packages', packages)
-  generate_firmware(node_name, profile, packages)
+  generate_firmware(node_cfg)
 end
 
 def prepare_directory(dir_name,filebase)
@@ -129,7 +123,21 @@ def process_erb(node,erb,base)
   FileUtils.rm erb
 end
 
-def generate_firmware(node_name,profile,packages)
+#def generate_firmware(node_name,profile,packages)
+def generate_firmware(node_cfg)
+  node_name = node_cfg['node_name']
+  check_variable('node_name', node_name)
+  profile = node_cfg['profile']
+  check_variable('profile', profile)
+  packages = node_cfg['packages']
+  check_variable('packages', packages)
+  notes = node_cfg['notes']
+  if(notes)
+    notes = '__' + notes.gsub(' ', '-')
+  else
+    notes = ''
+  end
+
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
@@ -138,19 +146,19 @@ def generate_firmware(node_name,profile,packages)
     Dir.mkdir 'bin'
   end
 
-  # different platforms different names
+  # different platforms different names in output file
   if "#{$platform}-#{$platform_type}" == "x86-64"
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
-      "bin/#{node_name}-combined-ext4.img.gz")
+      "bin/#{node_name}#{notes}-combined-ext4.img.gz")
     system("gunzip -f -k bin/#{node_name}-combined-ext4.img.gz")
   else
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
-      "bin/#{node_name}-sysupgrade.bin")
+      "bin/#{node_name}#{notes}-sysupgrade.bin")
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
-      "bin/#{node_name}-factory.bin")
+      "bin/#{node_name}#{notes}-factory.bin")
   end
 end
 

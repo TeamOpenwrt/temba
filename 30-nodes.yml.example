@@ -21,6 +21,7 @@ network:
     netmask4: '255.255.255.224' # usually is this /27
     bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
     wifi_channel: 120
+    notes: comments are visible in output file to highlight something
 
   hostname-x86_64
     <<: *regular-x86_64
