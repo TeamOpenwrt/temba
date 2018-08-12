@@ -15,33 +15,29 @@
 # nanostation m5 and nanostation loco m5 xm series
 network:
 
-  regular-nanostation-m5:
+  hostnametest
     <<: *regular-ubnt-nano-m
-    node_name: 'hostnametest'
     ip4: '10.x.x.x' # fill IP
     netmask4: '255.255.255.224' # usually is this /27
     bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
     wifi_channel: 120
 
-  regular-x86_64:
+  hostname-x86_64
     <<: *regular-x86_64
-    node_name: 'hostname-x86_64'
     ip4: '10.x.x.x' # fill IP
     netmask4: '255.255.255.224' # usually is this /27
     bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
 
-  regular-nanostation-m5-xw:
+  hostnametest2
     <<: *regular-ubnt-nano-m-xw
-    node_name: 'hostnametest2'
     ip4: '10.x.x.x'
     netmask4: '255.255.255.224'
     bmx6_tun4: '10.x.x.x/27'
     wifi_channel: 132
     wifi_htmode: 'HT20' # overrides HT40 variable of 10-globals.yml (the example)
 
-  border-nanostation-m5-xw:
+  border-test
     <<: *border-ubnt-nano-m-xw
-    node_name: 'border-test'
     ip4: '10.1.66.161'
     netmask4: '255.255.255.224'
     bmx6_tun4: '10.1.66.161/27'
