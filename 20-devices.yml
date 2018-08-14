@@ -66,14 +66,6 @@ regular-ubnt-nano-m: &regular-ubnt-nano-m
   platform_type: generic
   filebase: 'template__regular-ubnt-nano-m'
 
-regular-ubnt-nano-m: &regular-ubnt-nano-m
-  <<: *globals
-  <<: *regular-packages
-  profile: ubnt-nano-m
-  platform: ar71xx
-  platform_type: generic
-  filebase: 'template__regular-ubnt-nano-m'
-
 regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   <<: *globals
   <<: *regular-packages
