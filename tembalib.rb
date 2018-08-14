@@ -139,7 +139,7 @@ def generate_firmware(node_cfg)
 
   # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
-  node_cfg['ssid'] = (wifi_ssid_base + node_name).slice(0,32)
+  node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
 
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
