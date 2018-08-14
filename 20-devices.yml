@@ -74,21 +74,6 @@ regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   platform_type: generic
   filebase: 'template__regular-ubnt-nano-m-xw'
 
-border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
-  <<: *globals
-  <<: *border-packages
-  profile: ubnt-nano-m-xw
-  platform: ar71xx
-  platform_type: generic
-  filebase: 'template__border-ubnt-nano-m-xw'
-
-regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
-  <<: *globals
-  <<: *regular-packages
-  profile: ubnt-nano-m-xw
-  platform: ar71xx
-  platform_type: generic
-  filebase: 'template__regular-ubnt-nano-m-xw'
 
 regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
   <<: *globals
@@ -97,4 +82,20 @@ regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
   platform: ar71xx
   platform_type: generic
   filebase: 'template__regular-ubnt-loco-m-xw'
-  # wifi_txpower: 22 # max value
+  # wifi_txpower: 22 # its max value
+
+ubnt-nano-m-xw: &ubnt-nano-m-xw
+  <<: *globals
+  profile: ubnt-nano-m-xw
+  platform: ar71xx
+  platform_type: generic
+
+border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
+  <<: *ubnt-nano-m-xw
+  <<: *border-packages
+  filebase: 'template__border-ubnt-nano-m-xw'
+
+regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
+  <<: *ubnt-nano-m-xw
+  <<: *regular-packages
+  filebase: 'template__regular-ubnt-nano-m-xw'
