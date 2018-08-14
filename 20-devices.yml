@@ -64,6 +64,7 @@ regular-ubnt-nano-m: &regular-ubnt-nano-m
   profile: ubnt-nano-m
   platform: ar71xx
   platform_type: generic
+  wifi_path: 'pci0000:00/0000:00:00.0'
   filebase: 'template__regular-ubnt-nano-m'
 
 regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
@@ -81,6 +82,7 @@ regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
   profile: ubnt-loco-m-xw
   platform: ar71xx
   platform_type: generic
+  wifi_path: 'platform/ar934x_wmac'
   filebase: 'template__regular-ubnt-loco-m-xw'
   # wifi_txpower: 22 # its max value
 
@@ -89,6 +91,7 @@ ubnt-nano-m-xw: &ubnt-nano-m-xw
   profile: ubnt-nano-m-xw
   platform: ar71xx
   platform_type: generic
+  wifi_path: 'platform/ar934x_wmac'
 
 border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
   <<: *ubnt-nano-m-xw
