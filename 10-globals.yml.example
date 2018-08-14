@@ -26,5 +26,6 @@ globals: &globals
   wifi_htmode: 'HT40'
   wifi_txpower: 17
   wifi_bssid: '02:CA:FF:EE:BA:BE'
+  wifi_ssid_base: 'guifi.net/'
   bmx6_main_iface: 'wif0_t'
   bmx6_over_eth0: false
