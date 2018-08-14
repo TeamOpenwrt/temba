@@ -68,10 +68,11 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 
 To avoid redundancy of information we use different yaml files, you can test yaml stuff through this online app http://yaml-online-parser.appspot.com/ and here is the source code https://github.com/ptarjan/online-yaml-parser/tree/master
 
-* `10-globals.yml` - default variables that are generic for a specific community network like DNS or NTP server, what kind of Image Builder you want to use
+* `10-globals.yml` - default variables that are generic for a specific community network like DNS or NTP server, what kind of Image Builder you want to use, and other default options you want to apply to your devices or nodes.
 * `20-devices.yml` - default variables that are part of a device like its packages, architecture
 * `30-nodes.yml` - inventory of all nodes. A firmware-file is generated per node. You probably don't want to share this file because contains sensitive information like IP, geolocalization of node, etc.
-* `files` - Directory of .ERB-templates. After processing all ERB-templates, it is integrated into the firmware files
+* `template__` - Directories with their specific .ERB-templates. After processing all ERB-templates, it is integrated into the firmware files
+* `notemplate__` - Directories with inmutable configuration that is integrated into the firmware files. This could be transitory until some generalization and templating is available for the target.
 * `bin` - Output folder for firmware files
 * `Rakefile` - Central build file
 
