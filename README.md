@@ -76,6 +76,16 @@ To avoid redundancy of information we use different yaml files, you can test yam
 * `bin` - Output folder for firmware files
 * `Rakefile` - Central build file
 
+## Requirements
+
+assuming debian 9
+
+    sudo gem install bundle
+
+install dependencies
+
+    bundle install
+
 ## Usage
 
 1. Adapt yml files (you have 2 examples you can rename files or create on your own)
