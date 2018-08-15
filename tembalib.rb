@@ -10,7 +10,7 @@ $image_base=''
 $platform=''
 $platform_type=''
 
-def generate_all(debug_erb)
+def generate_all()
   # file that merges all yaml files
   allfile = 'all.yml'
   if File.exists? allfile
@@ -34,11 +34,7 @@ def generate_all(debug_erb)
     # convert key of the entire subarray as value node_name
     v['node_name'] = k
     prepare_global_variables(v)
-    if debug_erb
-      debug_erb(v)
-    else
-      generate_node(v)
-    end
+    generate_node(v)
   }
 end
 
@@ -68,22 +64,28 @@ def check_variable(varname, var)
   end
 end
 
-def debug_erb(node_cfg)
-  dir_name = "./debug-" + node_cfg['node_name']
-
-  prepare_directory(dir_name,node_cfg['filebase'] || 'files')
-  #Evaluate templates
-  locate_erb(dir_name, node_cfg)
-  print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
-end
-
 def generate_node(node_cfg)
-  dir_name = "#{$image_base}/files_generated"
-  
-  prepare_directory(dir_name,node_cfg['filebase'] || 'files')
+
+  node_name = node_cfg['node_name']
+
+  if $debug_erb
+    dir_name = "./debug-" + node_name
+  else
+    dir_name = "#{$image_base}/files_generated"
+  end
+
+  prepare_directory(dir_name, node_cfg['filebase'] || 'files')
+
+  # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
+  wifi_ssid_base = node_cfg['wifi_ssid_base']
+  node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
+  #raise node_cfg['wifi_ssid'].inspect
+
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
+
   generate_firmware(node_cfg)
+
 end
 
 def prepare_directory(dir_name,filebase)
@@ -124,22 +126,18 @@ end
 
 def generate_firmware(node_cfg)
 
+  # check variables TODO improve
   node_name = node_cfg['node_name']
   check_variable('node_name', node_name)
   profile = node_cfg['profile']
   check_variable('profile', profile)
   packages = node_cfg['packages']
   check_variable('packages', packages)
-  notes = node_cfg['notes']
-  if(notes)
-    notes = '__' + notes.gsub(' ', '-')
-  else
-    notes = ''
-  end
 
-  # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
-  wifi_ssid_base = node_cfg['wifi_ssid_base']
-  node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
+  if $debug_erb
+    print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
+    return
+  end
 
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
@@ -147,6 +145,14 @@ def generate_firmware(node_cfg)
   # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
   unless File.exists? 'bin'
     Dir.mkdir 'bin'
+  end
+
+  # notes in output file
+  notes = node_cfg['notes']
+  if(notes)
+    notes = '__' + notes.gsub(' ', '-')
+  else
+    notes = ''
   end
 
   # different platforms different names in output file
