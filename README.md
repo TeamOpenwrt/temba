@@ -71,8 +71,9 @@ To avoid redundancy of information we use different yaml files, you can test yam
 * `10-globals.yml` - default variables that are generic for a specific community network like DNS or NTP server, what kind of Image Builder you want to use, and other default options you want to apply to your devices or nodes.
 * `20-devices.yml` - default variables that are part of a device like its packages, architecture
 * `30-nodes.yml` - inventory of all nodes. A firmware-file is generated per node. You probably don't want to share this file because contains sensitive information like IP, geolocalization of node, etc.
-* `template__` - Directories with their specific .ERB-templates. After processing all ERB-templates, it is integrated into the firmware files
-* `notemplate__` - Directories with inmutable configuration that is integrated into the firmware files. This could be transitory until some generalization and templating is available for the target.
+* `files` - Directory that contains all template config files
+  - `template__` - Directories with their specific .ERB-templates. After processing all ERB-templates, it is integrated into the firmware files
+  - `notemplate__` - Directories with inmutable configuration that is integrated into the firmware files. This could be transitory until some generalization and templating is available for the target.
 * `bin` - Output folder for firmware files
 * `Rakefile` - Central build file
 

@@ -32,7 +32,7 @@
   temba4:
     <<: *bordertb-x86_64
     node_name: 'temba4'
-    filebase: 'notemplate__bordertb-temba4'
+    filebase: 'files/notemplate__bordertb-temba4'
 
   temba5:
     <<: *bordertb-x86_64

@@ -56,7 +56,7 @@ regular-x86_64: &regular-x86_64
   platform: x86
   platform_type: 64
   bmx6_main_iface: 'mesh_12'
-  filebase: 'template__regular-x86_64'
+  filebase: 'files/template__regular-x86_64'
 
 regular-ubnt-nano-m: &regular-ubnt-nano-m
   <<: *globals
@@ -65,7 +65,7 @@ regular-ubnt-nano-m: &regular-ubnt-nano-m
   platform: ar71xx
   platform_type: generic
   wifi_path: 'pci0000:00/0000:00:00.0'
-  filebase: 'template__regular-ubnt-nano-m'
+  filebase: 'files/template__regular-ubnt-nano-m'
 
 regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   <<: *globals
@@ -73,7 +73,7 @@ regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   profile: ubnt-nano-m-xw
   platform: ar71xx
   platform_type: generic
-  filebase: 'template__regular-ubnt-nano-m-xw'
+  filebase: 'files/template__regular-ubnt-nano-m-xw'
 
 
 regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
@@ -83,7 +83,7 @@ regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
   platform: ar71xx
   platform_type: generic
   wifi_path: 'platform/ar934x_wmac'
-  filebase: 'template__regular-ubnt-loco-m-xw'
+  filebase: 'files/template__regular-ubnt-loco-m-xw'
   # wifi_txpower: 22 # its max value
 
 ubnt-nano-m-xw: &ubnt-nano-m-xw
@@ -96,9 +96,9 @@ ubnt-nano-m-xw: &ubnt-nano-m-xw
 border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
   <<: *ubnt-nano-m-xw
   <<: *border-packages
-  filebase: 'template__border-ubnt-nano-m-xw'
+  filebase: 'files/template__border-ubnt-nano-m-xw'
 
 regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
   <<: *ubnt-nano-m-xw
   <<: *regular-packages
-  filebase: 'template__regular-ubnt-nano-m-xw'
+  filebase: 'files/template__regular-ubnt-nano-m-xw'
