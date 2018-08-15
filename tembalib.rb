@@ -1,5 +1,6 @@
 require 'erb'
 require 'yaml'
+require 'ipaddress'
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
@@ -80,6 +81,11 @@ def generate_node(node_cfg)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
   node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
   #raise node_cfg['wifi_ssid'].inspect
+
+  # avoid redundant data entry in yaml (bmx6_tun4 in CIDR vs ip4 and netmask4)
+  ip4 = IPAddress::IPv4.new node_cfg['bmx6_tun4']
+  node_cfg['ip4'] = ip4.address
+  node_cfg['netmask4'] = ip4.netmask
 
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
