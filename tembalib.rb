@@ -11,16 +11,16 @@ $image_base=''
 $platform=''
 $platform_type=''
 
-def generate_all()
+def read_config(myPath)
   # file that merges all yaml files
-  allfile = 'all.yml'
+  allfile = myPath + 'all.yml'
   if File.exists? allfile
     File.delete(allfile)
   end
   all_f = File.open(allfile, 'a')
 
   # look for all yml files
-  Dir['*.yml'].sort.each {|file|
+  Dir[myPath + '*.yml'].sort.each {|file|
     # read file -> src https://stackoverflow.com/a/131001
     temp = File.open(file, 'r').read
     all_f.write(temp)
@@ -28,7 +28,11 @@ def generate_all()
 
   all_f.close
 
-  nodes = YAML.load_file(allfile)
+  YAML.load_file(allfile)
+end
+
+def generate_all()
+  nodes = read_config('./')
 
   # src https://stackoverflow.com/a/32230037
   nodes['network'].each {|k, v|
