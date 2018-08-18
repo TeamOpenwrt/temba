@@ -48,44 +48,6 @@ border-packages: &border-packages
     birdc4
     luci-app-bird4
 
-# TODO check
-regular-x86_64: &regular-x86_64
-  <<: *globals
-  <<: *regular-packages
-  profile: Generic
-  platform: x86
-  platform_type: 64
-  bmx6_main_iface: 'mesh_12'
-  filebase: 'files/template__regular-x86_64'
-
-regular-ubnt-nano-m: &regular-ubnt-nano-m
-  <<: *globals
-  <<: *regular-packages
-  profile: ubnt-nano-m
-  platform: ar71xx
-  platform_type: generic
-  wifi_path: 'pci0000:00/0000:00:00.0'
-  filebase: 'files/template__regular-ubnt-nano-m'
-
-regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
-  <<: *globals
-  <<: *regular-packages
-  profile: ubnt-nano-m-xw
-  platform: ar71xx
-  platform_type: generic
-  filebase: 'files/template__regular-ubnt-nano-m-xw'
-
-
-regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
-  <<: *globals
-  <<: *regular-packages
-  profile: ubnt-loco-m-xw
-  platform: ar71xx
-  platform_type: generic
-  wifi_path: 'platform/ar934x_wmac'
-  filebase: 'files/template__regular-ubnt-loco-m-xw'
-  # wifi_txpower: 22 # its max value
-
 ubnt-nano-m-xw: &ubnt-nano-m-xw
   <<: *globals
   profile: ubnt-nano-m-xw
@@ -93,12 +55,51 @@ ubnt-nano-m-xw: &ubnt-nano-m-xw
   platform_type: generic
   wifi_path: 'platform/ar934x_wmac'
 
-border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
-  <<: *ubnt-nano-m-xw
-  <<: *border-packages
-  filebase: 'files/template__border-ubnt-nano-m-xw'
+devices:
 
-regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
-  <<: *ubnt-nano-m-xw
-  <<: *regular-packages
-  filebase: 'files/template__regular-ubnt-nano-m-xw'
+  # TODO check
+  regular-x86_64: &regular-x86_64
+    <<: *globals
+    <<: *regular-packages
+    profile: Generic
+    platform: x86
+    platform_type: 64
+    bmx6_main_iface: 'mesh_12'
+    filebase: 'files/template__regular-x86_64'
+
+  regular-ubnt-nano-m: &regular-ubnt-nano-m
+    <<: *globals
+    <<: *regular-packages
+    profile: ubnt-nano-m
+    platform: ar71xx
+    platform_type: generic
+    wifi_path: 'pci0000:00/0000:00:00.0'
+    filebase: 'files/template__regular-ubnt-nano-m'
+
+  regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
+    <<: *globals
+    <<: *regular-packages
+    profile: ubnt-nano-m-xw
+    platform: ar71xx
+    platform_type: generic
+    filebase: 'files/template__regular-ubnt-nano-m-xw'
+
+  regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
+    <<: *globals
+    <<: *regular-packages
+    profile: ubnt-loco-m-xw
+    platform: ar71xx
+    platform_type: generic
+    wifi_path: 'platform/ar934x_wmac'
+    filebase: 'files/template__regular-ubnt-loco-m-xw'
+    # wifi_txpower: 22 # its max value
+
+  border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
+    <<: *ubnt-nano-m-xw
+    <<: *border-packages
+    filebase: 'files/template__border-ubnt-nano-m-xw'
+
+  regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
+    <<: *ubnt-nano-m-xw
+    <<: *regular-packages
+    filebase: 'files/template__regular-ubnt-nano-m-xw'
