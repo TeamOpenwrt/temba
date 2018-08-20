@@ -162,8 +162,8 @@ def generate_firmware(node_cfg)
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
   # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
-  unless File.exists? 'bin'
-    Dir.mkdir 'bin'
+  unless File.exists? 'output'
+    Dir.mkdir 'output'
   end
 
   # notes in output file
@@ -178,15 +178,15 @@ def generate_firmware(node_cfg)
   if "#{$platform}-#{$platform_type}" == "x86-64"
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
-      "bin/#{node_name}#{notes}-combined-ext4.img.gz")
-    system("gunzip -f -k bin/#{node_name}-combined-ext4.img.gz")
+      "output/#{node_name}#{notes}-combined-ext4.img.gz")
+    system("gunzip -f -k output/#{node_name}-combined-ext4.img.gz")
   else
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
-      "bin/#{node_name}#{notes}-sysupgrade.bin")
+      "output/#{node_name}#{notes}-sysupgrade.bin")
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
-      "bin/#{node_name}#{notes}-factory.bin")
+      "output/#{node_name}#{notes}-factory.bin")
   end
 end
 
