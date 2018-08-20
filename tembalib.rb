@@ -43,19 +43,19 @@ def generate_all()
   }
 end
 
-def prepare_global_variables(nodes)
-  $lede_version = nodes['lede_version']
+def prepare_global_variables(node_cfg)
+  $lede_version = node_cfg['lede_version']
   check_variable('lede_version', $lede_version)
-  $platform = nodes['platform']
+  $platform = node_cfg['platform']
   check_variable('platform', $platform)
-  $platform_type = nodes['platform_type']
+  $platform_type = node_cfg['platform_type']
   check_variable('platform_type', $platform_type)
-  if nodes['image_base_type'] == 'lime-sdk'
+  if node_cfg['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
-    $image_base = nodes['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
-  elsif nodes['image_base_type'] == 'path'
-    $image_base = nodes['image_base']
-  elsif nodes['image_base_type'] == 'official'
+    $image_base = node_cfg['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
+  elsif node_cfg['image_base_type'] == 'path'
+    $image_base = node_cfg['image_base']
+  elsif node_cfg['image_base_type'] == 'official'
     $download_base = "https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
     $image_base = "lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
     prepare_official_ib()
