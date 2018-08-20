@@ -145,6 +145,8 @@ end
 
 def generate_firmware(node_cfg)
 
+  out_dir = myPath + 'output'
+
   # check variables TODO improve
   node_name = node_cfg['node_name']
   check_variable('node_name', node_name)
@@ -162,11 +164,11 @@ def generate_firmware(node_cfg)
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
   # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
-  unless File.exists? 'output'
-    Dir.mkdir 'output'
+  unless File.exists? out_dir
+    Dir.mkdir out_dir
   end
 
-  # notes in output file
+  # notes for the output file
   notes = node_cfg['notes']
   if(notes)
     notes = '__' + notes.gsub(' ', '-')
@@ -178,15 +180,15 @@ def generate_firmware(node_cfg)
   if "#{$platform}-#{$platform_type}" == "x86-64"
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
-      "output/#{node_name}#{notes}-combined-ext4.img.gz")
-    system("gunzip -f -k output/#{node_name}-combined-ext4.img.gz")
+      "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz")
+    system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
   else
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
-      "output/#{node_name}#{notes}-sysupgrade.bin")
+      "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin")
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
-      "output/#{node_name}#{notes}-factory.bin")
+      "#{out_dir}/#{node_name}#{notes}-factory.bin")
   end
 end
 
