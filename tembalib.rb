@@ -87,7 +87,16 @@ def generate_node(node_cfg)
   #raise node_cfg['wifi_ssid'].inspect
 
   # avoid redundant data entry in yaml (bmx6_tun4 in CIDR vs ip4 and netmask4)
-  ip4 = IPAddress::IPv4.new node_cfg['bmx6_tun4']
+  bmx6_tun4 = node_cfg['bmx6_tun4']
+  temp_ip, temp_netmask = bmx6_tun4.split("/")
+
+  # TODO Need newer version of gem -> src https://github.com/ipaddress-gem/ipaddress/blob/master/lib/ipaddress.rb#L157-L161
+  #unless IPAddress.valid_ipv4_subnet? bmx6_tun4
+  unless IPAddress.valid_ipv4?(temp_ip) && (!(temp_netmask =~ /\A([12]?\d|3[0-2])\z/).nil? || IPAddress.valid_ipv4_netmask?(temp_netmask))
+    raise 'invalid IP address'
+  end
+
+  ip4 = IPAddress::IPv4.new bmx6_tun4
   node_cfg['ip4'] = ip4.address
   node_cfg['netmask4'] = ip4.netmask
 
