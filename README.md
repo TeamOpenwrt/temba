@@ -74,7 +74,7 @@ To avoid redundancy of information we use different yaml files, you can test yam
 * `files` - Directory that contains all template config files
   - `template__` - Directories with their specific .ERB-templates. After processing all ERB-templates, it is integrated into the firmware files
   - `notemplate__` - Directories with inmutable configuration that is integrated into the firmware files. This could be transitory until some generalization and templating is available for the target.
-* `bin` - Output folder for firmware files
+* `output` - Output folder for files and directories generated with this tool
 * `Rakefile` - Central build file
 
 ## Requirements
