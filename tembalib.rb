@@ -6,6 +6,7 @@ require 'archive/zip'
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
 # initialize variables that are usually set in 10-globals.yml
+# TODO find alternative way for these global variables
 $lede_version=''
 $download_base=''
 $image_base=''
@@ -118,10 +119,10 @@ def prepare_directory(dir_name,filebase)
 
   temba_file = dir_name + "/etc/temba"
   # get latest commit -> src https://stackoverflow.com/questions/949314/how-to-retrieve-the-hash-for-the-current-commit-in-git
-  current_commit = `git log --pretty=format:'%h' -n 1`
+  current_commit = `git log --pretty=format:'%h' -n 1` || ''
   # get branch -> src https://stackoverflow.com/a/12142066
   # get rid of new line -> src https://stackoverflow.com/questions/7533318/get-rid-of-newline-from-shell-commands-in-ruby
-  current_branch = `git rev-parse --abbrev-ref HEAD`.chop
+  current_branch = `git rev-parse --abbrev-ref HEAD`.chop || ''
   temba_content = "temba " + current_commit + "\n"
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_content)
