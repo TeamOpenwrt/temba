@@ -1,0 +1,25 @@
+<%# be inspired by this form: https://github.com/jirutka/ldap-passwd-webui %>
+<%= form_for @node, url: create_node_url do |f| %>
+
+  <%# src https://stackoverflow.com/a/3873520 %>
+  <% if @node.errors.any? %>
+    Errors:
+    <ul>
+    <% @node.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+    <% end %>
+    </ul>
+
+  <% end %>
+
+  <%# options_for_select -> src https://stackoverflow.com/questions/19120706/rails-erb-form-helper-options-for-select-selected %>
+  <%= f.select :device, options_for_select(@node.vars['devices'].each_key), :prompt => 'select device' %>
+  <%= f.text_field :node_name, placeholder: 'node name' %>
+  <%# f.text_field :wifi_channel, placeholder: 'wifi channel' %>
+  <%# TODO: yaml variable valid channels or target channels ? %>
+  <%= f.select :wifi_channel, options_for_select([121, 132]), :prompt => 'wifi channel' %>
+  <%= f.text_field :bmx6_tun4, placeholder: 'IPv4' %>
+  <%= f.submit 'Build' %>
+  <br>
+  <%= notice %>
+<% end %>
