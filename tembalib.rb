@@ -31,19 +31,19 @@ def read_config(myPath)
   YAML.load_file(allfile)
 end
 
-def generate_all()
-  nodes = read_config('./')
+def generate_all(myPath)
+  nodes = read_config(myPath)
 
   # src https://stackoverflow.com/a/32230037
   nodes['network'].each {|k, v|
     # convert key of the entire subarray as value node_name
     v['node_name'] = k
-    prepare_global_variables(v)
-    generate_node(v)
+    prepare_global_variables(v, myPath)
+    generate_node(v, myPath)
   }
 end
 
-def prepare_global_variables(node_cfg)
+def prepare_global_variables(node_cfg, myPath)
   $lede_version = node_cfg['lede_version']
   check_variable('lede_version', $lede_version)
   $platform = node_cfg['platform']
@@ -52,12 +52,12 @@ def prepare_global_variables(node_cfg)
   check_variable('platform_type', $platform_type)
   if node_cfg['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
-    $image_base = node_cfg['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
+    $image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
   elsif node_cfg['image_base_type'] == 'path'
-    $image_base = node_cfg['image_base']
+    $image_base = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
     $download_base = "https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
-    $image_base = "lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
+    $image_base = myPath + "lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
     prepare_official_ib()
   end
   check_variable('image_base', $image_base)
@@ -69,22 +69,21 @@ def check_variable(varname, var)
   end
 end
 
-def generate_node(node_cfg)
+def generate_node(node_cfg, myPath)
 
   node_name = node_cfg['node_name']
 
   if $debug_erb
-    dir_name = "./debug-" + node_name
+    dir_name = myPath + "debug-" + node_name
   else
     dir_name = "#{$image_base}/files_generated"
   end
 
-  prepare_directory(dir_name, node_cfg['filebase'] || 'files')
+  prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files')
 
   # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
   node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
-  #raise node_cfg['wifi_ssid'].inspect
 
   # avoid redundant data entry in yaml (bmx6_tun4 in CIDR vs ip4 and netmask4)
   bmx6_tun4 = node_cfg['bmx6_tun4']
@@ -103,7 +102,7 @@ def generate_node(node_cfg)
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
 
-  generate_firmware(node_cfg)
+  return generate_firmware(node_cfg, myPath)
 
 end
 
@@ -143,7 +142,7 @@ def process_erb(node,erb,base)
   FileUtils.rm erb
 end
 
-def generate_firmware(node_cfg)
+def generate_firmware(node_cfg, myPath)
 
   out_dir = myPath + 'output'
 
