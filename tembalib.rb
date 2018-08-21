@@ -1,6 +1,7 @@
 require 'erb'
 require 'yaml'
 require 'ipaddress'
+require 'archive/zip'
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
@@ -177,17 +178,30 @@ def generate_firmware(node_cfg, myPath)
 
   # different platforms different names in output file
   if "#{$platform}-#{$platform_type}" == "x86-64"
+    out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
-      "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz")
-    system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
+      out_path)
+
+    # this requires so much space ...
+    #system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
+    return out_path
   else
+    out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
+                'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
-      "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin")
+      out_path['sysupgrade'])
     FileUtils.mv(
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
-      "#{out_dir}/#{node_name}#{notes}-factory.bin")
+      out_path['factory'])
+
+    # compact both files in a zip
+    zipfile = "#{out_dir}/#{node_name}#{notes}.zip"
+    Archive::Zip.archive(zipfile, out_path['sysupgrade'])
+    Archive::Zip.archive(zipfile, out_path['factory'])
+
+    return zipfile
   end
 end
 
