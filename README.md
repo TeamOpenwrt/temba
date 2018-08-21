@@ -83,6 +83,11 @@ assuming debian 9
 
     sudo gem install bundle
 
+ruby on rails
+
+    sudo apt install ruby-dev
+    sudo gem install rails
+
 install dependencies
 
     bundle install
