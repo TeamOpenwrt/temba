@@ -85,6 +85,20 @@ assuming debian 9
 
 ruby on rails
 
+nokogiri dependencies
+
+    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+
+install nokogiri as a gem (because bundler has problems)
+
+    gem install nokogiri
+
+nodejs
+
+    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+
+the rest
+
     sudo apt install ruby-dev
     sudo gem install rails
 
