@@ -1,3 +1,7 @@
+# references / thanks!
+# - https://blog.cloud66.com/supercharge-rails-with-vuejs-and-actioncables/
+# - https://stackoverflow.com/questions/46683252/actioncable-display-correct-number-of-connected-users-problems-multiple-tabs
+
 class OnlineChannel < ApplicationCable::Channel
   CHANNEL_NAME = 'online_channel'
 
