@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get '/', to: 'nodes#new', as: 'new_node'
   post '/', to: 'nodes#create', as: 'create_node'
 
+  get '/download', to: 'nodes#download'
+
 end
