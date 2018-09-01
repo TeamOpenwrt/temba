@@ -15,10 +15,9 @@
       // Called when there's incoming data on the websocket for this channel
       val = data.counter - 1 // just count other users
       //update "users_counter"-element in view:
-      document.getElementById('users').textContent = val
+      document.getElementById('online_users').textContent = val
 
-      console.log('new event')
-      return App.vue.receiveMessage(data)
+      //console.log('new event')
     },
     update_users_counter() {
       this.perform('update_users_counter')
