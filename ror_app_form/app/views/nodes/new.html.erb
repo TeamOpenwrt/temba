@@ -15,7 +15,8 @@
   <% end %>
 
   <%# options_for_select -> src https://stackoverflow.com/questions/19120706/rails-erb-form-helper-options-for-select-selected %>
-  <%= f.select :device, options_for_select(@node.vars['devices'].each_key), :prompt => 'select device' %>
+  <%# this form is not prepared for border templates -> src https://stackoverflow.com/a/7085390 %>
+  <%= f.select :device, options_for_select(@node.vars['devices'].reject{|k| k=~ /border/}.each_key), :prompt => 'select device' %>
   <%= f.text_field :node_name, placeholder: 'node name' %>
   <%# f.text_field :wifi_channel, placeholder: 'wifi channel' %>
   <%# TODO: yaml variable valid channels or target channels ? %>
@@ -23,5 +24,9 @@
   <%= f.text_field :bmx6_tun4, placeholder: 'IPv4' %>
   <%= f.submit 'Build' %>
   <br>
-  <%= notice %>
+  <div class="loader"></div>
+  <%# https://stackoverflow.com/questions/42535407/render-html-into-rails-flash-message %>
+  <%# https://stackoverflow.com/questions/24334755/form-undefined-method-html-safe-for-nilnilclass %>
+  <p id="notice"><%= notice %></p>
+
 <% end %>

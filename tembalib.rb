@@ -13,6 +13,11 @@ $image_base=''
 $platform=''
 $platform_type=''
 
+# src https://stackoverflow.com/a/27127342
+def gen_timestamp()
+  return Time.new.strftime ("%Y-%m-%d-%H-%M-%L")
+end
+
 def read_config(myPath)
   # file that merges all yaml files
   allfile = myPath + 'all.yml'
@@ -33,6 +38,7 @@ def read_config(myPath)
   YAML.load_file(allfile)
 end
 
+# generate all nodes defined in yaml configuration
 def generate_all(myPath)
   nodes = read_config(myPath)
 
@@ -111,6 +117,7 @@ end
 def prepare_directory(dir_name,filebase)
   # Clean up
   FileUtils.rm_r dir_name if File.exists? dir_name
+  FileUtils.rm_r dir_name + '-template' if File.exists? dir_name + '-template'
   
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
   system("cp -rpL " + filebase + " " + dir_name)
@@ -127,6 +134,7 @@ def prepare_directory(dir_name,filebase)
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_content)
 
+  FileUtils.cp_r dir_name, dir_name + '-template'
 end
 
 def locate_erb(dir_name, node_cfg)
@@ -147,7 +155,12 @@ end
 
 def generate_firmware(node_cfg, myPath)
 
-  out_dir = myPath + 'output'
+  out_dir_base = myPath + 'output'
+
+  # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
+  unless File.exists? out_dir_base
+    Dir.mkdir out_dir_base
+  end
 
   # check variables TODO improve
   node_name = node_cfg['node_name']
@@ -165,10 +178,6 @@ def generate_firmware(node_cfg, myPath)
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
-  # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
-  unless File.exists? out_dir
-    Dir.mkdir out_dir
-  end
 
   # notes for the output file
   notes = node_cfg['notes']
@@ -178,6 +187,17 @@ def generate_firmware(node_cfg, myPath)
     notes = ''
   end
 
+  if node_cfg.key? 'timestamp'
+    timestamp = node_cfg['timestamp']
+  else
+    timestamp = gen_timestamp()
+  end
+
+  out_dir = out_dir_base + '/' + node_name + '_' + timestamp
+  Dir.mkdir out_dir
+
+  zipfile = "#{out_dir_base}/#{node_name}_#{timestamp}.zip"
+
   # different platforms different names in output file
   if "#{$platform}-#{$platform_type}" == "x86-64"
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
@@ -185,9 +205,10 @@ def generate_firmware(node_cfg, myPath)
       "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
       out_path)
 
-    # this requires so much space ...
+    # this requires so much space and is slow
     #system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
-    return out_path
+
+    Archive::Zip.archive(zipfile, out_path)
   else
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
@@ -199,12 +220,33 @@ def generate_firmware(node_cfg, myPath)
       out_path['factory'])
 
     # compact both files in a zip
-    zipfile = "#{out_dir}/#{node_name}#{notes}.zip"
     Archive::Zip.archive(zipfile, out_path['sysupgrade'])
     Archive::Zip.archive(zipfile, out_path['factory'])
-
-    return zipfile
   end
+
+  # add README to explain the contents of the zipfile)
+  File.write( out_dir + '/README.txt', 'Contained files:
+
+- *combined-ext4.img.gz: special image in case you built x86_64 architecture. You have to uncompress it (warning: 7 MB => 200 MB)
+- *sysupgrade.bin: use it if you are comming from openwrt firmware
+- *factory.bin: use it if you are comming from stock/OEM/factory firmware
+- variables.yml: the variables that defined the firmware you got
+- etc: /etc directory that is inside this firmware
+- etc-template: /etc directory without applying variables.yml (in case you want to know what is exactly templating)
+')
+  Archive::Zip.archive(zipfile, out_dir + '/README.txt')
+  # add etc
+  FileUtils.cp_r "#{$image_base}/files_generated/etc", out_dir
+  Archive::Zip.archive(zipfile, out_dir + '/etc')
+  # add etc-template
+  FileUtils.cp_r "#{$image_base}/files_generated-template/etc", out_dir + '/etc-template'
+  Archive::Zip.archive(zipfile, out_dir + '/etc-template')
+  # add variables.yml
+  File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
+  Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
+
+  puts("\ntemba finished succesfully!")
+  return zipfile
 end
 
 def prepare_official_ib()

@@ -14,4 +14,24 @@
  *= require_self
  */
 
-input, textarea { display: block; }
+/* center form -> src https://stackoverflow.com/questions/8097744/how-do-i-center-this-form-in-css */
+h1 {
+  text-align: center;
+}
+
+form {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.loader {
+  /* center div -> http://www.tipue.com/blog/center-a-div/ */
+  margin: 0 auto;
+}
+
+input {
+  display: block;
+  /* https://www.w3schools.com/css/css_form.asp */
+  margin: 14px 0;
+}
