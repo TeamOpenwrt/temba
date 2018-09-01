@@ -15,7 +15,7 @@
  */
 
 /* center form -> src https://stackoverflow.com/questions/8097744/how-do-i-center-this-form-in-css */
-h1 {
+h1, .footer {
   text-align: center;
 }
 
