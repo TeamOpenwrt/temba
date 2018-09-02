@@ -18,7 +18,17 @@ def gen_timestamp()
   return Time.new.strftime ("%Y-%m-%d-%H-%M-%L")
 end
 
-def read_config(myPath)
+def get_temba_version()
+  # get latest commit -> src https://stackoverflow.com/questions/949314/how-to-retrieve-the-hash-for-the-current-commit-in-git
+  current_commit = `git log --pretty=format:'%h' -n 1` || ''
+  # get branch -> src https://stackoverflow.com/a/12142066
+  # get rid of new line -> src https://stackoverflow.com/questions/7533318/get-rid-of-newline-from-shell-commands-in-ruby
+  #current_branch = `git rev-parse --abbrev-ref HEAD`.chop || ''
+  temba_version = "temba " + current_commit + "\n"
+  return temba_version
+end
+
+def read_vars(myPath)
   # file that merges all yaml files
   allfile = myPath + 'all.yml'
   if File.exists? allfile
@@ -34,13 +44,14 @@ def read_config(myPath)
   }
 
   all_f.close
-
-  YAML.load_file(allfile)
+  nodes = YAML.load_file(allfile)
+  nodes['temba_version'] = get_temba_version()
+  return nodes
 end
 
 # generate all nodes defined in yaml configuration
 def generate_all(myPath)
-  nodes = read_config(myPath)
+  nodes = read_vars(myPath)
 
   # src https://stackoverflow.com/a/32230037
   nodes['network'].each {|k, v|
@@ -125,14 +136,11 @@ def prepare_directory(dir_name,filebase)
   # create dinamically a file to identify temba firmware with specific branch and commit
 
   temba_file = dir_name + "/etc/temba"
-  # get latest commit -> src https://stackoverflow.com/questions/949314/how-to-retrieve-the-hash-for-the-current-commit-in-git
-  current_commit = `git log --pretty=format:'%h' -n 1` || ''
-  # get branch -> src https://stackoverflow.com/a/12142066
-  # get rid of new line -> src https://stackoverflow.com/questions/7533318/get-rid-of-newline-from-shell-commands-in-ruby
-  current_branch = `git rev-parse --abbrev-ref HEAD`.chop || ''
-  temba_content = "temba " + current_commit + "\n"
+
+  temba_version = get_temba_version()
+
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
-  File.write(temba_file, temba_content)
+  File.write(temba_file, temba_version)
 
   FileUtils.cp_r dir_name, dir_name + '-template'
 end
