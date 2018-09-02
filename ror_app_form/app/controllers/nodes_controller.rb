@@ -3,7 +3,7 @@ load '../tembalib.rb'
 class NodesController < ApplicationController
   def new
     @node = Node.new
-    @node.vars = read_config('../') # load config for form
+    @node.vars = read_vars('../') # load config for form
   end
 
   # thanks https://stackoverflow.com/questions/22002020/how-to-download-file-with-send-file
