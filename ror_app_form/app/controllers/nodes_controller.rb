@@ -9,18 +9,16 @@ class NodesController < ApplicationController
   # thanks https://stackoverflow.com/questions/22002020/how-to-download-file-with-send-file
   def download
     # are you blacklisting? -> https://guides.rubyonrails.org/security.html#file-uploads
-    #@download_params = params[:file, :blob]
     @download_params = params.require(:file)
     file_name = params['file'].split('/').last
-    blob = params['blob']
+    download = params['download']
     file_loc = "#{Rails.root}/../output/#{file_name}"
-    #raise blob.inspect
     if File.exists? file_loc
-      if blob == 'true'
+      if download == 'true'
         return send_file file_loc
       end
       # src https://guides.rubyonrails.org/layouts_and_rendering.html#rendering-text
-      return render plain: "/download?file=#{file_name}&blob=true"
+      return render plain: "/download?file=#{file_name}&download=true"
     else
       return render plain: 'not available'
     end
