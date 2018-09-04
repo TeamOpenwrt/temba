@@ -27,7 +27,7 @@ class NodesController < ApplicationController
 
   def create
     @node = Node.new node_params
-    @node.vars = read_config('../') # load config for the procedure of building firmware
+    @node.vars = read_vars('../') # load config for the procedure of building firmware
 
     if @node.valid?
 
