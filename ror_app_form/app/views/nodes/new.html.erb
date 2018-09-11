@@ -16,12 +16,16 @@
 
   <%# options_for_select -> src https://stackoverflow.com/questions/19120706/rails-erb-form-helper-options-for-select-selected %>
   <%# this form is not prepared for border templates -> src https://stackoverflow.com/a/7085390 %>
-  <%= f.select :device, options_for_select(@node.vars['devices'].reject{|k| k=~ /border/}.each_key), :prompt => 'select device' %>
+  <%# retain select values after error:
+    https://stackoverflow.com/questions/26872093/rails-4-retaining-form-values-on-refresh
+    https://stackoverflow.com/questions/5052889/ruby-on-rails-f-select-options-with-custom-attributes
+  %>
+  <%= f.select :device, options_for_select(@node.vars['devices'].reject{|k| k=~ /border/}.each_key, f.object.device), :prompt => 'select device' %>
   <%= f.text_field :node_name, placeholder: 'node name' %>
   <%# f.text_field :wifi_channel, placeholder: 'wifi channel' %>
   <%# TODO: yaml variable valid channels or target channels ? %>
   <%# f.select :wifi_channel, options_for_select([120, 132]), :prompt => 'wifi channel' %>
-  <%= f.select :wifi_channel, options_for_select([36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 149, 153, 157, 161, 165]), :prompt => 'wifi channel' %>
+  <%= f.select :wifi_channel, options_for_select([36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 149, 153, 157, 161, 165], f.object.wifi_channel), :prompt => 'wifi channel' %>
 
   <%= f.text_field :bmx6_tun4, placeholder: 'IPv4' %>
   <%= f.submit 'Build' %>
