@@ -163,11 +163,13 @@ end
 
 def generate_firmware(node_cfg, myPath)
 
-  out_dir_base = myPath + 'output'
+  # everything goes to tmp. when zip file is finished it goes to parent directory
+  out_dir_base = myPath + 'output/tmp'
 
   # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
   unless File.exists? out_dir_base
-    Dir.mkdir out_dir_base
+    # src https://stackoverflow.com/questions/5020710/copy-a-file-creating-directories-as-necessary-in-ruby
+    FileUtils.mkdir_p out_dir_base
   end
 
   # check variables TODO improve
@@ -252,6 +254,9 @@ def generate_firmware(node_cfg, myPath)
   # add variables.yml
   File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
   Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
+
+  # when the file is ready, put it in the place to be downloaded
+  FileUtils.mv(zipfile, "#{out_dir_base}/..")
 
   puts("\ntemba finished succesfully!")
   return zipfile
