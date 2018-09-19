@@ -1,7 +1,7 @@
-require 'erb'
-require 'yaml'
-require 'ipaddress'
-require 'archive/zip'
+require 'erb' # config templates
+require 'yaml' # DB in a file
+require 'ipaddress' # ip validation
+require 'archive/zip' # zip stuff
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
