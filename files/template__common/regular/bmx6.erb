@@ -20,7 +20,7 @@ config dev 'mesh_1'
   option dev '<%= @node['bmx6_main_iface'] %>'
   option linklayer '2'
 
-<% if @node['bmx6_over_eth0'] == true -%>
+<% if @node['bmx6_over_br-lan'] == true -%>
 config dev 'mesh_2'
   option dev 'br-lan'
   option linklayer '1'
