@@ -54,15 +54,3 @@ config interface 'wif0'
 config interface 'mesh'
   option ifname 'wif0_t'
   option auto '1'
-
-<% if @node['bmx6_over_eth0'] == true -%>
-config device 'lan_t'
-  option type '8021q'
-  option name 'lan_t'
-  option ifname 'br-lan'
-  option vid '12'
-
-config interface 'lan_t_ad'
-  option ifname 'lan_t'
-  option auto '1'
-<% end -%>

@@ -22,7 +22,7 @@ config dev 'mesh_1'
 
 <% if @node['bmx6_over_eth0'] == true -%>
 config dev 'mesh_2'
-  option dev 'cif0_t'
+  option dev 'br-lan'
   option linklayer '1'
 <% end -%>
 
