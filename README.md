@@ -116,6 +116,18 @@ install dependencies
     - `rake` if you want to generate firmwares
     - `rake debug` if you want to debug only templates
 
+### 20-devices.yml
+
+in root of buildroot file `.config` gives you details of variables used in yaml file
+
+| variable in .config | variable in 20-devices.yml |
+| ------------------- | -------------------------- |
+| CONFIG_TARGET_PROFILE | profile |
+| CONFIG_TARGET_BOARD | platform |
+| CONFIG_TARGET_SUBTARGET | platform_type |
+
+alternatively use `cooker` as described in [lime-sdk](https://gitlab.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md#qa)
+
 ## Run x86_64 in qemu
 
     qemu-system-x86_64 -M q35 -drive file=bin/hostname-x86_64-combined-ext4.img,id=d0,if=none,bus=0,unit=0 -device ide-hd,drive=d0,bus=ide.0
