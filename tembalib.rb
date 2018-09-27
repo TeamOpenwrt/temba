@@ -64,11 +64,11 @@ end
 
 def prepare_global_variables(node_cfg, myPath)
   $lede_version = node_cfg['lede_version']
-  check_variable('lede_version', $lede_version)
+  check_var('lede_version', $lede_version)
   $platform = node_cfg['platform']
-  check_variable('platform', $platform)
+  check_var('platform', $platform)
   $platform_type = node_cfg['platform_type']
-  check_variable('platform_type', $platform_type)
+  check_var('platform_type', $platform_type)
   if node_cfg['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
     $image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
@@ -79,10 +79,11 @@ def prepare_global_variables(node_cfg, myPath)
     $image_base = myPath + "lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
     prepare_official_ib()
   end
-  check_variable('image_base', $image_base)
+  check_var('image_base', $image_base)
 end
 
-def check_variable(varname, var)
+def check_var(varname, var)
+  #unless defined? varname # TODO test this
   if var == '' || var.nil?
     raise varname + ' variable is empty'
   end
@@ -100,23 +101,27 @@ def generate_node(node_cfg, myPath)
 
   prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files')
 
-  # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
+    # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
-  node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
+  unless wifi_ssid_base.nil?
+    node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
+  end
 
   # avoid redundant data entry in yaml (bmx6_tun4 in CIDR vs ip4 and netmask4)
   bmx6_tun4 = node_cfg['bmx6_tun4']
-  temp_ip, temp_netmask = bmx6_tun4.split("/")
+  unless bmx6_tun4.nil?
+    temp_ip, temp_netmask = bmx6_tun4.split("/")
 
-  # TODO Need newer version of gem -> src https://github.com/ipaddress-gem/ipaddress/blob/master/lib/ipaddress.rb#L157-L161
-  #unless IPAddress.valid_ipv4_subnet? bmx6_tun4
-  unless IPAddress.valid_ipv4?(temp_ip) && (!(temp_netmask =~ /\A([12]?\d|3[0-2])\z/).nil? || IPAddress.valid_ipv4_netmask?(temp_netmask))
-    raise 'invalid IP address'
+    # TODO Need newer version of gem -> src https://github.com/ipaddress-gem/ipaddress/blob/master/lib/ipaddress.rb#L157-L161
+    #unless IPAddress.valid_ipv4_subnet? bmx6_tun4
+    unless IPAddress.valid_ipv4?(temp_ip) && (!(temp_netmask =~ /\A([12]?\d|3[0-2])\z/).nil? || IPAddress.valid_ipv4_netmask?(temp_netmask))
+      raise 'invalid IP address'
+    end
+
+    ip4 = IPAddress::IPv4.new bmx6_tun4
+    node_cfg['ip4'] = ip4.address
+    node_cfg['netmask4'] = ip4.netmask
   end
-
-  ip4 = IPAddress::IPv4.new bmx6_tun4
-  node_cfg['ip4'] = ip4.address
-  node_cfg['netmask4'] = ip4.netmask
 
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
@@ -174,11 +179,11 @@ def generate_firmware(node_cfg, myPath)
 
   # check variables TODO improve
   node_name = node_cfg['node_name']
-  check_variable('node_name', node_name)
+  check_var('node_name', node_name)
   profile = node_cfg['profile']
-  check_variable('profile', profile)
+  check_var('profile', profile)
   packages = node_cfg['packages']
-  check_variable('packages', packages)
+  check_var('packages', packages)
 
   if $debug_erb
     print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
