@@ -209,6 +209,9 @@ def generate_firmware(node_cfg, myPath)
     timestamp = gen_timestamp()
   end
 
+  # include it in yaml variables
+  node_cfg['timestamp'] = timestamp
+
   out_dir = out_dir_base + '/' + node_name + '_' + timestamp
   Dir.mkdir out_dir
 
