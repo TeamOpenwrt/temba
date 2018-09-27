@@ -101,7 +101,7 @@ def generate_node(node_cfg, myPath)
 
   prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files')
 
-    # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
+  # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
   unless wifi_ssid_base.nil?
     node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
@@ -131,16 +131,17 @@ def generate_node(node_cfg, myPath)
 end
 
 def prepare_directory(dir_name,filebase)
+
   # Clean up
   FileUtils.rm_r dir_name if File.exists? dir_name
   FileUtils.rm_r dir_name + '-template' if File.exists? dir_name + '-template'
   
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
-  system("cp -rpL " + filebase + " " + dir_name)
+  system('cp -rpL ' + filebase + ' ' + dir_name)
 
   # create dinamically a file to identify temba firmware with specific branch and commit
 
-  temba_file = dir_name + "/etc/temba"
+  temba_file = dir_name + '/etc/temba'
 
   temba_version = get_temba_version()
 
