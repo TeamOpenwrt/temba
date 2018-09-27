@@ -10,7 +10,7 @@ config zone
   option input 'ACCEPT'
   option output 'ACCEPT'
   option forward 'ACCEPT'
-  option network 'lan wif0 cif0_m'
+  option network 'lan wif0'
   option mtu_fix '1'
 
 config zone
