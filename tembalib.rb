@@ -124,7 +124,7 @@ def generate_node(node_cfg, myPath)
   end
 
   #Evaluate templates
-  locate_erb(dir_name, node_cfg)
+  locate_erb(dir_name + '/etc', node_cfg)
 
   return generate_firmware(node_cfg, myPath)
 
@@ -147,7 +147,8 @@ def prepare_directory(dir_name,filebase)
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_version)
 
-  FileUtils.cp_r dir_name, dir_name + '-template'
+  # duplicate directory in order to maintain a copy of erb variables
+  FileUtils.cp_r dir_name + '/etc', dir_name + '/etc-template'
 end
 
 def locate_erb(dir_name, node_cfg)
@@ -254,7 +255,7 @@ def generate_firmware(node_cfg, myPath)
   FileUtils.cp_r "#{$image_base}/files_generated/etc", out_dir
   Archive::Zip.archive(zipfile, out_dir + '/etc')
   # add etc-template
-  FileUtils.cp_r "#{$image_base}/files_generated-template/etc", out_dir + '/etc-template'
+  FileUtils.cp_r "#{$image_base}/files_generated/etc-template", out_dir + '/etc-template'
   Archive::Zip.archive(zipfile, out_dir + '/etc-template')
   # add variables.yml
   File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
