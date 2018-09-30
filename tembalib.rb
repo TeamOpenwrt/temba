@@ -163,7 +163,8 @@ end
 def process_erb(node,erb,base)
   @node = node
   # enable trim mode -> src https://stackoverflow.com/questions/4632879/erb-template-removing-the-trailing-line
-  template = ERB.new(File.new(erb).read, nil, '-')
+  safe_level = nil # TODO this erb operation might be insecure (specially for ror app?)  SecurityError: Insecure operation - eval
+  template = ERB.new(File.new(erb).read, safe_level, '-')
   # rails require binding context -> src https://blog.revathskumar.com/2014/10/ruby-rendering-erb-template.html
   File.open(base, 'w') { |file| file.write(template.result(binding)) }
   FileUtils.rm erb
