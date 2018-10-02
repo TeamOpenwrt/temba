@@ -165,8 +165,13 @@ def process_erb(node,erb,base)
   # enable trim mode -> src https://stackoverflow.com/questions/4632879/erb-template-removing-the-trailing-line
   safe_level = nil # TODO this erb operation might be insecure (specially for ror app?)  SecurityError: Insecure operation - eval
   template = ERB.new(File.new(erb).read, safe_level, '-')
+  # catch error -> src https://medium.com/@farsi_mehdi/error-handling-in-ruby-part-i-557898185e2f
+  begin
   # rails require binding context -> src https://blog.revathskumar.com/2014/10/ruby-rendering-erb-template.html
-  File.open(base, 'w') { |file| file.write(template.result(binding)) }
+    File.open(base, 'w') { |file| file.write(template.result(binding)) }
+  rescue KeyError => e
+    puts "Template error in file #{File.basename(erb)} of #{node['filebase']}: contains undefined variables. #{e.message}"
+  end
   FileUtils.rm erb
 end
 
