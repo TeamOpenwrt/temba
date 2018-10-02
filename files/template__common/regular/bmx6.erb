@@ -17,10 +17,10 @@ config ipVersion 'ipVersion'
   option ipVersion '6'
 
 config dev 'mesh_1'
-  option dev '<%= @node['bmx6_main_iface'] %>'
+  option dev '<%= @node.fetch('bmx6_main_iface') %>'
   option linklayer '2'
 
-<% if @node['bmx6_over_br-lan'] == true -%>
+<% if @node.fetch('bmx6_over_br-lan') == true -%>
 config dev 'mesh_2'
   option dev 'br-lan'
   option linklayer '1'
@@ -28,7 +28,7 @@ config dev 'mesh_2'
 
 config tunDev 'main'
   option tunDev 'main'
-  option tun4Address '<%= @node['bmx6_tun4'] %>'
+  option tun4Address '<%= @node.fetch('bmx6_tun4') %>'
 
 # I demand
 config tunOut 'inet6_zone'

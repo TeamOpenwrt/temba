@@ -10,9 +10,9 @@ config interface 'lan'
   option type 'bridge'
   option ifname 'eth0'
   option proto 'static'
-  option ipaddr '<%= @node['ip4'] %>'
-  option netmask '<%= @node['netmask4'] %>'
-  option dns '<%= @node['dns_server'] %>'
+  option ipaddr '<%= @node.fetch('ip4') %>'
+  option netmask '<%= @node.fetch('netmask4') %>'
+  option dns '<%= @node.fetch('dns_server') %>'
   option ip6assign '64'
 
 config interface 'wan'
@@ -33,7 +33,7 @@ config device 'wif0_t'
 # configurable MTU
 config interface 'wif0'
   option proto 'none'
-  option mtu '<%= @node['wifi_mtu'] %>'
+  option mtu '<%= @node.fetch('wifi_mtu') %>'
 
 # trick to activate wif0_t
 config interface 'mesh'

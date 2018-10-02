@@ -1,6 +1,6 @@
 filter ebgp_in {                           
 
-  krt_prefsrc = <%= @node['ip4'] %>;
+  krt_prefsrc = <%= @node.fetch('ip4') %>;
 
   if match_guifi_prefix() then accept;
   else reject;

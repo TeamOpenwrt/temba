@@ -1,6 +1,6 @@
 filter ebgp_in {                           
 
-  krt_prefsrc = <%= @node['bgp_local_addr'] %>;
+  krt_prefsrc = <%= @node.fetch('bgp_local_addr') %>;
 
   if match_guifi_prefix() then accept;
   else reject;
