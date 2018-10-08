@@ -1,5 +1,7 @@
 # Temba
 
+One liner definition: erb templates on config files per device (some files are shared) evaluated from inherited yaml files with two interfaces: rake and rubyonrails form.
+
 Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network.
 
 At the moment this is serving postqMp community with bmx6 (note that VLAN 12 on ethernet is untagged)
