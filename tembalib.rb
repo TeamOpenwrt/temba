@@ -19,14 +19,14 @@ def gen_timestamp()
   return Time.new.strftime ("%Y-%m-%d-%H-%M-%L")
 end
 
-def get_temba_version()
+def get_current_temba_commit()
   # get latest commit -> src https://stackoverflow.com/questions/949314/how-to-retrieve-the-hash-for-the-current-commit-in-git
   current_commit = `git log --pretty=format:'%h' -n 1` || ''
   # get branch -> src https://stackoverflow.com/a/12142066
   # get rid of new line -> src https://stackoverflow.com/questions/7533318/get-rid-of-newline-from-shell-commands-in-ruby
   #current_branch = `git rev-parse --abbrev-ref HEAD`.chop || ''
-  temba_version = "temba " + current_commit + "\n"
-  return temba_version
+
+  return current_commit
 end
 
 def read_vars(myPath)
@@ -46,7 +46,6 @@ def read_vars(myPath)
 
   all_f.close
   nodes = YAML.load_file(allfile)
-  nodes['temba_version'] = get_temba_version()
   return nodes
 end
 
@@ -100,7 +99,7 @@ def generate_node(node_cfg, myPath)
     dir_name = "#{$image_base}/files_generated"
   end
 
-  prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files')
+  prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files', node_cfg)
 
   # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
@@ -131,7 +130,7 @@ def generate_node(node_cfg, myPath)
 
 end
 
-def prepare_directory(dir_name,filebase)
+def prepare_directory(dir_name,filebase, node_cfg)
 
   # Clean up
   FileUtils.rm_r dir_name if File.exists? dir_name
@@ -144,9 +143,23 @@ def prepare_directory(dir_name,filebase)
 
   temba_file = dir_name + '/etc/temba'
 
-  temba_version = get_temba_version()
+  temba_version = "temba " + get_current_temba_commit() + "\n"
 
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
+  File.write(temba_file, temba_version)
+
+  if node_cfg.key? 'timestamp'
+    timestamp = node_cfg['timestamp']
+  else
+    timestamp = gen_timestamp()
+  end
+
+  # include variables in the yaml
+  node_cfg['timestamp'] = timestamp
+  node_cfg['temba_commit'] = get_current_temba_commit()
+
+  File.write( dir_name + '/etc/temba_vars.yml', node_cfg.to_yaml)
+
   File.write(temba_file, temba_version)
 
   # duplicate directory in order to maintain a copy of erb variables
@@ -202,7 +215,6 @@ def generate_firmware(node_cfg, myPath)
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
 
-
   # notes for the output file
   notes = node_cfg['notes']
   if(notes)
@@ -211,14 +223,7 @@ def generate_firmware(node_cfg, myPath)
     notes = ''
   end
 
-  if node_cfg.key? 'timestamp'
-    timestamp = node_cfg['timestamp']
-  else
-    timestamp = gen_timestamp()
-  end
-
-  # include it in yaml variables
-  node_cfg['timestamp'] = timestamp
+  timestamp = node_cfg['timestamp']
 
   out_dir = out_dir_base + '/' + node_name + '_' + timestamp
   Dir.mkdir out_dir
