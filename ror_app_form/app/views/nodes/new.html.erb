@@ -20,7 +20,7 @@
     https://stackoverflow.com/questions/26872093/rails-4-retaining-form-values-on-refresh
     https://stackoverflow.com/questions/5052889/ruby-on-rails-f-select-options-with-custom-attributes
   %>
-  <%= f.select :device, options_for_select(@node.vars['devices'].reject{|k| k=~ /border/}.each_key, f.object.device), :prompt => 'select device' %>
+  <%= f.select :device, options_for_select(@node.vars['devices'].select{|k| k=~ /regular/}.each_key, f.object.device), :prompt => 'select device' %>
   <%= f.text_field :node_name, placeholder: 'node name' %>
   <%# f.text_field :wifi_channel, placeholder: 'wifi channel' %>
   <%# TODO: yaml variable valid channels or target channels ? %>
