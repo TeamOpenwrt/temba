@@ -4,6 +4,7 @@ class NodesController < ApplicationController
   def new
     @node = Node.new
     @node.vars = read_vars('../') # load config for form
+    @node.vars['temba_commit'] = get_current_temba_commit()
   end
 
   # thanks https://stackoverflow.com/questions/22002020/how-to-download-file-with-send-file
@@ -28,6 +29,7 @@ class NodesController < ApplicationController
   def create
     @node = Node.new node_params
     @node.vars = read_vars('../') # load config for the procedure of building firmware
+    @node.vars['temba_commit'] = get_current_temba_commit()
 
     if @node.valid?
 
