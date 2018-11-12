@@ -1,4 +1,4 @@
-require 'pry' # for debugging use a line as `binding pry` src https://stackoverflow.com/questions/1144560/how-do-i-drop-to-the-irb-prompt-from-a-running-script
+#require 'pry' # for debugging use a line as `binding pry` src https://stackoverflow.com/questions/1144560/how-do-i-drop-to-the-irb-prompt-from-a-running-script
 require 'erb' # config templates
 require 'yaml' # DB in a file
 require 'ipaddress' # ip validation
