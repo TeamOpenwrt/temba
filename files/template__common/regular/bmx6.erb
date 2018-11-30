@@ -1,6 +1,6 @@
 config bmx6 'general'
-  option dbgMuteTimeout '1000000'
-  option tunOutTimeout '100000'
+  # bmx6: doesn't "configSync" by default anymore (no more "uci pending changes" because of auto-gw-mode) -> src https://lists.libremesh.org/pipermail/lime-dev/2017-May/000894.html
+changes" because of auto-gw-mode)
   option configSync '0'
   option syslog '0' # put 1 if you want to debug bmx6
 
