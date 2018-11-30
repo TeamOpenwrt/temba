@@ -1,6 +1,6 @@
 # all variables explained
 # profile: this is a specific profile,
-#     globals: inherited from 10-globals.yml
+#     mesh-globals: inherited from 10-globals.yml
 #     default-packages: inherited from packages (at the moment there are no categories like tiny,medium,big)
 #     profile: openwrt profile base
 #     platform: architecture of the device
@@ -48,8 +48,21 @@ border-packages: &border-packages
     birdc4
     luci-app-bird4
 
+l2tp-packages: &l2tp-packages
+  packages: >-
+    luci
+    xl2tpd
+
+l2tp-extra-packages: &l2tp-extra-packages
+  packages: >-
+    luci
+    luci-ssl
+    xl2tpd
+    tcpdump-mini
+    ip
+
 ubnt-nano-m-xw: &ubnt-nano-m-xw
-  <<: *globals
+  <<: *mesh-globals
   profile: ubnt-nano-m-xw
   platform: ar71xx
   platform_type: generic
@@ -59,7 +72,7 @@ devices:
 
   # TODO check
   regular-x86_64: &regular-x86_64
-    <<: *globals
+    <<: *mesh-globals
     <<: *regular-packages
     profile: Generic
     platform: x86
@@ -68,7 +81,7 @@ devices:
     filebase: 'files/template__regular-x86_64'
 
   regular-ubnt-nano-m: &regular-ubnt-nano-m
-    <<: *globals
+    <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-nano-m
     platform: ar71xx
@@ -77,7 +90,7 @@ devices:
     filebase: 'files/template__regular-ubnt-nano-m'
 
   regular-ubnt-nano-m-xw: &regular-ubnt-nano-m-xw
-    <<: *globals
+    <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-nano-m-xw
     platform: ar71xx
@@ -85,7 +98,7 @@ devices:
     filebase: 'files/template__regular-ubnt-nano-m-xw'
 
   regular-ubnt-loco-m-xw: &regular-ubnt-loco-m-xw
-    <<: *globals
+    <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-loco-m-xw
     platform: ar71xx
@@ -103,3 +116,32 @@ devices:
     <<: *ubnt-nano-m-xw
     <<: *regular-packages
     filebase: 'files/template__regular-ubnt-nano-m-xw'
+
+  l2tp-mesh-nexx: &l2tp-mesh-nexx
+    <<: *cpe-globals
+    <<: *l2tp-extra-packages
+    profile: DEVICE_wt3020-8M
+    platform: ar71xx
+    platform_type: generic
+    tun_mtu: 1420
+    filebase: 'files/template__l2tp-nexx'
+
+  l2tp-infra-nexx: &l2tp-infra-nexx
+    <<: *cpe-globals
+    <<: *l2tp-extra-packages
+    profile: DEVICE_wt3020-8M
+    platform: ar71xx
+    platform_type: generic
+    wifi_path: 'platform/10180000.wmac'
+    tun_mtu: 1436
+    filebase: 'files/template__l2tp-nexx'
+
+  # this was used to generate a temba image based on a backup of previous thing (no template file is available)
+  l2tp-mesh-841: &l2tp-mesh-841
+    <<: *cpe-globals
+    <<: *l2tp-packages
+    tun_mtu: 1420
+    filebase: 'files/notemplate__l2tp-841'
+    platform: ar71xx
+    platform_type: generic
+    profile: tl-wr841-v8
