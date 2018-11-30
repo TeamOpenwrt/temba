@@ -1,17 +1,17 @@
-regulartb-x86_64: &regulartb-x86_64
-  <<: *globals
-  <<: *regular-packages
-  profile: Generic
-  platform: x86
-  platform_type: 64
-  bmx6_main_iface: 'mesh_12'
-  filebase: 'files/template__regulartb-x86_64'
-
-bordertb-x86_64: &bordertb-x86_64
-  <<: *globals
-  <<: *border-packages
-  profile: Generic
-  platform: x86
-  platform_type: 64
-  bmx6_main_iface: 'mesh_12'
-  filebase: 'files/template__bgptb-x86_64'
+#regulartb-x86_64: &regulartb-x86_64
+#  <<: *globals
+#  <<: *regular-packages
+#  profile: Generic
+#  platform: x86
+#  platform_type: 64
+#  bmx6_main_iface: 'mesh_12'
+#  filebase: 'files/template__regulartb-x86_64'
+#
+#bordertb-x86_64: &bordertb-x86_64
+#  <<: *globals
+#  <<: *border-packages
+#  profile: Generic
+#  platform: x86
+#  platform_type: 64
+#  bmx6_main_iface: 'mesh_12'
+#  filebase: 'files/template__bgptb-x86_64'
