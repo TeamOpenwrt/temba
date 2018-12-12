@@ -163,3 +163,7 @@ Sometimes the commits are not done by the original authors
 The original idea is from [@yanosz](https://github.com/yanosz) and its repository https://github.com/yanosz/mesh_testbed_generator
 
 The inspiration to do the ruby on rails form app comes from chef.libremesh.org, thanks [@aparcar](https://github.com/aparcar)
+
+## Similar projects
+
+https://github.com/openwisp/ansible-openwisp2-imagegenerator
