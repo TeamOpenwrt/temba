@@ -166,4 +166,7 @@ The inspiration to do the ruby on rails form app comes from chef.libremesh.org, 
 
 ## Similar projects
 
-https://github.com/openwisp/ansible-openwisp2-imagegenerator
+- https://chef.libremesh.org
+- https://github.com/yanosz/mesh_testbed_generator
+- https://github.com/openwisp/ansible-openwisp2-imagegenerator
+- https://chef.altermundi.net
