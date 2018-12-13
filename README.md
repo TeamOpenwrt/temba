@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Temba](#temba)
+  - [Structure](#structure)
+  - [Requirements](#requirements)
+  - [Usage](#usage)
+    - [20-devices.yml](#20-devicesyml)
+  - [Run x86_64 in qemu](#run-x86_64-in-qemu)
+  - [Testbed](#testbed)
+  - [Notation & coding style](#notation--coding-style)
+  - [Motivation](#motivation)
+  - [Invisible credits](#invisible-credits)
+  - [Similar projects](#similar-projects)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Temba
 
 One liner definition: erb templates on config files per device (some files are shared) evaluated from inherited yaml files with two interfaces: rake and rubyonrails form.
@@ -8,65 +26,7 @@ At the moment this is serving postqMp community with bmx6 (note that VLAN 12 on 
 
 If you want to control the build system my recomendation is to use [lime-sdk](https://github.com/libremesh/lime-sdk). [Instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
 
-## Status
-
-### General
-
-Work in progress
-
-- with official openwrt should work by default, just `rake`
-- with custom firmware requires manual operations and the documentation is not clean/finished
-
-### Device status
-
-- regular-nanostation-m5
-
-    - [x] template
-    - [x] tested
-    - [x] in production
-        - 10.1.58.65 with temba commit d4f4256
-        - 10.1.56.161
-        - 10.1.57.33
-        - 10.1.57.225
-        - etc.
-
-- regular-nanostation-m5-xw
-
-    - note: template is based on a node running in production (10.1.71.97)
-    - [x] template
-    - [x] tested
-    - [x] in production
-      - 10.1.57.193
-      - 10.1.58.161
-
-- regular-nanostation-loco-m5-xw
-
-    - note: template is based on a node running in production (10.1.73.65)
-    - [x] template
-    - [x] tested
-
-- regular-rocket-m5-xw
-
-    - note: template is based on a node running in production (10.1.72.1)
-        - observeu que en el cas de la Rocket, he afegit una nova iface WAN per connectar a un router ADSL (per exemple) a través d'una VLAN
-    - [ ] template
-    - [ ] tested
-
-- border-nanostation-m5-xw
-
-    - note: template is based on a node running in production (strange bgp: 10.1.66.161, normal bgp: 10.1.71.161)
-    - [x] template
-    - [ ] tested
-
-## Motivation
-
-Device configuration should be:
-
-* Consistent / [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
-* Revertible - especially using `first_boot`
-* Under version control
-
-To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb` templates. A dedicated firmware file is generated for each node.
+[Check status of the project](./status.md)
 
 ## Structure
 
@@ -153,6 +113,17 @@ wifN means wireless N=0,1,2,...
 cifN means cable N=0,1,2,...
 
 instead of tab, configurations are indented by 2 spaces (as in [GNU style](https://en.wikipedia.org/wiki/Indentation_style#GNU_style))
+
+## Motivation
+
+Device configuration should be:
+
+* Consistent / [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+* Revertible - especially using `first_boot`
+* Under version control
+
+To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb` templates. A dedicated firmware file is generated for each node.
+
 
 ## Invisible credits
 
