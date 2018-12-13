@@ -135,7 +135,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # Clean up
   FileUtils.rm_r dir_name if File.exists? dir_name
   FileUtils.rm_r dir_name + '-template' if File.exists? dir_name + '-template'
-  
+
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
   system('cp -rpL ' + filebase + ' ' + dir_name)
 
@@ -157,6 +157,8 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # include variables in the yaml
   node_cfg['timestamp'] = timestamp
   node_cfg['temba_commit'] = get_current_temba_commit()
+  # format password for /etc/shadow
+  node_cfg['hashed_passwd'] = node_cfg['passwd'].crypt('$1$md5Salt$')
 
   File.write( dir_name + '/etc/temba_vars.yml', node_cfg.to_yaml)
 
