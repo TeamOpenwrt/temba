@@ -10,13 +10,16 @@
 # thanks! https://superuser.com/a/157832
 
 SRC_DIR="." # current directory
-OLD_TARGET="*common*" # match symbolic link affected
-SUB="s/common/template__common/" # what is the substitution you want to apply
+OLD_TARGET="*shadow" # match symbolic link affected
+SUB="s/shadow/shadow.erb/" # what is the substitution you want to apply
 
 # why ln-nsf -> src https://superuser.com/questions/81164/why-create-a-link-like-this-ln-nsf
 find $SRC_DIR -type l \
-  -lname "$OLD_TARGET/*" -printf \
+  -lname "$OLD_TARGET" -printf \
   'ln -nsf "$(readlink "%p"|sed '$SUB')" "$(echo "%p"|sed '$SUB')"\n' \
   > do_rename_symlinks.sh
 
 chmod +x do_rename_symlinks.sh
+
+echo results:
+cat do_rename_symlinks.sh
