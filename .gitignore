@@ -7,7 +7,6 @@
 all.yml
 # temp things
 debug-*
-do_rename_symlinks.sh
 output
 lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz
 lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64/
