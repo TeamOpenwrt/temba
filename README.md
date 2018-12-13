@@ -138,6 +138,7 @@ The inspiration to do the ruby on rails form app comes from chef.libremesh.org, 
 ## Similar projects
 
 - https://chef.libremesh.org
+    - this looks similar to temba https://github.com/libremesh/network-profiles/tree/master/jardibotanic
 - https://github.com/yanosz/mesh_testbed_generator
 - https://github.com/openwisp/ansible-openwisp2-imagegenerator
-- https://chef.altermundi.net
+- https://chef.altermundi.net (deprecated, unmaintained, go to chef.libremesh.org)
