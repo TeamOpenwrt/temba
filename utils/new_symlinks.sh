@@ -2,12 +2,8 @@
 
 # This script is a helper when you want to massively add a new symlink to all
 # targets. It creates another script that you verify before executing it. It
-# contains example when I decided to change `common` directory to
-# `template__common` directory.
-# Warning, if you apply again, this mess is going to happen
-#
-#    -../../../template__common/regular/bmx6.erb
-#    +../../../template__template__common/regular/bmx6.erb
+# contains example when I decided to add dropbear authorized keys to all
+# targets.
 
 # thanks! https://superuser.com/a/157832
 
