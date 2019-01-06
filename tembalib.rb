@@ -36,6 +36,14 @@ def read_vars(myPath)
   if File.exists? allfile
     File.delete(allfile)
   end
+
+  # helper: copy example files
+  if ! File.exists? myPath + '10-globals.yml' and ! File.exists? myPath + '30-nodes.yml'
+    puts("Looks like this is newly git cloned repository, copying example yaml files to use them:")
+    system("cp -v #{myPath + '10-globals.yml.example'} #{myPath + '10-globals.yml'}")
+    system("cp -v #{myPath + '30-nodes.yml.example'} #{myPath + '30-nodes.yml'}")
+  end
+
   all_f = File.open(allfile, 'a')
 
   # look for all yml files
@@ -216,7 +224,8 @@ def generate_firmware(node_cfg, myPath)
   end
 
   puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
-  system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated")
+  # throw error on system call -> src https://stackoverflow.com/a/18728161
+  system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{$image_base}\n    #{$image_base}.tar.xz"
 
   # notes for the output file
   notes = node_cfg['notes']
@@ -295,11 +304,13 @@ def generate_firmware(node_cfg, myPath)
   return zipfile
 end
 
+# user should check consistency of image_base file and directory by itself
 def prepare_official_ib()
   ib_archive = "#{$image_base}.tar.xz"
+
+  system("wget -c #{$download_base}#{ib_archive}")
+
   unless File.exists? $image_base
-    # assumed file is already downloaded
-    system("wget #{$download_base}#{ib_archive}") unless File.exists? ib_archive
     system("tar xf #{ib_archive}")
   end
 end
