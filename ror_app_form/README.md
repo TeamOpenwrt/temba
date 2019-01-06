@@ -4,6 +4,27 @@ This is a rails application that allows user to download a firmware based on som
 
 This application at the moment does not use a database, but there is a model `@node` to perform validations in the form
 
+## Requirements
+
+ruby on rails
+
+nokogiri dependencies
+
+    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+
+install nokogiri as a gem (because bundler has problems)
+
+    gem install nokogiri
+
+nodejs
+
+    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+
+the rest
+
+    sudo apt install ruby-dev
+    sudo gem install rails
+
 ## Run server
 
     rails s

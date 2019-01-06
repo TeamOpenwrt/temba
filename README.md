@@ -5,6 +5,8 @@
 - [Temba](#temba)
   - [Structure](#structure)
   - [Requirements](#requirements)
+    - [option 1: using debian stable packages (recommended)](#option-1-using-debian-stable-packages-recommended)
+    - [option 2: bundle installation](#option-2-bundle-installation)
   - [Usage](#usage)
     - [20-devices.yml](#20-devicesyml)
   - [Run x86_64 in qemu](#run-x86_64-in-qemu)
@@ -43,30 +45,26 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 ## Requirements
 
-assuming debian 9
+Note: [for ruby on rails application requirements go to this README.md](ror_app_form/README.md) after applying the generic requirements of this section
+
+There are two ways to obtain the requirements to run this software
+
+### option 1: using debian stable packages (recommended)
+
+    sudo apt install rake ruby-ipaddress zip pry
+
+### option 2: bundle installation
+
+assuming debian 9, required packages to manage ruby dependencies using its own dependency manager
+
+    # src https://stackoverflow.com/a/33432126
+    sudo apt install rubygems-integration ruby ruby-dev
+
+install the dependency manager
 
     sudo gem install bundle
 
-ruby on rails
-
-nokogiri dependencies
-
-    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
-
-install nokogiri as a gem (because bundler has problems)
-
-    gem install nokogiri
-
-nodejs
-
-    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
-
-the rest
-
-    sudo apt install ruby-dev
-    sudo gem install rails
-
-install dependencies
+install temba's dependencies using bundle in this directory (looks for `Gemfile`)
 
     bundle install
 
