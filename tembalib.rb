@@ -2,7 +2,8 @@ require 'pry' # for debugging use a line as `binding.pry` src https://stackoverf
 require 'erb' # config templates
 require 'yaml' # DB in a file
 require 'ipaddress' # ip validation
-require 'archive/zip' # zip stuff
+# wait debian 10 -> https://packages.debian.org/search?keywords=ruby-archive-zip
+#require 'archive/zip' # zip stuff
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
@@ -242,7 +243,9 @@ def generate_firmware(node_cfg, myPath)
     # this requires so much space and is slow
     #system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
 
-    Archive::Zip.archive(zipfile, out_path)
+    ##Archive::Zip.archive(zipfile, out_path)
+    # create zip - ignore directory structure -> src https://stackoverflow.com/questions/9710141/create-zip-ignore-directory-structure
+    system("zip -j -r #{zipfile} #{out_path}")
   else
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
@@ -254,8 +257,10 @@ def generate_firmware(node_cfg, myPath)
       out_path['factory'])
 
     # compact both files in a zip
-    Archive::Zip.archive(zipfile, out_path['sysupgrade'])
-    Archive::Zip.archive(zipfile, out_path['factory'])
+    ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
+    system("zip -j -r #{zipfile} #{out_path['sysupgrade']}")
+    ##Archive::Zip.archive(zipfile, out_path['factory'])
+    system("zip -j -r #{zipfile} #{out_path['factory']}")
   end
 
   # add README to explain the contents of the zipfile)
@@ -268,16 +273,20 @@ def generate_firmware(node_cfg, myPath)
 - etc: /etc directory that is inside this firmware
 - etc-template: /etc directory without applying variables.yml (in case you want to know what is exactly templating)
 ')
-  Archive::Zip.archive(zipfile, out_dir + '/README.txt')
+  ##Archive::Zip.archive(zipfile, out_dir + '/README.txt')
+  system("zip -j -r #{zipfile} #{out_dir + '/README.txt'}")
   # add etc
   FileUtils.cp_r "#{$image_base}/files_generated/etc", out_dir
-  Archive::Zip.archive(zipfile, out_dir + '/etc')
+  ##Archive::Zip.archive(zipfile, out_dir + '/etc')
+  system("cd #{out_dir}; zip -r #{'../' + File::basename(zipfile)} #{'./etc'}")
   # add etc-template
   FileUtils.cp_r "#{$image_base}/files_generated/etc-template", out_dir + '/etc-template'
-  Archive::Zip.archive(zipfile, out_dir + '/etc-template')
+  ##Archive::Zip.archive(zipfile, out_dir + '/etc-template')
+  system("cd #{out_dir}; zip -r #{'../' + File::basename(zipfile)} #{'./etc-template'}")
   # add variables.yml
   File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
-  Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
+  ##Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
+  system("zip -j -r #{zipfile} #{out_dir + '/variables.yml'}")
 
   # when the file is ready, put it in the place to be downloaded
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
