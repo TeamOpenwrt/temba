@@ -45,15 +45,25 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 ## Requirements
 
-Note: [for ruby on rails application requirements go to this README.md](ror_app_form/README.md) after applying the generic requirements of this section
+Generic packages you need in your debian distribution.
 
-There are two ways to obtain the requirements to run this software
+### Openwrt build requirements
 
-### option 1: using debian stable packages (recommended)
+    sudo apt install build-essential file python gawk zlib1g-dev libncurses5-dev
 
-    sudo apt install rake ruby-ipaddress zip pry
+### temba cli (rake) requirements
 
-### option 2: bundle installation
+    sudo apt install wget zip xz-utils rake
+
+### ruby gems requirements
+
+There are two ways to obtain the specific ruby packages required to run this software
+
+#### option 1: using debian stable packages (recommended)
+
+    sudo apt install pry ruby-ipaddress
+
+#### option 2: bundle installation
 
 assuming debian 9, required packages to manage ruby dependencies using its own dependency manager
 
@@ -67,6 +77,10 @@ install the dependency manager
 install temba's dependencies using bundle in this directory (looks for `Gemfile`)
 
     bundle install
+
+### temba gui (rails) requirements
+
+[go to this README.md](ror_app_form/README.md) after applying all previous needs on requirements of this section
 
 ## Usage
 
