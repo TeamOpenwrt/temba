@@ -5,7 +5,7 @@
 - [Temba](#temba)
   - [Structure](#structure)
   - [Requirements](#requirements)
-    - [Openwrt build requirements](#openwrt-build-requirements)
+    - [openwrt build requirements](#openwrt-build-requirements)
     - [temba cli (rake) requirements](#temba-cli-rake-requirements)
     - [ruby gems requirements](#ruby-gems-requirements)
       - [option 1: using debian stable packages (recommended)](#option-1-using-debian-stable-packages-recommended)
