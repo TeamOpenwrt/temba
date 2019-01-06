@@ -1,6 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+**Table of Contents**
 
 - [Temba](#temba)
   - [Structure](#structure)
@@ -51,7 +51,7 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 Generic packages you need in your debian distribution.
 
-### Openwrt build requirements
+### openwrt build requirements
 
     sudo apt install build-essential file python gawk zlib1g-dev libncurses5-dev
 
