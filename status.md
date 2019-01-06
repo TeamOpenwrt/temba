@@ -45,12 +45,16 @@ Work in progress
     - [x] template
     - [x] tested
 
-- regular-rocket-m5-xw
+- regular-rocket-m5
 
     - note: template is based on a node running in production (10.1.72.1)
         - observeu que en el cas de la Rocket, he afegit una nova iface WAN per connectar a un router ADSL (per exemple) a través d'una VLAN
     - [ ] template
     - [ ] tested
+
+- regular-rocket-m5-xw
+
+    - reference to work on 10.1.27.129
 
 - border-nanostation-m5-xw
 
