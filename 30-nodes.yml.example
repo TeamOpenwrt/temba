@@ -4,41 +4,38 @@
 # all variables explained
 
 # network: a firmware will be generated for each child
-#   node: a particular node with its custom firmware that will be generated
-#     device: 20-devices.yml is inherited
-#     node_name: name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
-#     ip4: ask to guifi.net website
-#     netmask4: we usually use a netmask of /27 (30 hosts)
-#     bmx6_tun4: ip4 in cidr format for bmx6 file
+#   node_name: a particular node with its custom firmware that will be generated. Put here the name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
+#     <<: inheritances from other yaml files
+#     bmx6_tun4: Ask guifi.net website. we usually use a netmask of /27 (30 hosts)
 #     wifi_channel: do a wifi scan or ask your community
 
 # nanostation m5 and nanostation loco m5 xm series
 network:
 
-  hostnametest
-    <<: *regular-ubnt-nano-m
-    bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+  hostname-nano-xw:
+    <<: *regular-ubnt-nano-m-xw
+    bmx6_tun4: '10.1.1.1/27'
     wifi_channel: 120
     notes: comments are visible in output file to highlight something
 
-  hostname-x86_64
-    <<: *regular-x86_64
-    bmx6_tun4: '10.x.x.x/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
-
-  hostnametest2
-    <<: *regular-ubnt-nano-m-xw
-    bmx6_tun4: '10.x.x.x/27'
-    wifi_channel: 132
-    wifi_htmode: 'HT20' # overrides HT40 variable of 10-globals.yml (the example)
-
-  border-test
-    <<: *border-ubnt-nano-m-xw
-    bmx6_tun4: '10.1.66.161/27'
-    bgp_local_addr: '10.1.66.161'
-    bgp_local_as: '98790'
-    bgp_neigh_name: 'BCNHangarST2'
-    bgp_neigh_addr: '10.1.66.163'
-    bgp_neigh_as: '15624'
-    bgp_agg_prefix:
-      - '10.1.64.0/21{22,32}'
-      - '10.1.65.0/21{22,32}'
+#  hostname-x86_64:
+#    <<: *regular-x86_64
+#    bmx6_tun4: '10.1.1.1/27'
+#
+#  hostname-nano-xm:
+#    <<: *regular-ubnt-nano-m
+#    bmx6_tun4: '10.1.1.1/27'
+#    wifi_channel: 132
+#    wifi_htmode: 'HT20' # overrides HT40 variable of 10-globals.yml (the example)
+#
+#  border-node-example:
+#    <<: *border-ubnt-nano-m-xw
+#    bmx6_tun4: '10.1.66.161/27'
+#    bgp_local_addr: '10.1.66.161'
+#    bgp_local_as: '98790'
+#    bgp_neigh_name: 'BCNHangarST2'
+#    bgp_neigh_addr: '10.1.66.163'
+#    bgp_neigh_as: '15624'
+#    bgp_agg_prefix:
+#      - '10.1.64.0/21{22,32}'
+#      - '10.1.65.0/21{22,32}'
