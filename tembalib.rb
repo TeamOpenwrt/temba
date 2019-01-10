@@ -166,6 +166,8 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # include variables in the yaml
   node_cfg['timestamp'] = timestamp
   node_cfg['temba_commit'] = get_current_temba_commit()
+  # set a default password when it is indefined
+  node_cfg['passwd'] = '13f' if node_cfg['passwd'].nil?
   # format password for /etc/shadow
   node_cfg['hashed_passwd'] = node_cfg['passwd'].crypt('$1$md5Salt$')
 
