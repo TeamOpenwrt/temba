@@ -113,7 +113,7 @@ devices:
     profile: ubnt-rocket-m-xw
     platform: ar71xx
     platform_type: generic
-    # wifi_path null, aha
+    wifi_path: 'platform/ar934x_wmac'
     filebase: 'files/template__regular-ubnt-rocket-m-xw'
 
   border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
