@@ -49,10 +49,10 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 Read and execute instructions of [install_temba_cli.sh](install_temba_cli.sh)
 
-files:
+source:
 
-- Rakefile
-- tembalib.rb
+- *Rakefile*
+- *tembalib.rb*
 
 quickstart: run `rake`
 
@@ -60,10 +60,10 @@ quickstart: run `rake`
 
 Read and execute instructions of [install_temba_gui.sh](install_temba_gui.sh)
 
-files:
+source:
 
-- tembalib.rb
-- `ror_app_form` is the rails directory
+- *ror_app_form* is the rails directory
+- *tembalib.rb*
 
 quickstart: run `ror_app_form/run_rails.sh`
 
