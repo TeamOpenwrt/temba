@@ -310,7 +310,8 @@ end
 def prepare_official_ib()
   ib_archive = "#{$image_base}.tar.xz"
 
-  system("wget -c #{$download_base}#{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{$download_base}; ib_archive=#{ib_archive}\n \n"
+  # basename of ib_archive could be a relative path (specially in case of rails execution)
+  system("wget -c #{$download_base}#{File.basename(ib_archive)}") or raise "ERROR. Incorrect URL. Variables: download_base=#{$download_base}; ib_archive=#{ib_archive}\n \n"
 
   unless File.exists? $image_base
     system("tar xf #{ib_archive}")
