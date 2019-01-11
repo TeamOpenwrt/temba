@@ -47,7 +47,7 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 ### temba cli (rake)
 
-Read and execute instructions of [install_temba_cli_requirements.sh](install_temba_cli.sh)
+Read and execute instructions of [install_temba_cli.sh](install_temba_cli.sh)
 
 files:
 
@@ -58,7 +58,7 @@ quickstart: run `rake`
 
 ### temba gui (rails)
 
-Read and execute instructions of [install_temba_gui_requirements.sh](install_temba_gui.sh)
+Read and execute instructions of [install_temba_gui.sh](install_temba_gui.sh)
 
 files:
 
