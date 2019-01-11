@@ -25,7 +25,8 @@ mesh-globals: &mesh-globals
   <<: *globals
   image_base_type: 'official' # all options: official, path, lime-sdk
   image_base_limesdk: '../lime-sdk/' # suggested place (relative path)
-  wifi_hwmode: '11na' # it's easy to use '11a' as fallback for specific devices or other modes
+  # wifi parameters -> src https://openwrt.org/docs/guide-user/network/wifi/basic
+  wifi_hwmode: '11a'
   wifi_htmode: 'HT40'
   wifi_country: 'TZ'
   wifi_txpower: 17
