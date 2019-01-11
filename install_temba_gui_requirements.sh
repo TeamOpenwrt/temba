@@ -13,5 +13,7 @@ packagelist=(
 
 apt-get install ${packagelist[@]}
 
+# install rails with bundle
+gem install bundle
 cd ror_app_form
 bundle install
