@@ -65,7 +65,7 @@ source:
 - *ror_app_form* is the rails directory
 - *tembalib.rb*
 
-quickstart: run `ror_app_form/run_rails.sh`
+quickstart: run `cd ror_app_form; ./run_rails.sh`
 
 ## Usage
 
