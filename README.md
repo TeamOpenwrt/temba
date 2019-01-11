@@ -45,6 +45,20 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 ## Install
 
+Requires debian 9 stable
+
+but **I don't have debian / I don't want to taint my debian**
+
+use [docker](https://docker.com)
+
+    docker run -h debian-temba -it -P debian:9 bash
+
+and
+
+    apt install git vim
+    git clone https://gitlab.com/guifi-exo/temba
+    cd temba
+
 ### temba cli (rake)
 
 Read and execute instructions of [install_temba_cli.sh](install_temba_cli.sh)
