@@ -1,6 +1,6 @@
 config wifi-device 'radio0'
   option type 'mac80211'
-  option hwmode '11na'
+  option hwmode '<%= @node.fetch('wifi_hwmode') %>'
   option distance '1000'
 <%# detect nil -> src https://softwareengineering.stackexchange.com/questions/302530/ruby-if-variable-vs-if-variable-nil -%>
 <% if ! @node['wifi_path'].nil? -%>
