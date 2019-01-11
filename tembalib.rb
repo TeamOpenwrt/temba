@@ -315,6 +315,6 @@ def prepare_official_ib()
 
   unless File.exists? $image_base
     # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
-    system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)})"
+    system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)}")
   end
 end
