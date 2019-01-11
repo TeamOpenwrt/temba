@@ -4,13 +4,9 @@
 
 - [Temba](#temba)
   - [Structure](#structure)
-  - [Requirements](#requirements)
-    - [openwrt build requirements](#openwrt-build-requirements)
-    - [temba cli (rake) requirements](#temba-cli-rake-requirements)
-    - [ruby gems requirements](#ruby-gems-requirements)
-      - [option 1: using debian stable packages (recommended)](#option-1-using-debian-stable-packages-recommended)
-      - [option 2: bundle installation](#option-2-bundle-installation)
-    - [temba gui (rails) requirements](#temba-gui-rails-requirements)
+  - [Install](#install)
+    - [temba cli (rake)](#temba-cli-rake)
+    - [temba gui (rails)](#temba-gui-rails)
   - [Usage](#usage)
     - [20-devices.yml](#20-devicesyml)
   - [Run x86_64 in qemu](#run-x86_64-in-qemu)
@@ -47,44 +43,29 @@ To avoid redundancy of information we use different yaml files, you can test yam
 * `output` - Output folder for files and directories generated with this tool
 * `Rakefile` - Central build file
 
-## Requirements
+## Install
 
-Generic packages you need in your debian distribution.
+### temba cli (rake)
 
-### openwrt build requirements
+Read and execute instructions of [install_temba_cli_requirements.sh](install_temba_cli.sh)
 
-    sudo apt install build-essential file python gawk zlib1g-dev libncurses5-dev
+files:
 
-### temba cli (rake) requirements
+- Rakefile
+- tembalib.rb
 
-    sudo apt install wget zip xz-utils rake
+quickstart: run `rake`
 
-### ruby gems requirements
+### temba gui (rails)
 
-There are two ways to obtain the specific ruby packages required to run this software
+Read and execute instructions of [install_temba_gui_requirements.sh](install_temba_gui.sh)
 
-#### option 1: using debian stable packages (recommended)
+files:
 
-    sudo apt install pry ruby-ipaddress
+- tembalib.rb
+- `ror_app_form` is the rails directory
 
-#### option 2: bundle installation
-
-assuming debian 9, required packages to manage ruby dependencies using its own dependency manager
-
-    # src https://stackoverflow.com/a/33432126
-    sudo apt install rubygems-integration ruby ruby-dev
-
-install the dependency manager
-
-    sudo gem install bundle
-
-install temba's dependencies using bundle in this directory (looks for `Gemfile`)
-
-    bundle install
-
-### temba gui (rails) requirements
-
-[go to this README.md](ror_app_form/README.md) after applying all previous needs on requirements of this section
+quickstart: run `ror_app_form/run_rails.sh`
 
 ## Usage
 

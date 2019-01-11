@@ -1,33 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [README](#readme)
+  - [Requirements](#requirements)
+  - [Run server](#run-server)
+  - [Javascript](#javascript)
+    - [Online users](#online-users)
+    - [Download file](#download-file)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # README
 
 This is a rails application that allows user to download a firmware based on some parameters in a form. At some point is probably going to do more things: more forms or even an app
 
 This application at the moment does not use a database, but there is a model `@node` to perform validations in the form
-
-## Requirements
-
-ruby on rails
-
-nokogiri dependencies
-
-    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
-
-install nokogiri as a gem (because bundler has problems)
-
-    gem install nokogiri
-
-nodejs
-
-    apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
-
-the rest
-
-    sudo apt install ruby-dev
-    sudo gem install rails
-
-## Run server
-
-    rails s
 
 ## Javascript
 
