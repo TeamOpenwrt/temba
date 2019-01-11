@@ -1,4 +1,4 @@
-# if you want to use this file rename it to something ended in .yml
+# If you are reading this means you did not configure 10-globals.yml and/or 30-nodes.yml for your needs, then temba supposed you are a newcommer or in a quick demo situation and copied files 10-globals.yml.example and 30-nodes.yml.example as 10-globals.yml and 30-nodes.yml
 
 
 # all variables explained
