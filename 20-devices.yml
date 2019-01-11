@@ -107,7 +107,7 @@ devices:
     filebase: 'files/template__regular-ubnt-loco-m-xw'
     # wifi_txpower: 22 # its max value
 
-  ubnt-rocket-m-xw: &ubnt-rocket-m-xw
+  regular-ubnt-rocket-m-xw: &ubnt-rocket-m-xw
     <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-rocket-m-xw
