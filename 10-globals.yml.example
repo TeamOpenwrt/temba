@@ -25,10 +25,11 @@ mesh-globals: &mesh-globals
   <<: *globals
   image_base_type: 'official' # all options: official, path, lime-sdk
   image_base_limesdk: '../lime-sdk/' # suggested place (relative path)
-  wifi_country: 'TZ'
-  wifi_mtu: 1500
+  wifi_hwmode: '11a' # try '11na' if works better
   wifi_htmode: 'HT40'
+  wifi_country: 'TZ'
   wifi_txpower: 17
+  wifi_mtu: 1500
   wifi_bssid: '02:CA:FF:EE:BA:BE'
   wifi_ssid_base: 'guifi.net/'
   bmx6_main_iface: 'wif0_t'
