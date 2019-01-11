@@ -314,6 +314,7 @@ def prepare_official_ib()
   system("wget -c #{$download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{$download_base}; ib_archive=#{ib_archive}\n \n"
 
   unless File.exists? $image_base
-    system("tar xf #{ib_archive}")
+    # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
+    system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)})"
   end
 end
