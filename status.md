@@ -41,7 +41,9 @@ Work in progress
 
 - regular-nanostation-loco-m5-xw
 
-    - note: template is based on a node running in production (10.1.73.65)
+    - note:
+        - template is based on a node running in production (10.1.73.65)
+        - [PowerBeam M5-300 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam)
     - [x] template
     - [x] tested
 
@@ -54,7 +56,13 @@ Work in progress
 
 - regular-rocket-m5-xw
 
-    - reference to work on 10.1.27.129
+    - notes:
+        - checked 10.1.27.129 as reference, it is similar to nanostation-loco-m5-xw
+        - [PowerBeam M5-400 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam)
+    - [x] template
+    - [x] tested
+    - [x] in production
+      - 10.1.192.129
 
 - border-nanostation-m5-xw
 
