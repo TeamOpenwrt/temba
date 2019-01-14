@@ -58,7 +58,7 @@ Work in progress
 - regular-rocket-m-xw
 
     - notes:
-        - checked 10.1.27.129 as reference, it is similar to nanostation-loco-m5-xw
+        - checked 10.1.27.129 as reference, it is similar to nanostation-loco-m-xw
         - [PowerBeam M5-400 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam)
     - [x] template
     - [x] tested
@@ -66,6 +66,13 @@ Work in progress
       - 10.1.192.129
 
 - regular-bullet-m
+
+    - notes:
+        - template inspired from a a running node with qMp 3.2.1 (10.1.12.193)
+        - [Nanobridge](https://openwrt.org/toh/ubiquiti/airmaxm) runs this target
+    - [ ] template
+    - [ ] tested
+    - [ ] in production
 
 - border-nanostation-m-xw
 
