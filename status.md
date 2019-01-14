@@ -21,6 +21,7 @@ Work in progress
 
 - regular-nanostation-m5
 
+    - note: Nanostation M5 XM and Nanostation M5 XW uses this firmware
     - [x] template
     - [x] tested
     - [x] in production
