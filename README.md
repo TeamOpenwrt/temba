@@ -47,9 +47,7 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 Requires debian 9 stable
 
-but **I don't have debian / I don't want to taint my debian**
-
-use [docker](https://docker.com)
+if you don't have a debian or you don't want to taint your debian you can use [docker](https://docker.com)
 
     docker run -h debian-temba -it -P debian:9 bash
 
