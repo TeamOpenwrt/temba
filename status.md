@@ -19,7 +19,7 @@ Work in progress
 
 ### Device status
 
-- regular-nanostation-m5
+- regular-nanostation-m
 
     - note: Nanostation M5 XM and Nanostation M5 XW uses this firmware
     - [x] template
@@ -31,7 +31,7 @@ Work in progress
         - 10.1.57.225
         - etc.
 
-- regular-nanostation-m5-xw
+- regular-nanostation-m-xw
 
     - note: template is based on a node running in production (10.1.71.97)
     - [x] template
@@ -40,7 +40,7 @@ Work in progress
       - 10.1.57.193
       - 10.1.58.161
 
-- regular-nanostation-loco-m5-xw
+- regular-nanostation-loco-m-xw
 
     - note:
         - template is based on a node running in production (10.1.73.65)
@@ -48,14 +48,14 @@ Work in progress
     - [x] template
     - [x] tested
 
-- regular-rocket-m5
+- regular-rocket-m
 
     - note: template is based on a node running in production (10.1.72.1)
         - observeu que en el cas de la Rocket, he afegit una nova iface WAN per connectar a un router ADSL (per exemple) a través d'una VLAN
     - [ ] template
     - [ ] tested
 
-- regular-rocket-m5-xw
+- regular-rocket-m-xw
 
     - notes:
         - checked 10.1.27.129 as reference, it is similar to nanostation-loco-m5-xw
@@ -65,7 +65,9 @@ Work in progress
     - [x] in production
       - 10.1.192.129
 
-- border-nanostation-m5-xw
+- regular-bullet-m
+
+- border-nanostation-m-xw
 
     - note: template is based on a node running in production (strange bgp: 10.1.66.161, normal bgp: 10.1.71.161)
     - [x] template
