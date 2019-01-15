@@ -1,0 +1,30 @@
+---
+
+- name: apply "option auto '1'" to all configs
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    # thanks https://chrisshort.net/ansible-lineinfile-be-damned/
+    - name: Find all target files
+      find:
+        paths: '../../files/'
+        patterns: network*
+        file_type: file
+        #contains: config interface 'lan'
+        recurse: yes
+      register: conf_files
+
+    # src https://serverfault.com/questions/537060/how-to-see-stdout-of-ansible-commands
+    #- debug: msg="{{ conf_files.files }}"
+
+    - name: check if line exists
+      lineinfile:
+        path: "{{ item.path }}"
+        insertafter: "config interface 'lan'"
+        # regex for matching something between two strings -> inspiration https://stackoverflow.com/a/32024755
+        #  \n.*   next line
+        # (\n.*)* next lines
+        regexp: "config interface 'lan'(\n.*)*option auto '1'(\n.*)*config interface 'wif"
+        line: "  option auto '1'"
+        state: present
+      with_items: "{{ conf_files.files }}"
