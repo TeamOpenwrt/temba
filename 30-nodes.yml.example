@@ -12,7 +12,7 @@
 # nanostation m5 and nanostation loco m5 xm series
 network:
 
-  hostname-nano-xw:
+  test-device:
     <<: *regular-ubnt-nano-m-xw
     ip4_cidr: '10.1.1.1/27'
     wifi_channel: 120
