@@ -313,8 +313,10 @@ end
 def prepare_official_ib()
   ib_archive = "#{$image_base}.tar.xz"
 
-  # rails case: ensure basename of ib_archive for concatenation, but place in the same place as temba cli
-  system("wget -c #{$download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{$download_base}; ib_archive=#{ib_archive}\n \n"
+  unless $debug_erb
+    # rails case: ensure basename of ib_archive for concatenation, but place in the same place as temba cli
+    system("wget -c #{$download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{$download_base}; ib_archive=#{ib_archive}\n \n"
+  end
 
   unless File.exists? $image_base
     # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
