@@ -114,6 +114,8 @@ def generate_node(node_cfg, myPath)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
   unless wifi_ssid_base.nil?
     node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
+  else
+    puts 'WARNING: "wifi_ssid_base" variable is undefined. This affects "wifi_ssid" to be undefined too'
   end
 
   # avoid redundant data entry in yaml (ip4_cidr in CIDR vs ip4 and netmask4)
@@ -196,7 +198,8 @@ def process_erb(node,erb,base)
   # rails require binding context -> src https://blog.revathskumar.com/2014/10/ruby-rendering-erb-template.html
     File.open(base, 'w') { |file| file.write(template.result(binding)) }
   rescue KeyError => e
-    puts "Template error in file #{File.basename(erb)} of #{node['filebase']}: contains undefined variables. #{e.message}"
+    puts "Template error in file #{File.basename(erb)} of #{node['filebase']}: contains undefined variables.\n  #{e.message}"
+    abort
   end
   FileUtils.rm erb
 end
