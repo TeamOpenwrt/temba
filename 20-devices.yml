@@ -116,6 +116,15 @@ devices:
     wifi_path: 'platform/ar934x_wmac'
     filebase: 'files/template__regular-ubnt-rocket-m-xw'
 
+  regular-ubnt-bullet-m: &ubnt-bullet-m
+    <<: *mesh-globals
+    <<: *regular-packages
+    profile: ubnt-bullet-m
+    platform: ar71xx
+    platform_type: generic
+    # without wifi_path
+    filebase: 'files/template__regular-ubnt-bullet-m'
+
   border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
     <<: *ubnt-nano-m-xw
     <<: *border-packages
