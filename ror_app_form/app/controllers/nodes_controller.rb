@@ -37,7 +37,7 @@ class NodesController < ApplicationController
       device = @node.vars['devices'][target]
       device['node_name'] = @node.node_name
       device['wifi_channel'] = @node.wifi_channel
-      device['bmx6_tun4'] = @node.bmx6_tun4
+      device['ip4_cidr'] = @node.ip4_cidr
 
       device['timestamp'] = gen_timestamp()
 
@@ -61,6 +61,6 @@ class NodesController < ApplicationController
 
   def node_params
     # strong parameters -> https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
-    return params.require(:node).permit(:device, :node_name, :wifi_channel, :bmx6_tun4)
+    return params.require(:node).permit(:device, :node_name, :wifi_channel, :ip4_cidr)
   end
 end
