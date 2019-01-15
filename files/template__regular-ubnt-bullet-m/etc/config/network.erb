@@ -1,0 +1,33 @@
+config interface 'loopback'
+  option ifname 'lo'
+  option proto 'static'
+  option ipaddr '127.0.0.1'
+  option netmask '255.0.0.0'
+
+config globals 'globals'
+
+config interface 'lan'
+  option type 'bridge'
+  option ifname 'eth0'
+  option proto 'static'
+  option ipaddr '<%= @node.fetch('ip4') %>'
+  option netmask '<%= @node.fetch('netmask4') %>'
+  option dns '<%= @node.fetch('dns_server') %>'
+  option ip6assign '64'
+
+# standard mesh guifi bcn (bmx6 runs on vlan 12)
+config device 'wif0_t'
+  option type '8021q'
+  option name 'wif0_t'
+  option ifname '@wif0'
+  option vid '12'
+
+# configurable MTU
+config interface 'wif0'
+  option proto 'none'
+  option mtu '<%= @node.fetch('wifi_mtu') %>'
+
+# trick to activate wif0_t
+config interface 'mesh'
+  option ifname 'wif0_t'
+  option auto '1'
