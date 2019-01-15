@@ -22,7 +22,7 @@ config dev 'mesh_1'
 
 config tunDev 'main'
   option tunDev 'main'
-  option tun4Address '<%= @node.fetch('bmx6_tun4') %>'
+  option tun4Address '<%= @node.fetch('ip4_cidr') %>'
 #  option tun6Address 'fdfc:1c4c:da9d::1/64'
 
 # I demand

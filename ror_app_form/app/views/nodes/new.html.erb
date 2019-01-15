@@ -27,7 +27,7 @@
   <%# f.select :wifi_channel, options_for_select([120, 132]), :prompt => 'wifi channel' %>
   <%= f.select :wifi_channel, options_for_select([36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 149, 153, 157, 161, 165], f.object.wifi_channel), :prompt => 'wifi channel' %>
 
-  <%= f.text_field :bmx6_tun4, placeholder: 'IPv4' %>
+  <%= f.text_field :ip4_cidr, placeholder: 'IPv4' %>
   <%= f.submit 'Build' %>
   <br>
   <div class="loader"></div>

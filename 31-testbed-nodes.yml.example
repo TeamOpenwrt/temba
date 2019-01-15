@@ -5,7 +5,7 @@
     node_name: 'temba1'
     ip4: '10.0.0.1' # fill IP
     netmask4: '255.255.255.224' # usually is this /27
-    bmx6_tun4: '10.0.0.1/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+    ip4_cidr: '10.0.0.1/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
     bgp_ptp_ip4: '172.1.1.1'
     bgp_ptp_netmask4: '255.255.255.252'
     bgp_local_as: '10'
@@ -20,14 +20,14 @@
 #    node_name: 'temba2'
 #    ip4: '10.0.0.33' # fill IP
 #    netmask4: '255.255.255.224' # usually is this /27
-#    bmx6_tun4: '10.0.0.33/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+#    ip4_cidr: '10.0.0.33/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
 #
 #  temba3:
 #    <<: *regulartb-x86_64
 #    node_name: 'temba3'
 #    ip4: '10.0.0.65' # fill IP
 #    netmask4: '255.255.255.224' # usually is this /27
-#    bmx6_tun4: '10.0.0.65/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+#    ip4_cidr: '10.0.0.65/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
 
   temba4:
     <<: *bordertb-x86_64
@@ -39,7 +39,7 @@
     node_name: 'temba5'
     ip4: '10.1.0.1' # fill IP
     netmask4: '255.255.255.224' # usually is this /27
-    bmx6_tun4: '10.1.0.1/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+    ip4_cidr: '10.1.0.1/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
     bgp_ptp_ip4: '172.2.2.1'
     bgp_ptp_netmask4: '255.255.255.252'
     bgp_local_as: '11'
@@ -54,11 +54,11 @@
 #    node_name: 'temba6'
 #    ip4: '10.1.0.33' # fill IP
 #    netmask4: '255.255.255.224' # usually is this /27
-#    bmx6_tun4: '10.1.0.33/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+#    ip4_cidr: '10.1.0.33/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
 #
 #  temba7:
 #    <<: *regulartb-x86_64
 #    node_name: 'temba7'
 #    ip4: '10.1.0.65' # fill IP
 #    netmask4: '255.255.255.224' # usually is this /27
-#    bmx6_tun4: '10.1.0.65/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9
+#    ip4_cidr: '10.1.0.65/27' # yes, this is redundant, check https://github.com/guifi-exo/temba/issues/9

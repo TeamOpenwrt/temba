@@ -6,7 +6,7 @@
 # network: a firmware will be generated for each child
 #   node_name: a particular node with its custom firmware that will be generated. Put here the name of your node, in guifi this is CITYStreetNumber, this is going to be also the ESSID
 #     <<: inheritances from other yaml files
-#     bmx6_tun4: Ask guifi.net website. we usually use a netmask of /27 (30 hosts)
+#     ip4_cidr: Ask guifi.net website. we usually use a netmask of /27 (30 hosts)
 #     wifi_channel: do a wifi scan or ask your community
 
 # nanostation m5 and nanostation loco m5 xm series
@@ -14,23 +14,23 @@ network:
 
   hostname-nano-xw:
     <<: *regular-ubnt-nano-m-xw
-    bmx6_tun4: '10.1.1.1/27'
+    ip4_cidr: '10.1.1.1/27'
     wifi_channel: 120
     notes: comments are visible in output file to highlight something
 
 #  hostname-x86_64:
 #    <<: *regular-x86_64
-#    bmx6_tun4: '10.1.1.1/27'
+#    ip4_cidr: '10.1.1.1/27'
 #
 #  hostname-nano-xm:
 #    <<: *regular-ubnt-nano-m
-#    bmx6_tun4: '10.1.1.1/27'
+#    ip4_cidr: '10.1.1.1/27'
 #    wifi_channel: 132
 #    wifi_htmode: 'HT20' # overrides HT40 variable of 10-globals.yml (the example)
 #
 #  border-node-example:
 #    <<: *border-ubnt-nano-m-xw
-#    bmx6_tun4: '10.1.66.161/27'
+#    ip4_cidr: '10.1.66.161/27'
 #    bgp_local_addr: '10.1.66.161'
 #    bgp_local_as: '98790'
 #    bgp_neigh_name: 'BCNHangarST2'
