@@ -7,6 +7,7 @@ config interface 'loopback'
 config globals 'globals'
 
 config interface 'lan'
+  option auto '1'
   option type 'bridge'
   option ifname 'eth0'
   option proto 'static'
