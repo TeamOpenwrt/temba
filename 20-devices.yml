@@ -107,7 +107,7 @@ devices:
     filebase: 'files/template__regular-ubnt-loco-m-xw'
     # wifi_txpower: 22 # its max value
 
-  regular-ubnt-rocket-m-xw: &ubnt-rocket-m-xw
+  regular-ubnt-rocket-m-xw: &regular-ubnt-rocket-m-xw
     <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-rocket-m-xw
@@ -116,7 +116,7 @@ devices:
     wifi_path: 'platform/ar934x_wmac'
     filebase: 'files/template__regular-ubnt-rocket-m-xw'
 
-  regular-ubnt-bullet-m: &ubnt-bullet-m
+  regular-ubnt-bullet-m: &regular-ubnt-bullet-m
     <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-bullet-m
