@@ -219,6 +219,9 @@ def generate_firmware(node_cfg, myPath)
   node_name = node_cfg['node_name']
   check_var('node_name', node_name)
   profile = node_cfg['profile']
+  profile_bin = node_cfg['profile_bin']
+  # next is probably the situation for all target/linux/ar71xx/image/legacy.mk -> src https://bugs.openwrt.org/index.php?do=details&task_id=2061
+  profile_bin = profile if node_cfg['profile_bin'].nil?
   check_var('profile', profile)
   packages = node_cfg['packages']
   check_var('packages', packages)
@@ -264,10 +267,10 @@ def generate_firmware(node_cfg, myPath)
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-sysupgrade.bin",
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile}-squashfs-factory.bin",
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-factory.bin",
       out_path['factory'])
 
     # compact both files in a zip
