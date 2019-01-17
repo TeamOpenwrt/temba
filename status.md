@@ -75,6 +75,10 @@ Work in progress
     - [x] tested
     - [ ] in production
 
+- regular-ALFANX
+    - [x] template
+    - [x] tested
+
 - border-nanostation-m-xw
 
     - note: template is based on a node running in production (strange bgp: 10.1.66.161, normal bgp: 10.1.71.161)

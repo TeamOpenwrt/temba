@@ -132,7 +132,7 @@ devices:
     profile_bin: alfa-nx
     platform: ar71xx
     platform_type: generic
-    #wifi_path: '?'
+    wifi_path: 'pci0000:00/0000:00:00.0'
     filebase: 'files/template__regular-ALFANX'
 
   border-ubnt-nano-m-xw: &border-ubnt-nano-m-xw
