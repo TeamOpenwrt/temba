@@ -9,20 +9,25 @@ config globals 'globals'
 config interface 'lan'
   option auto '1'
   option type 'bridge'
-  option ifname 'eth0'
+  # in this configuration: PoE LAN port (eth1 interface) does not work in ipv6 link local (duplicated address), only PoE WAN/LAN port (eth0 interface)
+  option ifname 'eth0 eth1'
   option proto 'static'
   option ipaddr '<%= @node.fetch('ip4') %>'
   option netmask '<%= @node.fetch('netmask4') %>'
   option dns '<%= @node.fetch('dns_server') %>'
   option ip6assign '64'
 
-config interface 'wan'
-  option ifname 'eth1'
-  option proto 'dhcp'
+# eth0 is PoE WAN/LAN
+# eth1 is PoE LAN
 
-config interface 'wan6'
-  option ifname 'eth1'
-  option proto 'dhcpv6'
+# this was disabled to avoid confusion
+#config interface 'wan'
+#  option ifname 'eth1'
+#  option proto 'dhcp'
+#
+#config interface 'wan6'
+#  option ifname 'eth1'
+#  option proto 'dhcpv6'
 
 # standard mesh guifi bcn (bmx6 runs on vlan 12)
 config device 'wif0_t'
