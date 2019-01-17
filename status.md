@@ -44,7 +44,7 @@ Work in progress
 
     - note:
         - template is based on a node running in production (10.1.73.65)
-        - [PowerBeam M5-300 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam)
+        - [PowerBeam M5-300 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam) but **is not going to work properly** see [#63](https://gitlab.com/guifi-exo/temba/issues/63)
     - [x] template
     - [x] tested
       - 10.1.56.97
