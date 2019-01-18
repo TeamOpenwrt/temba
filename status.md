@@ -23,7 +23,7 @@ Work in progress
 
     - note: Nanostation M5 XM and Nanostation M5 XW uses this firmware
     - [x] template
-    - [x] tested
+    - [x] tested in '17.01.4'
     - [x] in production
         - 10.1.58.65 with temba commit d4f4256
         - 10.1.56.161
@@ -35,7 +35,7 @@ Work in progress
 
     - note: template is based on a node running in production (10.1.71.97)
     - [x] template
-    - [x] tested
+    - [x] tested in '17.01.4'
     - [x] in production
       - 10.1.57.193
       - 10.1.58.161
@@ -46,7 +46,7 @@ Work in progress
         - template is based on a node running in production (10.1.73.65)
         - [PowerBeam M5-300 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam) but **is not going to work properly** see [#63](https://gitlab.com/guifi-exo/temba/issues/63)
     - [x] template
-    - [x] tested
+    - [x] tested in '17.01.4'
       - 10.1.56.97
 
 - regular-rocket-m
@@ -54,7 +54,7 @@ Work in progress
     - note: template is based on a node running in production (10.1.72.1)
         - observeu que en el cas de la Rocket, he afegit una nova iface WAN per connectar a un router ADSL (per exemple) a través d'una VLAN
     - [ ] template
-    - [ ] tested
+    - [ ] tested in '17.01.4'
 
 - regular-rocket-m-xw
 
@@ -62,7 +62,7 @@ Work in progress
         - checked 10.1.27.129 as reference, it is similar to nanostation-loco-m-xw
         - [PowerBeam M5-400 uses this firmware](https://openwrt.org/toh/ubiquiti/powerbeam?s[]=powerbeam)
     - [x] template
-    - [x] tested
+    - [x] tested in '17.01.4'
     - [x] in production
       - 10.1.192.129 (Powerbeam M5-400)
 
@@ -72,16 +72,16 @@ Work in progress
         - template inspired from a a running node with qMp 3.2.1 (10.1.12.193)
         - [Nanobridge](https://openwrt.org/toh/ubiquiti/airmaxm) runs this target
     - [x] template
-    - [x] tested
+    - [x] tested in '17.01.4'
     - [ ] in production
 
 - regular-ALFANX
     - [x] template
-    - [x] tested
+    - [x] tested in '17.01.4'
 
 - border-nanostation-m-xw
 
     - note: template is based on a node running in production (strange bgp: 10.1.66.161, normal bgp: 10.1.71.161)
     - [x] template
-    - [ ] tested
+    - [ ] tested in '17.01.4'
 

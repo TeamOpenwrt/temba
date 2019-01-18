@@ -9,7 +9,8 @@ require 'ipaddress' # ip validation
 
 # initialize variables that are usually set in 10-globals.yml
 # TODO find alternative way for these global variables
-$lede_version=''
+$openwrt_version=''
+$openwrt=''
 $download_base=''
 $image_base=''
 $platform=''
@@ -72,20 +73,27 @@ def generate_all(myPath)
 end
 
 def prepare_global_variables(node_cfg, myPath)
-  $lede_version = node_cfg['lede_version']
-  check_var('lede_version', $lede_version)
+  $openwrt_version = node_cfg['openwrt_version']
+  check_var('openwrt_version', $openwrt_version)
+  $openwrt = node_cfg['openwrt']
+  check_var('openwrt', $openwrt)
+  # check coherence between name and number
+  if ($openwrt_version.split('.')[0] == '17' && $openwrt == 'openwrt') or ($openwrt_version.split('.')[0] != '17' && $openwrt == 'lede')
+    puts "ERROR Mismatch:\n  Given openwrt_version=#{$openwrt_version} openwrt=#{$openwrt}.\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
+    abort
+  end
   $platform = node_cfg['platform']
   check_var('platform', $platform)
   $platform_type = node_cfg['platform_type']
   check_var('platform_type', $platform_type)
   if node_cfg['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
-    $image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{$lede_version}/#{$platform}/#{$platform_type}/ib"
+    $image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{$openwrt_version}/#{$platform}/#{$platform_type}/ib"
   elsif node_cfg['image_base_type'] == 'path'
     $image_base = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
-    $download_base = "https://downloads.lede-project.org/releases/#{$lede_version}/targets/#{$platform}/#{$platform_type}/"
-    $image_base = myPath + "lede-imagebuilder-#{$lede_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
+    $download_base = "https://downloads.openwrt.org/releases/#{$openwrt_version}/targets/#{$platform}/#{$platform_type}/"
+    $image_base = myPath + "#{$openwrt}-imagebuilder-#{$openwrt_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
     prepare_official_ib()
   end
   check_var('image_base', $image_base)
@@ -254,7 +262,7 @@ def generate_firmware(node_cfg, myPath)
   if "#{$platform}-#{$platform_type}" == "x86-64"
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/#{$openwrt}-#{$openwrt_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
       out_path)
 
     # this requires so much space and is slow
@@ -267,10 +275,10 @@ def generate_firmware(node_cfg, myPath)
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/#{$openwrt}-#{$openwrt_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/lede-#{$lede_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-factory.bin",
+      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/#{$openwrt}-#{$openwrt_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-factory.bin",
       out_path['factory'])
 
     # compact both files in a zip

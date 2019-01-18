@@ -4,7 +4,8 @@
 # all variables explained
 
 # mesh-globals:
-#   lede_version: what version is going to use your base firmware
+#   openwrt_version: what version is going to use your base firmware
+#   openwrt: 'openwrt' or 'lede' (this is a temp backward compatible measure)
 #   image_base_type: select between lime-sdk, custom path for image builder or official openwrt image builder
 #   image_base_limesdk: if image_base_type is 'lime-sdk' put the path to the lime-sdk git repository
 #   image_
@@ -20,7 +21,8 @@
 
 globals: &globals
   passwd: 13f
-  lede_version: '17.01.4'
+  openwrt_version: '18.06.1' # previous was '17.01.4'
+  openwrt: 'openwrt' # or 'lede' (this variable exist to have a temporary backward compatibility to lede)
   dns_server: '8.8.8.8' # bcn.guifi.net = 10.228.203.104
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104
 
