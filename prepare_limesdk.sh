@@ -1,3 +1,6 @@
+# development environment
+## work in progress (only intended to work on 18.06.1)
+
 set -e   # causes the shell to exit if any subcommand or pipeline returns a non-zero status.
 set -v
 
@@ -10,8 +13,8 @@ cd ../lime-sdk
 ## release hardcoded (TODO)
 cat > options.conf.local <<EOF
 #release=17.01.4
-release=18.04.1
-base_url=https://downloads.openwrt.org/releases/$release/targets/
+release=18.06.1
+base_url=https://downloads.openwrt.org/releases/\$release/targets/
 communities_git=https://github.com/libremesh/network-profiles.git
 communities_dir=communities
 tmp_dir=tmp
@@ -30,7 +33,7 @@ targets_list=targets.list
 downloads_dir=dl
 make_j=1
 bin_output=output
-brand_name=lede
+brand_name=openwrt
 EOF
 
 ## release hardcoded (TODO)
@@ -46,7 +49,21 @@ EOF
 ./cooker -f
 
 # optional patch
-../lime-sdk/snippets/regdbtz.sh
+cat > feeds/base/package/firmware/wireless-regdb/patches/962-regulatory-domains-database.patch <<EOF
+--- a/db.txt    2018-11-28 06:22:43.218991030 +0100
++++ b/db.txt    2018-11-28 06:23:47.994200112 +0100
+@@ -1209,8 +1209,8 @@
+    (57000 - 66000 @ 2160), (40)
+
+ country TZ:
+-   (2402 - 2482 @ 40), (20)
+-   (5735 - 5835 @ 80), (30)
++    (2402 - 2484 @ 40), (30)
++    (5150 - 5835 @ 80), (30)
+
+ # Source:
+ # #914 / 06 Sep 2007: http://www.ucrf.gov.ua/uk/doc/nkrz/1196068874
+EOF
 
 # get specific version of bmx6 -> src https://gitlab.com/guifi-exo/wiki/blob/master/howto/openwrt_template.md
 # more https://github.com/bmx-routing/bmx6/tree/2a87b770d3f9c254e3927dc159e2f425f2e0e83a
