@@ -5,6 +5,13 @@
 # contains example when I decided to add dropbear authorized keys to all
 # targets.
 
+# thanks https://unix.stackexchange.com/a/52801
+if [[ $(dirname $0) != . ]]; then
+  echo 'ERROR: execute script in the same directory (no absolute nor relative path)'
+  exit 1
+fi
+
+
 # thanks! https://superuser.com/a/157832
 
 DIR="../files/" # template directory

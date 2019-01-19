@@ -9,6 +9,13 @@
 #    -../../../template__common
 #    +../../../library
 
+# thanks https://unix.stackexchange.com/a/52801
+if [[ $(dirname $0) != . ]]; then
+  echo 'ERROR: execute script in the same directory (no absolute nor relative path)'
+  exit 1
+fi
+
+
 # thanks! https://superuser.com/a/157832
 
 SRC_DIR=".." # current directory
