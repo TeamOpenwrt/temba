@@ -12,7 +12,7 @@ if [[ $(dirname $0) != . ]]; then
 fi
 
 # src https://gitlab.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md
-git clone https://github.com/libremesh/lime-sdk ../lime-sdk
+git clone https://github.com/libremesh/lime-sdk ../../lime-sdk
 
 cd ../../lime-sdk
 
