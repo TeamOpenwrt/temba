@@ -31,7 +31,7 @@ snippets/regdbtz18.sh
 # get specific version of bmx6 -> src https://gitlab.com/guifi-exo/wiki/blob/master/howto/openwrt_template.md
 # more https://github.com/bmx-routing/bmx6/tree/2a87b770d3f9c254e3927dc159e2f425f2e0e83a
 # warning: this assumes temba git repo is named temba and it is in the same level as lime-sdk
-cp ../temba/bmx6_Makefile feeds/routing/bmx6/Makefile
+cp ../temba/limesdk-files/bmx6_Makefile feeds/routing/bmx6/Makefile
 
 # ar71xx hardcoded
 ./cooker -b ar71xx/generic --force-local
