@@ -1,1 +1,3 @@
-run `./prepare_limesdk.sh`
+run
+
+    ./prepare_limesdk.sh

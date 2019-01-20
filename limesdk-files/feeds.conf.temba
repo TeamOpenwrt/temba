@@ -1,5 +1,5 @@
 ## release hardcoded (TODO)
-# source files fir 18.06.1 release https://git.openwrt.org/?p=openwrt/openwrt.git;a=blob;f=feeds.conf.default;h=9dddc195324f6c02e17df3fec3eda05e06756430;hb=70255e3d624cd393612069aae0a859d1acbbeeae
+# source files for 18.06.1 release https://git.openwrt.org/?p=openwrt/openwrt.git;a=blob;f=feeds.conf.default;h=9dddc195324f6c02e17df3fec3eda05e06756430;hb=70255e3d624cd393612069aae0a859d1acbbeeae
 src-git base https://git.openwrt.org/openwrt/openwrt.git^70255e3d624cd393612069aae0a859d1acbbeeae
 src-git packages https://git.openwrt.org/feed/packages.git^35e0b737ab496f5b51e80079b0d8c9b442e223f5
 src-git luci https://git.openwrt.org/project/luci.git^f64b1523447547032d5280fb0bcdde570f2ca913
