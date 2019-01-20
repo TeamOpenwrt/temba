@@ -35,3 +35,4 @@ cp ../temba/limesdk-files/bmx6_Makefile feeds/routing/bmx6/Makefile
 
 # ar71xx hardcoded
 ./cooker -b ar71xx/generic --force-local
+./cooker -c ar71xx/generic --profile=ubnt-loco-m-xw --flavor=mytargets --force-local
