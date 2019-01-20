@@ -12,7 +12,7 @@
 regular-packages: &regular-packages
   # break string in multilines -> src https://stackoverflow.com/questions/3790454/in-yaml-how-do-i-break-a-string-over-multiple-lines
   packages: >-
-    wireless-regdb
+    bmx6
     bmx6-json
     bmx6-sms
     bmx6-uci-config
@@ -30,6 +30,7 @@ regular-packages: &regular-packages
 
 border-packages: &border-packages
   packages: >-
+    bmx6
     bmx6-json
     bmx6-sms
     bmx6-uci-config
