@@ -27,6 +27,7 @@ cp ../temba/limesdk-files/flavors.conf.local .
 # TODO failed trying to change feeds
 # these feeds are not working (I suspect that is because libremesh packages are
 #  missing and the options.conf assumes are there)
+#  related issues: https://github.com/libremesh/lime-sdk/issues/47 and https://github.com/libremesh/lime-sdk/issues/9
 #cp ../temba/limesdk-files/feeds.conf.temba .
 
 # cooker does not work from other link
