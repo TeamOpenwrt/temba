@@ -21,9 +21,10 @@ cd ../../lime-sdk
 
 git checkout 943c4ad3d4f3cb8982c530e5d00ff7fa08cbf1d5
 
-# override release
-cp ../temba/limesdk-files/options.conf.local .
+# add new flavor (intended package to patch)
 cp ../temba/limesdk-files/flavors.conf.local .
+
+# TODO failed trying to change feeds
 # these feeds are not working (I suspect that is because libremesh packages are
 #  missing and the options.conf assumes are there)
 #cp ../temba/limesdk-files/feeds.conf.temba .
