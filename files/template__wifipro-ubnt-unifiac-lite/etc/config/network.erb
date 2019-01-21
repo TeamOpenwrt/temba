@@ -1,0 +1,29 @@
+config interface 'loopback'
+  option ifname 'lo'
+  option proto 'static'
+  option ipaddr '127.0.0.1'
+  option netmask '255.0.0.0'
+
+# config switch
+#   option name 'switch0'
+#   option reset '1'
+#   option enable_vlan '1'
+#
+# config switch_vlan
+#   option device 'switch0'
+#   option vlan '1'
+#   option ports '0 1 2 3 4'
+#   option vid '1'
+
+config interface '<%= @node.fetch('admin_vlan') %>'
+  option proto 'static'
+  option ipaddr '<%= @node.fetch('admin_vlan_ip') %>'
+  option netmask '255.255.255.0'
+  option gateway '<%= @node.fetch('admin_vlan_gw') %>'
+  option dns '<%= @node.fetch('dns_server') %>'
+  option ifname 'eth1.<%= @node.fetch('admin_vlan_id') %>'
+
+config interface '<%= @node.fetch('wifi_vlan') %>'
+  option type 'bridge'
+  option proto 'none'
+  option ifname 'eth0.<%= @node.fetch('wifi_vlan_id') %>'

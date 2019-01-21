@@ -175,3 +175,21 @@ devices:
     platform: ar71xx
     platform_type: generic
     profile: tl-wr841-v8
+
+  wifipro-ubnt-unifiac-lite: &wifipro-ubnt-unifiac-lite
+    <<: *wifipro-globals
+    profile: ubnt-unifiac-lite
+    platform: ar71xx
+    platform_type: generic
+
+    wifi2_hwmode: '11g'
+    wifi2_htmode: 'HT20'
+    wifi2_path: 'platform/qca956x_wmac'
+    #wifi2_channel: '11'
+    # wifi2_txpower: 23 # its max value
+
+    wifi5_hwmode: '11a'
+    wifi5_htmode: 'VHT80' # ac? this is default
+    wifi5_path: 'pci0000:00/0000:00:00.0'
+    #wifi5_channel: '36'
+    # wifi5_txpower: 23 # its max value
