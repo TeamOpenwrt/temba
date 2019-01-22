@@ -138,7 +138,7 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 
 Sometimes the commits are not done by the original authors
 
-@dyangol provided great help contributing with templates, configurations, bugfix and reviewing ideas here implemented
+@dyangol and @ces10 provided great help contributing with templates, configurations, bugfix and reviewing ideas here implemented
 
 The original idea is from [@yanosz](https://github.com/yanosz) and its repository https://github.com/yanosz/mesh_testbed_generator
 
