@@ -7,15 +7,6 @@ require 'ipaddress' # ip validation
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
-# initialize variables that are usually set in 10-globals.yml
-# TODO find alternative way for these global variables
-$openwrt_version=''
-$openwrt=''
-$download_base=''
-$image_base=''
-$platform=''
-$platform_type=''
-
 # src https://stackoverflow.com/a/27127342
 def gen_timestamp()
   return Time.new.strftime ("%Y-%m-%d-%H-%M-%L")
@@ -67,36 +58,40 @@ def generate_all(myPath)
   nodes['network'].each {|k, v|
     # convert key of the entire subarray as value node_name
     v['node_name'] = k
-    prepare_global_variables(v, myPath)
-    generate_node(v, myPath)
+    # we want all nodes to include these variables (they can be overridden)
+    v_n = prepare_global_variables(v, myPath)
+    generate_node(v_n, myPath)
   }
 end
 
 def prepare_global_variables(node_cfg, myPath)
-  $openwrt_version = node_cfg['openwrt_version']
-  check_var('openwrt_version', $openwrt_version)
-  $openwrt = node_cfg['openwrt']
-  check_var('openwrt', $openwrt)
+  openwrt_version = node_cfg['openwrt_version']
+  check_var('openwrt_version', openwrt_version)
+  openwrt_number = openwrt_version.split('.')[0]
+  openwrt = node_cfg['openwrt']
+  check_var('openwrt', openwrt)
   # check coherence between name and number
-  if ($openwrt_version.split('.')[0] == '17' && $openwrt == 'openwrt') or ($openwrt_version.split('.')[0] != '17' && $openwrt == 'lede')
-    puts "ERROR Mismatch:\n  Given openwrt_version=#{$openwrt_version} openwrt=#{$openwrt}.\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
+  if (openwrt_number == '17' && openwrt == 'openwrt') or (openwrt_number != '17' && openwrt == 'lede')
+    puts "ERROR Mismatch:\n  Given openwrt_version=#{openwrt_version} openwrt=#{openwrt}.\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
     abort
   end
-  $platform = node_cfg['platform']
-  check_var('platform', $platform)
-  $platform_type = node_cfg['platform_type']
-  check_var('platform_type', $platform_type)
+  platform = node_cfg['platform']
+  check_var('platform', platform)
+  platform_type = node_cfg['platform_type']
+  check_var('platform_type', platform_type)
   if node_cfg['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
-    $image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{$openwrt_version}/#{$platform}/#{$platform_type}/ib"
+    image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{openwrt_version}/#{platform}/#{platform_type}/ib"
   elsif node_cfg['image_base_type'] == 'path'
-    $image_base = myPath + node_cfg['image_base']
+    node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
-    $download_base = "https://downloads.openwrt.org/releases/#{$openwrt_version}/targets/#{$platform}/#{$platform_type}/"
-    $image_base = myPath + "#{$openwrt}-imagebuilder-#{$openwrt_version}-#{$platform}-#{$platform_type}.Linux-x86_64"
-    prepare_official_ib()
+    node_cfg['download_base'] = "https://downloads.openwrt.org/releases/#{openwrt_version}/targets/#{platform}/#{platform_type}/"
+    node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
+    prepare_official_ib(node_cfg)
   end
-  check_var('image_base', $image_base)
+  check_var('image_base', node_cfg['image_base'])
+
+  return node_cfg
 end
 
 def check_var(varname, var)
@@ -113,7 +108,7 @@ def generate_node(node_cfg, myPath)
   if $debug_erb
     dir_name = myPath + "debug-" + node_name
   else
-    dir_name = "#{$image_base}/files_generated"
+    dir_name = "#{node_cfg['image_base']}/files_generated"
   end
 
   prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files', node_cfg)
@@ -239,9 +234,11 @@ def generate_firmware(node_cfg, myPath)
     return
   end
 
-  puts("\n\n\n\n\n    >>> make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
+  image_base = node_cfg['image_base']
+
+  puts("\n\n\n\n\n    >>> make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   # throw error on system call -> src https://stackoverflow.com/a/18728161
-  system("make -C #{$image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{$image_base}\n    #{$image_base}.tar.xz"
+  system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    #{image_base}.tar.xz"
 
   # notes for the output file
   notes = node_cfg['notes']
@@ -257,12 +254,16 @@ def generate_firmware(node_cfg, myPath)
   Dir.mkdir out_dir
 
   zipfile = "#{out_dir_base}/#{node_name}_#{timestamp}.zip"
+  platform = node_cfg['platform']
+  platform_type = node_cfg['platform_type']
+  openwrt = node_cfg['openwrt']
+  openwrt_version = node_cfg['openwrt_version']
 
   # different platforms different names in output file
-  if "#{$platform}-#{$platform_type}" == "x86-64"
+  if "#{platform}-#{platform_type}" == "x86-64"
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/#{$openwrt}-#{$openwrt_version}-#{$platform}-#{$platform_type}-combined-ext4.img.gz",
+      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-combined-ext4.img.gz",
       out_path)
 
     # this requires so much space and is slow
@@ -275,10 +276,10 @@ def generate_firmware(node_cfg, myPath)
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/#{$openwrt}-#{$openwrt_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
+      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
     FileUtils.mv(
-      "#{$image_base}/bin/targets/#{$platform}/#{$platform_type}/#{$openwrt}-#{$openwrt_version}-#{$platform}-#{$platform_type}-#{profile_bin}-squashfs-factory.bin",
+      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin",
       out_path['factory'])
 
     # compact both files in a zip
@@ -301,11 +302,11 @@ def generate_firmware(node_cfg, myPath)
   ##Archive::Zip.archive(zipfile, out_dir + '/README.txt')
   system("zip -j -r #{zipfile} #{out_dir + '/README.txt'}")
   # add etc
-  FileUtils.cp_r "#{$image_base}/files_generated/etc", out_dir
+  FileUtils.cp_r "#{image_base}/files_generated/etc", out_dir
   ##Archive::Zip.archive(zipfile, out_dir + '/etc')
   system("cd #{out_dir}; zip -r #{'../' + File::basename(zipfile)} #{'./etc'}")
   # add etc-template
-  FileUtils.cp_r "#{$image_base}/files_generated/etc-template", out_dir + '/etc-template'
+  FileUtils.cp_r "#{image_base}/files_generated/etc-template", out_dir + '/etc-template'
   ##Archive::Zip.archive(zipfile, out_dir + '/etc-template')
   system("cd #{out_dir}; zip -r #{'../' + File::basename(zipfile)} #{'./etc-template'}")
   # add variables.yml
@@ -321,15 +322,18 @@ def generate_firmware(node_cfg, myPath)
 end
 
 # user should check consistency of image_base file and directory by itself
-def prepare_official_ib()
-  ib_archive = "#{$image_base}.tar.xz"
+def prepare_official_ib(node_cfg)
+  image_base = node_cfg['image_base']
+  download_base = node_cfg['download_base']
+
+  ib_archive = "#{image_base}.tar.xz"
 
   unless $debug_erb
     # rails case: ensure basename of ib_archive for concatenation, but place in the same place as temba cli
-    system("wget -c #{$download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{$download_base}; ib_archive=#{ib_archive}\n \n"
+    system("wget -c #{download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{download_base}; ib_archive=#{ib_archive}\n \n"
   end
 
-  unless File.exists? $image_base
+  unless File.exists? image_base
     # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
     system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)}")
   end
