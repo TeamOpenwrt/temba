@@ -4,7 +4,7 @@ class NodesController < ApplicationController
   def new
     @node = Node.new
     @node.vars = read_vars('../') # load config for form
-    @node.vars['temba_commit'] = get_current_temba_commit()
+    @node.vars['temba_commit_ror'] = get_current_temba_commit()
   end
 
   # thanks https://stackoverflow.com/questions/22002020/how-to-download-file-with-send-file

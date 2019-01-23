@@ -159,7 +159,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   temba_file = dir_name + '/etc/temba'
 
   # temba dynamic pseudorelease
-  temba_version = 'temba ' + node_cfg['openwrt_number'] + ' ' + get_current_temba_commit() + "\n" 
+  temba_version = 'temba ' + node_cfg['openwrt_version'] + ' ' + get_current_temba_commit() + "\n"
 
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_version)
@@ -173,6 +173,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # include variables in the yaml
   node_cfg['timestamp'] = timestamp
   node_cfg['temba_commit'] = get_current_temba_commit()
+  node_cfg['temba_version'] = temba_version
   # set a default password when it is indefined
   node_cfg['passwd'] = '13f' if node_cfg['passwd'].nil?
   # format password for /etc/shadow
