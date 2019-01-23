@@ -81,7 +81,7 @@ def prepare_global_variables(node_cfg, myPath)
   check_var('platform_type', platform_type)
   if node_cfg['image_base_type'] == 'lime-sdk'
     # this is the path given by lime-sdk
-    image_base = myPath + node_cfg['image_base_limesdk'] + '/' + "#{openwrt_version}/#{platform}/#{platform_type}/ib"
+    node_cfg['image_base'] = myPath + node_cfg['image_base_limesdk'] + '/' + "#{openwrt_version}/#{platform}/#{platform_type}/ib"
   elsif node_cfg['image_base_type'] == 'path'
     node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
