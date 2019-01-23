@@ -38,7 +38,7 @@
 <% end %>
 
 <p class="footer">
-  <b>temba <%= @node.vars['temba_commit'] %></b> <a href="<%= "https://gitlab.com/guifi-exo/temba/tree/"+@node.vars['temba_commit'] %>" target="_blank">tree</a> <a href="<%= "https://gitlab.com/guifi-exo/temba/commit/"+@node.vars['temba_commit'] %>" target="_blank">commit</a> |
+  <b>temba <%= @node.vars['globals']['openwrt_version'] %> <%= @node.vars['temba_commit_ror'] %></b> <a href="<%= "https://gitlab.com/guifi-exo/temba/tree/"+@node.vars['temba_commit_ror'] %>" target="_blank">tree</a> <a href="<%= "https://gitlab.com/guifi-exo/temba/commit/"+@node.vars['temba_commit_ror'] %>" target="_blank">commit</a> |
   <a href="https://gitlab.com/guifi-exo/temba/issues" target="_blank"><b>Bugs</b></a> |
   Contribute to <a href="https://gitlab.com/guifi-exo/temba/tree/master/files" target="_blank">templates</a>!
 </p>
