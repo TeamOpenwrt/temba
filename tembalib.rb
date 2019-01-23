@@ -158,6 +158,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
 
   temba_file = dir_name + '/etc/temba'
 
+  # temba dynamic pseudorelease
   temba_version = 'temba ' + node_cfg['openwrt_number'] + ' ' + get_current_temba_commit() + "\n" 
 
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
