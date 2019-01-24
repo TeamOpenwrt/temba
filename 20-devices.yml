@@ -50,7 +50,7 @@ border-packages: &border-packages
     birdc4
     luci-app-bird4
 
-wifipro-packages: &wifipro-pacages
+wifipro-packages: &wifipro-packages
   packages: >-
     luci-ssl
     tcpdump-mini
