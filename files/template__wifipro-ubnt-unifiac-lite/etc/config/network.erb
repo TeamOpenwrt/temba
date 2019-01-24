@@ -4,13 +4,16 @@ config interface 'loopback'
   option ipaddr '127.0.0.1'
   option netmask '255.0.0.0'
 
+# eventually you would need wifi admin
 config interface '<%= @node.fetch('admin_vlan') %>'
   option proto 'static'
+  option type 'bridge'
   option ipaddr '<%= @node.fetch('admin_vlan_ip') %>'
   option netmask '255.255.255.0'
   option gateway '<%= @node.fetch('admin_vlan_gw') %>'
   option dns '<%= @node.fetch('dns_server') %>'
-  option ifname 'eth1.<%= @node.fetch('admin_vlan_id') %>'
+  # admin untagged to facilitate troubleshooting
+  option ifname 'eth0'
 
 config interface '<%= @node.fetch('wifi_vlan') %>'
   option type 'bridge'
