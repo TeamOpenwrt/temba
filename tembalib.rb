@@ -278,23 +278,27 @@ def generate_firmware(node_cfg, myPath)
   else
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
+
+    # process sysupgrade image: move to a different directory and compact it
     FileUtils.mv(
       "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
 
+    # compact sysupgrade files in a zip
+    ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
+    system("zip -j -r #{zipfile} #{out_path['sysupgrade']}")
+
+    # process factory image: move to a different directory and compact it
     # some devices does not have factory
     factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
-    if File.exists? factory_path.
+    if File.exists? factory_path
       FileUtils.mv(
         factory_path,
         out_path['factory'])
+        ##Archive::Zip.archive(zipfile, out_path['factory'])
+        system("zip -j -r #{zipfile} #{out_path['factory']}")
     end
 
-    # compact both files in a zip
-    ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
-    system("zip -j -r #{zipfile} #{out_path['sysupgrade']}")
-    ##Archive::Zip.archive(zipfile, out_path['factory'])
-    system("zip -j -r #{zipfile} #{out_path['factory']}")
   end
 
   # add README to explain the contents of the zipfile)
