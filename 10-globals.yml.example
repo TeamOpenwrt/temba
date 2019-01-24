@@ -56,6 +56,7 @@ cpe-globals: &cpe-globals
 wifipro-globals: &wifipro-globals
   <<: *globals
   image_base_type: 'official' # note: because compile it is a nonsense
+  wifi_country: 'ES'
   wifi_ssid: 'OpenWrt'
   # the recommended value for indoor corporate deployment
   wifi_txpower: 12
