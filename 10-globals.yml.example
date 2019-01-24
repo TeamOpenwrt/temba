@@ -57,6 +57,8 @@ wifipro-globals: &wifipro-globals
   <<: *globals
   image_base_type: 'official' # note: because compile it is a nonsense
   wifi_ssid: 'OpenWrt'
+  # the recommended value for indoor corporate deployment
+  wifi_txpower: 12
   wifi_vlan: 'guest'
   wifi_vlan_id: 20
   admin_vlan: 'admin'
