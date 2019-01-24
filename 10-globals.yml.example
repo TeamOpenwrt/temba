@@ -62,7 +62,7 @@ wifipro-globals: &wifipro-globals
   wifi_vlan: 'guest'
   wifi_vlan_id: 20
   admin_vlan: 'admin'
-  admin_vlan_id: 10
+  admin_vlan_id: 10 # not used in current network config
   admin_vlan_gw: 192.168.10.1
   ssh-keys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEApVRWW6tHBKEoK2+QJ3but2tsqdJjwSCdhNO+2aLAaOV17bggWB1mRF51oaky6RFdZPqpeM8XejKoMyGYt8xDbRCAtW7SGzHW5SwTiQ8LLMAyZCAyf47k5YGdHZu0z3kZfSKzX6D9hO2JgJrrwz+MBpExS2h9HxINWafCKEcoi4WFaviwHuDfwNpqCQnojZc7K9KPP356RyytEDKlXcp88Ov+WnvzuEQ+ybEaQxroqRy5yX3n3cV0RxanBGleqLkdHqoN5VVFI4nS4bMcICtCCZMEEN9v9hahNqSU41wzBOQArZPsZssBH6OBHpAevKqzMyPkr8tG0qY+kvNsFiI+Aw== victor@cube
