@@ -281,9 +281,14 @@ def generate_firmware(node_cfg, myPath)
     FileUtils.mv(
       "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
-    FileUtils.mv(
-      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin",
-      out_path['factory'])
+
+    # some devices does not have factory
+    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
+    if File.exists? factory_path.
+      FileUtils.mv(
+        factory_path,
+        out_path['factory'])
+    end
 
     # compact both files in a zip
     ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
