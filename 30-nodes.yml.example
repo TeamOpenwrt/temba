@@ -39,3 +39,8 @@ network:
 #    bgp_agg_prefix:
 #      - '10.1.64.0/21{22,32}'
 #      - '10.1.65.0/21{22,32}'
+#
+#  test-wifipro:
+#    admin_vlan_ip: 192.168.1.20
+#    wifi2_channel: '11' # alternate 1,6,11
+#    wifi5_channel: '36' # you have more channels: 36 44 52 60 100 108 116 124 132 140
