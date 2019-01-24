@@ -178,6 +178,7 @@ devices:
 
   wifipro-ubnt-unifiac-lite: &wifipro-ubnt-unifiac-lite
     <<: *wifipro-globals
+    filebase: 'files/template__wifipro-ubnt-unifiac-lite'
     profile: ubnt-unifiac-lite
     platform: ar71xx
     platform_type: generic
