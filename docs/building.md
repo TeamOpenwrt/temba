@@ -37,3 +37,13 @@ make: Entering directory '/home/music/dev/temba/lede-imagebuilder-17.01.4-ar71xx
 Profile "ALFA-NX" does not exist!
 Use "make info" to get a list of available profile names.
 ```
+
+# debugging cooker
+
+requirements, missed:
+
+    time
+
+18.06.1/ar71xx/generic/sdk/ V=s
+
+https://bugs.openwrt.org/index.php?do=details&task_id=1918&status%5B0%5D=&pagenum=2

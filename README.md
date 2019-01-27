@@ -28,7 +28,7 @@ At the moment this is serving postqMp community with bmx6 (note that VLAN 12 on 
 
 If you want to control the build system my recomendation is to use [lime-sdk](https://github.com/libremesh/lime-sdk). [Instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
 
-[Check status of the project](./status.md)
+[Check status of the project](./docs/status.md)
 
 ## Structure
 
