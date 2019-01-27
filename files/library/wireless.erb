@@ -14,6 +14,11 @@ config wifi-device 'radio0'
 <% if ! @node['wifi_path'].nil? -%>
   option path '<%= @node.fetch('wifi_path') %>'
 <% end -%>
+  # two common options useful for mesh networks
+  # check here for understand why
+  # https://gitlab.com/guifi-exo/temba/tree/master/docs/wireless.md
+  option distance '5000'
+  option mcast_rate '6000'
 
 config wifi-iface 'default_radio0'
   option device 'radio0'
