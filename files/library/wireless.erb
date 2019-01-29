@@ -1,6 +1,5 @@
 config wifi-device 'radio0'
   option type 'mac80211'
-  option distance '1000'
   option hwmode '<%= @node.fetch('wifi_hwmode') %>'
   option htmode '<%= @node.fetch('wifi_htmode') %>'
   option channel '<%= @node.fetch('wifi_channel') %>'
