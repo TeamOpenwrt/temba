@@ -28,6 +28,18 @@ regular-packages: &regular-packages
     netcat
     mtr
 
+regular-packages-32ram: &regular-packages-32ram
+  packages: >-
+    bmx6
+    bmx6-json
+    bmx6-sms
+    bmx6-uci-config
+    bmx6-table
+    luci
+    luci-app-bmx6
+    iperf3
+    iwinfo
+
 border-packages: &border-packages
   packages: >-
     bmx6
@@ -95,7 +107,7 @@ devices:
 
   regular-ubnt-nano-m: &regular-ubnt-nano-m
     <<: *mesh-globals
-    <<: *regular-packages
+    <<: *regular-packages-32ram
     profile: ubnt-nano-m
     platform: ar71xx
     platform_type: generic
