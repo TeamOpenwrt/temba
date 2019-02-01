@@ -1,6 +1,6 @@
 # Nanostation M5 XM (32 MB RAM)
 
-qMp Clearance 3.2, master rev.9782ba8-20160121_1921 ram usage from a device in production, example 1, one long distance link
+qMp Clearance 3.2, master rev.9782ba8-20160121_1921 from a device in production, example 1, one long distance link
 
 ```
 # free -h
@@ -10,7 +10,7 @@ Mem:         28708        26632         2076          888         1440
 Swap:            0            0            0
 ```
 
-qMp Clearance 3.2, master rev.9782ba8-20160121_1921 ram usage from a device in production, example 2, very confident device...?
+qMp Clearance 3.2, master rev.9782ba8-20160121_1921 from a device in production, example 2, very confident device...?
 
 ```
 # free -h
@@ -20,7 +20,7 @@ Mem:         28708        23356         5352          452         1132
 Swap:            0            0            0
 ```
 
-qMp Clearance 3.2, master rev.9782ba8-20160121_1921 ram usage from a device in production, example 2, lots of wifi links
+qMp Clearance 3.2, master rev.9782ba8-20160121_1921 from a device in production, example 2, lots of wifi links
 
 ```
 # free -h
@@ -30,7 +30,7 @@ Mem:         28708        26648         2060          768         1036
 Swap:            0            0            0
 ```
 
-temba 18.06.1 ram usage from a device in production, example 1, relatively idle
+temba 18.06.1 from a device in production, example 1, relatively idle
 
 ```
 # free -h
