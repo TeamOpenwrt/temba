@@ -20,15 +20,6 @@ config interface 'lan'
 # eth0 is PoE WAN/LAN
 # eth1 is PoE LAN
 
-# this was disabled to avoid confusion
-#config interface 'wan'
-#  option ifname 'eth1'
-#  option proto 'dhcp'
-#
-#config interface 'wan6'
-#  option ifname 'eth1'
-#  option proto 'dhcpv6'
-
 # standard mesh guifi bcn (bmx6 runs on vlan 12)
 config device 'wif0_t'
   option type '8021q'
