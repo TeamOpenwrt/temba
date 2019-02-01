@@ -152,7 +152,7 @@ devices:
 
   regular-ALFANX: &regular-ALFANX
     <<: *mesh-globals
-    <<: *regular-packages
+    <<: *regular-packages-32ram
     profile: ALFANX
     profile_bin: alfa-nx
     platform: ar71xx
