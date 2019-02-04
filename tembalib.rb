@@ -345,10 +345,9 @@ def prepare_official_ib(node_cfg)
   unless $debug_erb
     # rails case: ensure basename of ib_archive for concatenation, but place in the same place as temba cli
     system("wget -c #{download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{download_base}; ib_archive=#{ib_archive}\n \n"
-  end
-
-  unless File.exists? image_base
-    # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
-    system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)}")
+    unless File.exists? image_base
+      # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
+      system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)}") or raise "ERROR processing system call"
+    end
   end
 end
