@@ -159,10 +159,12 @@ def prepare_directory(dir_name,filebase, node_cfg)
   temba_file = dir_name + '/etc/temba'
 
   # temba dynamic pseudorelease
-  temba_version = 'temba ' + node_cfg['openwrt_version'] + ' ' + get_current_temba_commit() + "\n"
+  temba_version = ' Temba ' + get_current_temba_commit() + "\n"
+  temba_hline = '-----------------------------------------------------' + "\n"
 
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_version)
+  File.write(temba_file, temba_hline)
 
   if node_cfg.key? 'timestamp'
     timestamp = node_cfg['timestamp']
