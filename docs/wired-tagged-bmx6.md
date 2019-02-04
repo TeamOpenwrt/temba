@@ -16,6 +16,8 @@ config interface 'mesh2'
   option auto '1'
 ```
 
+and add the new interfaces of mesh to LAN firewall zone
+
 in /etc/config/bmx6 add
 
 ```
