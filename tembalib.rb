@@ -160,7 +160,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
 
   # temba dynamic pseudorelease
   temba_version = ' Temba ' + get_current_temba_commit() + "\n"
-  temba_hline = '-----------------------------------------------------' + "\n"
+  temba_hline = ' -----------------------------------------------------' + "\n"
 
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
   File.write(temba_file, temba_version)
