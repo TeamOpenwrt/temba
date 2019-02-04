@@ -154,17 +154,15 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
   system('cp -rpL ' + filebase + ' ' + dir_name)
 
-  # create dinamically a file to identify temba firmware with specific branch and commit
 
-  temba_file = dir_name + '/etc/temba'
-
-  # temba dynamic pseudorelease
+  # temba dynamic pseudorelease that appears as banner
   temba_version = ' Temba ' + get_current_temba_commit() + "\n"
   temba_hline = ' -----------------------------------------------------' + "\n"
 
+  # create dinamically a file to identify temba firmware with specific branch and commit
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
-  File.write(temba_file, temba_version)
-  File.write(temba_file, temba_hline)
+  File.write(dir_name + '/etc/temba_commit', get_current_temba_commit())
+  File.write(dir_name + '/etc/temba_banner', temba_version + temba_hline)
 
   if node_cfg.key? 'timestamp'
     timestamp = node_cfg['timestamp']
@@ -182,8 +180,6 @@ def prepare_directory(dir_name,filebase, node_cfg)
   node_cfg['hashed_passwd'] = node_cfg['passwd'].crypt('$1$md5Salt$')
 
   File.write( dir_name + '/etc/temba_vars.yml', node_cfg.to_yaml)
-
-  File.write(temba_file, temba_version)
 
   # duplicate directory in order to maintain a copy of erb variables
   FileUtils.cp_r dir_name + '/etc', dir_name + '/etc-template'
