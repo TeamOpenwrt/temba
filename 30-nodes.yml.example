@@ -18,6 +18,16 @@ network:
     wifi_channel: 120
     notes: comments are visible in output file to highlight something
 
+#  test-l2tp:
+#    <<: *l2tp-nexx
+#    ip4_cidr: 10.1.1.1/27
+#    l2tp_guifigateway4: 10.10.10.11
+#    l2tp_user: user@exo.cat
+#    l2tp_passwd: 382948jiojlP
+#    wifi_ssid: my_private_wifi
+#    wifi_passwd: my_pwd_wifi
+
+
 #  hostname-x86_64:
 #    <<: *regular-x86_64
 #    ip4_cidr: '10.1.1.1/27'

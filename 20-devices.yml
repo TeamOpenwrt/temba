@@ -38,6 +38,7 @@ regular-packages-32ram: &regular-packages-32ram
     luci
     luci-app-bmx6
     iperf3
+    netperf
     iwinfo
 
 border-packages: &border-packages
@@ -170,13 +171,13 @@ devices:
     <<: *regular-packages
     filebase: 'files/template__regular-ubnt-nano-m-xw'
 
-  l2tp-mesh-nexx: &l2tp-mesh-nexx
+  l2tp-nexx: &l2tp-nexx
     <<: *cpe-globals
     <<: *l2tp-extra-packages
     profile: DEVICE_wt3020-8M
-    platform: ar71xx
-    platform_type: generic
-    tun_mtu: 1420
+    platform: ramips
+    platform_type: mt7620
+    wifi_path: 'platform/10180000.wmac'
     filebase: 'files/template__l2tp-nexx'
 
   l2tp-infra-nexx: &l2tp-infra-nexx
