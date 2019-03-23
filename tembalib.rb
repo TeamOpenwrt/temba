@@ -95,6 +95,7 @@ def prepare_global_variables(node_cfg, myPath)
   return node_cfg
 end
 
+# TODO check all varaibles with a for statement?
 def check_var(varname, var)
   #unless defined? varname # TODO test this
   if var == '' || var.nil?
@@ -116,10 +117,11 @@ def generate_node(node_cfg, myPath)
 
   # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
-  unless wifi_ssid_base.nil?
+  # don't use unless -> src https://veerasundaravel.wordpress.com/2011/02/25/why-ruby-unless-doesnt-have-elsif-or-elsunless-option/
+  if ! wifi_ssid_base.nil?
     node_cfg['wifi_ssid'] = (wifi_ssid_base + node_name).slice(0,32)
-  else
-    puts 'WARNING: "wifi_ssid_base" variable is undefined. This affects "wifi_ssid" to be undefined too'
+  elsif ! node_cfg['wifi_ssid'].nil?
+    puts 'WARNING: "wifi_ssid_base" variable is undefined. Custom "wifi_ssid" is going to be used'
   end
 
   # avoid redundant data entry in yaml (ip4_cidr in CIDR vs ip4 and netmask4)
@@ -260,10 +262,12 @@ def generate_firmware(node_cfg, myPath)
   openwrt = node_cfg['openwrt']
   openwrt_version = node_cfg['openwrt_version']
 
+  # TODO all this if block section should be highly refactored
   # different platforms different names in output file
   if "#{platform}-#{platform_type}" == "x86-64"
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
     FileUtils.mv(
+      # TODO this differs from "else" situation because there is not "-#{profile_bin}", changes the final text, and there is no sysupgrade image (just one image)
       "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-combined-ext4.img.gz",
       out_path)
 
@@ -278,9 +282,13 @@ def generate_firmware(node_cfg, myPath)
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
 
     # process sysupgrade image: move to a different directory and compact it
+    # TODO in "path" situation (image builder from stratch) "-#{openwrt_version}" must not be there
     FileUtils.mv(
-      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
+      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
+      # TODO recover this line for lime-sdk ?
+      #"#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
+      #out_path['sysupgrade'])
 
     # compact sysupgrade files in a zip
     ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
@@ -288,7 +296,9 @@ def generate_firmware(node_cfg, myPath)
 
     # process factory image: move to a different directory and compact it
     # some devices does not have factory
-    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
+    # TODO recover this line for lime-sdk ?
+    #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
+    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
     if File.exists? factory_path
       FileUtils.mv(
         factory_path,
