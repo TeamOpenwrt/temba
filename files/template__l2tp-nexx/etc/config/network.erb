@@ -1,0 +1,65 @@
+config interface 'loopback'
+  option ifname 'lo'
+  option proto 'static'
+  option ipaddr '127.0.0.1'
+  option netmask '255.0.0.0'
+
+config interface 'lan'
+  option auto '1'
+  option type 'bridge'
+  option ifname 'eth0.1'
+  option proto 'static'
+  option netmask '255.255.255.0'
+  option ip6assign '64'
+  option ipaddr '192.168.1.1'
+
+config device 'lan_dev'
+  option name 'eth0.1'
+
+config interface 'wan'
+  option ifname 'eth0.2'
+  option _orig_ifname 'eth0.2'
+  option _orig_bridge 'false'
+  option proto 'static'
+  option ipaddr '<%= @node.fetch('ip4') %>'
+  option netmask '<%= @node.fetch('netmask4') %>'
+  option ip6assign '64'
+
+config device 'wan_dev'
+  option name 'eth0.2'
+
+config interface 'wan6'
+  option ifname '@<%= @node.fetch('l2tp_ifname') %>'
+  option proto 'dhcpv6'
+  option reqaddress 'try'
+  option reqprefix 'auto'
+
+config switch
+  option name 'switch0'
+  option reset '1'
+  option enable_vlan '1'
+
+config switch_vlan
+  option device 'switch0'
+  option vlan '1'
+  option ports '1 2 3 4 6t'
+
+config switch_vlan
+  option device 'switch0'
+  option vlan '2'
+  option ports '0 6t'
+
+config route
+  option interface 'wan'
+  option target '10.0.0.0/8'
+  option gateway '<%= @node.fetch('l2tp_guifigateway4') %>'
+
+config interface '<%= @node.fetch('l2tp_ifname') %>'
+  option proto 'l2tp'
+  option server '<%= @node.fetch('l2tp_server') %>'
+  option username '<%= @node.fetch('l2tp_user') %>'
+  option password '<%= @node.fetch('l2tp_passwd') %>'
+  option ipv6 '1'
+  option mtu <%= @node.fetch('l2tp_mtu') %>
+  option checkup_interval '10'
+  option keepalive '20,10'
