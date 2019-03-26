@@ -15,3 +15,7 @@ openwrt-imagebuilder*
 
 # discard at the moment this file
 Gemfile.lock
+
+# Discard local packages
+vendor/*
+bin/*
