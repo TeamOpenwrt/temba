@@ -10,6 +10,7 @@
   - [Usage](#usage)
     - [20-devices.yml](#20-devicesyml)
   - [Run x86_64 in qemu](#run-x86_64-in-qemu)
+  - [Contribute to this software](#contribute-to-this-software)
   - [Testbed](#testbed)
   - [Notation & coding style](#notation--coding-style)
   - [Motivation](#motivation)
@@ -104,6 +105,18 @@ alternatively use `cooker` as described in [lime-sdk](https://gitlab.com/guifi-e
     qemu-system-x86_64 -M q35 -drive file=bin/hostname-x86_64-combined-ext4.img,id=d0,if=none,bus=0,unit=0 -device ide-hd,drive=d0,bus=ide.0
 
 src https://openwrt.org/docs/guide-user/virtualization/qemu#openwrt_in_qemu_x86-64
+
+## Contribute to this software
+In order to contribute to temba we have prepared a brief guide to developers:
+
+Installation:
+ - Clone this repository
+ - Install ruby in your system using package manager or another source: In debian based Linux you need to install: `ruby` package. (`sudo apt install ruby`).
+ - Install global dependencies using Gems: `sudo gem install ruby-debug-ide byebug bundler`
+ - Install temba's dependencies using `Gemfile` in project: `bundle install --binstubs
+`
+
+We tested temba's debugging using VS Code editor and we also include its configuration files in order to debug temba CLI.
 
 ## Testbed
 
