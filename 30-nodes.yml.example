@@ -18,6 +18,17 @@ network:
     wifi_channel: 120
     notes: comments are visible in output file to highlight something
 
+  device-842v2:
+    <<: *cpe-globals
+    <<: *l2tp-packages
+    filebase: 'files/notemplate__842v2'
+    platform: ar71xx
+    platform_type: generic
+    profile: tl-wr842n-v2
+    # this device in 18.06.2 is very slow and with 17.01.4 boots very quick (30 sec)
+    openwrt_version: '17.01.4'
+    openwrt: 'lede'
+
 #  test-l2tp:
 #    <<: *l2tp-nexx
 #    ip4_cidr: 10.1.1.1/27
