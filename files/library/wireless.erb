@@ -1,28 +1,28 @@
 config wifi-device 'radio0'
-  option type 'mac80211'
-  option hwmode '<%= @node.fetch('wifi_hwmode') %>'
-  option htmode '<%= @node.fetch('wifi_htmode') %>'
-  option channel '<%= @node.fetch('wifi_channel') %>'
-  option country '<%= @node.fetch('wifi_country') %>'
+	option type 'mac80211'
+	option hwmode '<%= @node.fetch('wifi_hwmode') %>'
+	option htmode '<%= @node.fetch('wifi_htmode') %>'
+	option channel '<%= @node.fetch('wifi_channel') %>'
+	option country '<%= @node.fetch('wifi_country') %>'
 <%# detect nil -> src https://softwareengineering.stackexchange.com/questions/302530/ruby-if-variable-vs-if-variable-nil -%>
 <%# when txpower is null, it is in auto mode -%>
 <% if ! @node['wifi_path'].nil? -%>
-  option txpower '<%= @node.fetch('wifi_txpower') %>'
+	option txpower '<%= @node.fetch('wifi_txpower') %>'
 <% end -%>
 <%# devices seems that always require this; leaving it null let's openwrt autocomplete it -%>
 <% if ! @node['wifi_path'].nil? -%>
-  option path '<%= @node.fetch('wifi_path') %>'
+	option path '<%= @node.fetch('wifi_path') %>'
 <% end -%>
-  # two common options useful for mesh networks
-  # check here for understand why
-  # https://gitlab.com/guifi-exo/temba/tree/master/docs/wireless.md
-  option distance '5000'
-  option mcast_rate '6000'
+	# two common options useful for mesh networks
+	# check here for understand why
+	# https://gitlab.com/guifi-exo/temba/tree/master/docs/wireless.md
+	option distance '5000'
+	option mcast_rate '6000'
 
 config wifi-iface 'default_radio0'
-  option device 'radio0'
-  option encryption 'none'
-  option mode 'adhoc'
-  option network 'wif0'
-  option bssid '<%= @node.fetch('wifi_bssid') %>'
-  option ssid '<%= @node.fetch('wifi_ssid') %>'
+	option device 'radio0'
+	option encryption 'none'
+	option mode 'adhoc'
+	option network 'wif0'
+	option bssid '<%= @node.fetch('wifi_bssid') %>'
+	option ssid '<%= @node.fetch('wifi_ssid') %>'
