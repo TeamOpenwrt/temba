@@ -147,9 +147,9 @@ config forwarding
 	option dest 'wan'
 	option src 'bmxtun'
 
-config rule             
+config rule
 	option name 'Allow-testbed-management'
-	option src 'wan'                      
-	option proto 'all'                    
-	option src_ip '192.168.99.0/24'       
+	option src 'wan'
+	option proto 'all'
+	option src_ip '192.168.99.0/24'
 	option target 'ACCEPT'
