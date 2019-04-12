@@ -284,7 +284,7 @@ def generate_firmware(node_cfg, myPath)
     # process sysupgrade image: move to a different directory and compact it
     # TODO in "path" situation (image builder from stratch) "-#{openwrt_version}" must not be there
     FileUtils.mv(
-      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
+      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       out_path['sysupgrade'])
       # TODO recover this line for lime-sdk ?
       #"#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
@@ -298,7 +298,7 @@ def generate_firmware(node_cfg, myPath)
     # some devices does not have factory
     # TODO recover this line for lime-sdk ?
     #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
-    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
+    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
     if File.exists? factory_path
       FileUtils.mv(
         factory_path,
