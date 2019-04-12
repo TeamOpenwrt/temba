@@ -73,7 +73,7 @@ def prepare_global_variables(node_cfg, myPath)
   check_var('openwrt', openwrt)
   # check coherence between name and number
   if (openwrt_number == '17' && openwrt == 'openwrt') or (openwrt_number != '17' && openwrt == 'lede')
-    puts "ERROR Mismatch:\n  Given openwrt_version=#{openwrt_version} openwrt=#{openwrt}.\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
+    puts "ERROR Mismatch:\n  Given openwrt_version=#{openwrt_version} openwrt=#{openwrt}\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
     abort
   end
   platform = node_cfg['platform']
@@ -175,7 +175,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # include variables in the yaml
   node_cfg['timestamp'] = timestamp
   node_cfg['temba_commit'] = get_current_temba_commit()
-  node_cfg['temba_version'] = temba_version
+  node_cfg['temba_version'] = temba_version.strip
   # set a default password when it is indefined
   node_cfg['passwd'] = '13f' if node_cfg['passwd'].nil?
   # format password for /etc/shadow
