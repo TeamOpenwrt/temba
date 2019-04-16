@@ -1,0 +1,54 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd67:c63f:1cca::/48'
+
+config interface 'lan'
+    option auto '1'
+    option auto '2'
+    option auto '1'
+	option ifname 'eth1'
+	option force_link '1'
+	option type 'bridge'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+	option dns '8.8.8.8 8.8.4.4'
+
+config interface 'guifi'
+	option ifname 'eth0'
+	option _orig_ifname 'eth0'
+	option _orig_bridge 'false'
+	option proto 'static'
+	option ipaddr '10.1.208.34'
+	option netmask '255.255.255.224'
+
+config switch
+	option name 'switch0'
+	option reset '1'
+	option enable_vlan '1'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '1'
+	option ports '0 1 2 3 4'
+
+config route
+	option interface 'guifi'
+	option gateway '10.1.208.33'
+	option target '10.0.0.0/8'
+
+config interface 'exo'
+	option proto 'l2tp'
+	option server '10.38.140.225'
+	option username 'user@exo.cat'
+	option password 'blabla'
+	option mtu '1420'
+	option checkup_interval '10'
+	option keepalive '20,10'
