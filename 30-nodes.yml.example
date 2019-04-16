@@ -25,8 +25,19 @@ network:
     platform: ar71xx
     platform_type: generic
     profile: tl-wr842n-v2
-    # this device in 18.06.2 is very slow and with 17.01.4 boots very quick (30 sec)
-    openwrt_version: '17.01.4'
+    # this device in 18.06.2 is very slow and with 17.01.6 boots very quick (30 sec)
+    openwrt_version: '17.01.6'
+    openwrt: 'lede'
+
+  device-841v8:
+    <<: *cpe-globals
+    <<: *l2tp-packages
+    filebase: 'files/notemplate__841v8'
+    platform: ar71xx
+    platform_type: generic
+    profile: tl-wr841-v8
+    # this device in 18.06.2 is very slow and with 17.01.6 boots very quick (30 sec)
+    openwrt_version: '17.01.6'
     openwrt: 'lede'
 
 #  test-l2tp:
