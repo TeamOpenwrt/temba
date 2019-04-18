@@ -268,7 +268,7 @@ def generate_firmware(node_cfg, myPath)
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
     FileUtils.mv(
       # TODO this differs from "else" situation because there is not "-#{profile_bin}", changes the final text, and there is no sysupgrade image (just one image)
-      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-combined-ext4.img.gz",
+      Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-combined-ext4.img.gz")[0],
       out_path)
 
     # this requires so much space and is slow
@@ -284,7 +284,7 @@ def generate_firmware(node_cfg, myPath)
     # process sysupgrade image: move to a different directory and compact it
     # TODO in "path" situation (image builder from stratch) "-#{openwrt_version}" must not be there
     FileUtils.mv(
-      "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
+      Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin")[0],
       out_path['sysupgrade'])
       # TODO recover this line for lime-sdk ?
       #"#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
@@ -298,10 +298,10 @@ def generate_firmware(node_cfg, myPath)
     # some devices does not have factory
     # TODO recover this line for lime-sdk ?
     #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
-    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
+    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
     if File.exists? factory_path
       FileUtils.mv(
-        factory_path,
+        Dir.glob(factory_path)[0],
         out_path['factory'])
         ##Archive::Zip.archive(zipfile, out_path['factory'])
         system("zip -j -r #{zipfile} #{out_path['factory']}")
