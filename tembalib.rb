@@ -338,6 +338,7 @@ def generate_firmware(node_cfg, myPath)
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
 
   puts("\ntemba finished succesfully!")
+  puts("firmware generated: output/" + File::basename(zipfile) + "\n\n")
   return zipfile
 end
 
