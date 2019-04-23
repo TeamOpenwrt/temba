@@ -298,10 +298,10 @@ def generate_firmware(node_cfg, myPath)
     # some devices does not have factory
     # TODO recover this line for lime-sdk ?
     #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
-    factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
+    factory_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin")[0]
     if File.exists? factory_path
       FileUtils.mv(
-        Dir.glob(factory_path)[0],
+        factory_path,
         out_path['factory'])
         ##Archive::Zip.archive(zipfile, out_path['factory'])
         system("zip -j -r #{zipfile} #{out_path['factory']}")
