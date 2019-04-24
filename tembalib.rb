@@ -324,11 +324,11 @@ def generate_firmware(node_cfg, myPath)
   # add etc
   FileUtils.cp_r "#{image_base}/files_generated/etc", out_dir
   ##Archive::Zip.archive(zipfile, out_dir + '/etc')
-  system("cd #{out_dir}; zip -r #{'../' + File::basename(zipfile)} #{'./etc'}")
+  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./etc'}")
   # add etc-template
   FileUtils.cp_r "#{image_base}/files_generated/etc-template", out_dir + '/etc-template'
   ##Archive::Zip.archive(zipfile, out_dir + '/etc-template')
-  system("cd #{out_dir}; zip -r #{'../' + File::basename(zipfile)} #{'./etc-template'}")
+  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./etc-template'}")
   # add variables.yml
   File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
   ##Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
@@ -338,7 +338,7 @@ def generate_firmware(node_cfg, myPath)
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
 
   puts("\ntemba finished succesfully!")
-  puts("firmware generated: output/" + File::basename(zipfile) + "\n\n")
+  puts("firmware generated: output/" + File.basename(zipfile) + "\n\n")
   return zipfile
 end
 
