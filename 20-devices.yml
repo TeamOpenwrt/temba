@@ -143,6 +143,7 @@ devices:
     wifi_path: 'platform/ar934x_wmac'
     filebase: 'files/template__regular-ubnt-rocket-m-xw'
 
+  # The rocket-m image is the bullet-m with an additionnal usb driver -> src https://openwrt.org/toh/ubiquiti/airmaxm?s[]=ubiquiti
   regular-ubnt-bullet-m: &regular-ubnt-bullet-m
     <<: *mesh-globals
     <<: *regular-packages
