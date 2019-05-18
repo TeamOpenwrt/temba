@@ -40,6 +40,7 @@ regular-packages-32ram: &regular-packages-32ram
     iperf3
     netperf
     iwinfo
+    tcpdump-mini
 
 border-packages: &border-packages
   packages: >-
