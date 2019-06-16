@@ -107,6 +107,15 @@ devices:
     bmx6_main_iface: 'mesh_12'
     filebase: 'files/template__regular-x86_64'
 
+  border-x86_64: &bordertb-x86_64
+    <<: *mesh-globals
+    <<: *border-packages
+    profile: Generic
+    platform: x86
+    platform_type: 64
+    bmx6_main_iface: 'mesh_12'
+    filebase: 'files/template__border-x86_64'
+
   regular-ubnt-nano-m: &regular-ubnt-nano-m
     <<: *mesh-globals
     <<: *regular-packages-32ram
