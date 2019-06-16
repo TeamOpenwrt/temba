@@ -42,6 +42,21 @@ regular-packages-32ram: &regular-packages-32ram
     iwinfo
     tcpdump-mini
 
+regular-packages-l2tp-32ram: &regular-packages-l2tp-32ram
+  packages: >-
+    bmx6
+    bmx6-json
+    bmx6-sms
+    bmx6-uci-config
+    bmx6-table
+    luci
+    luci-app-bmx6
+    iperf3
+    netperf
+    iwinfo
+    tcpdump-mini
+    xl2tpd
+
 border-packages: &border-packages
   packages: >-
     bmx6
