@@ -5,9 +5,6 @@ config interface 'loopback'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
 
-config globals 'globals'
-	option ula_prefix 'fd1b:b484:45bc::/48'
-
 config interface 'lan'
 	option type 'bridge'
 	option ifname 'eth1'
@@ -41,7 +38,7 @@ config switch_vlan
 config route
 	option interface 'wan'
 	option target '10.0.0.0/8'
-	option gateway '10.1.10.225'
+	option gateway '10.x.y.z'
 
 config interface 'exo'
 	option proto 'l2tp'

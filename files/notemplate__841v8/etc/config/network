@@ -5,9 +5,6 @@ config interface 'loopback'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
 
-config globals 'globals'
-	option ula_prefix 'fd67:c63f:1cca::/48'
-
 config interface 'lan'
     option auto '1'
     option auto '2'
@@ -26,7 +23,7 @@ config interface 'guifi'
 	option _orig_ifname 'eth0'
 	option _orig_bridge 'false'
 	option proto 'static'
-	option ipaddr '10.1.208.34'
+	option ipaddr '10.a.b.c'
 	option netmask '255.255.255.224'
 
 config switch
@@ -41,7 +38,7 @@ config switch_vlan
 
 config route
 	option interface 'guifi'
-	option gateway '10.1.208.33'
+	option gateway '10.x.y.z'
 	option target '10.0.0.0/8'
 
 config interface 'exo'
