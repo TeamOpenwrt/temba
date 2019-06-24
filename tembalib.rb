@@ -87,7 +87,12 @@ def prepare_global_variables(node_cfg, myPath)
     node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
     node_cfg['download_base'] = "https://downloads.openwrt.org/releases/#{openwrt_version}/targets/#{platform}/#{platform_type}/"
-    node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
+    # the path between different architectures is different (for example in cases of ar71xx and x86)
+    if node_cfg['platform'] == 'x86'
+        node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
+    else
+        node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64"
+    end
     prepare_official_ib(node_cfg)
   end
   check_var('image_base', node_cfg['image_base'])
