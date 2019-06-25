@@ -304,7 +304,7 @@ def generate_firmware(node_cfg, myPath)
     # TODO recover this line for lime-sdk ?
     #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
     factory_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin")[0]
-    if File.exists? factory_path
+    if ! factory_path.nil?
       FileUtils.mv(
         factory_path,
         out_path['factory'])
