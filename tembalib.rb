@@ -87,12 +87,16 @@ def prepare_global_variables(node_cfg, myPath)
     node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
     node_cfg['download_base'] = "https://downloads.openwrt.org/releases/#{openwrt_version}/targets/#{platform}/#{platform_type}/"
+
+    node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
+
+    # DEBUG
     # the path between different architectures is different (for example in cases of ar71xx and x86)
-    if node_cfg['platform'] == 'x86'
-        node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
-    else
-        node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64"
-    end
+    #if node_cfg['platform'] == 'x86' or node_cfg['profile'] == 'tl-wdr4300-v1'
+    #    node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
+    #else
+    #    node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64"
+    #end
     prepare_official_ib(node_cfg)
   end
   check_var('image_base', node_cfg['image_base'])
@@ -246,7 +250,7 @@ def generate_firmware(node_cfg, myPath)
 
   puts("\n\n\n\n\n    >>> make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
   # throw error on system call -> src https://stackoverflow.com/a/18728161
-  system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    #{image_base}.tar.xz"
+  system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    or the archive where came from #{File.basename(image_base)}.tar.xz"
 
   # notes for the output file
   notes = node_cfg['notes']
