@@ -65,3 +65,4 @@ wifipro-globals: &wifipro-globals
   admin_vlan: 'admin'
   admin_vlan_id: 10 # not used in current network config
   admin_vlan_gw: 192.168.10.1
+  passwd: 'mywifipropassword'
