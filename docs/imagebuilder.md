@@ -6,10 +6,11 @@
 
 - [Introduction](#introduction)
 - [Usage](#usage)
-  - [add package and prepare new image builder](#add-package-and-prepare-new-image-builder)
-    - [from scratch method](#from-scratch-method)
-    - [reusing as much as possible (this is still unfinished)](#reusing-as-much-as-possible-this-is-still-unfinished)
-      - [another examples with another packages](#another-examples-with-another-packages)
+  - [Add package and prepare new image builder](#add-package-and-prepare-new-image-builder)
+    - [From scratch method](#from-scratch-method)
+    - [Reusing method (work in progress)](#reusing-method-work-in-progress)
+      - [Another examples with another packages](#another-examples-with-another-packages)
+  - [show (target) profile list](#show-target-profile-list)
 
 <!-- END doctoc.sh generated TOC please keep comment here to allow auto update -->
 
