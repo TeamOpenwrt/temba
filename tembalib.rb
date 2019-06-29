@@ -238,7 +238,10 @@ def generate_firmware(node_cfg, myPath)
   # next is probably the situation for all target/linux/ar71xx/image/legacy.mk -> src https://bugs.openwrt.org/index.php?do=details&task_id=2061
   profile_bin = profile if node_cfg['profile_bin'].nil?
   check_var('profile', profile)
-  packages = node_cfg['packages']
+  # packages are generated through a merge of yaml arrays -> src https://stackoverflow.com/questions/24090177/how-to-merge-yaml-arrays
+  # it is required to postprocess with flatten function in ruby, and to put the array as a string separated by whitespaces
+  # packages can be repeated by different sets
+  packages = node_cfg['packages'].flatten.uniq.join(' ')
   check_var('packages', packages)
 
   if $debug_erb
