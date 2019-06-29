@@ -22,6 +22,8 @@ The method described here compiles the tools to do the image builder and after t
 
 looks like that with image builder you can do everything
 
+extra feature: once you have done the image builder it works offline (without internet)
+
 ## Usage
 
 use [install_imagebuilder.sh](../install_imagebuilder.sh) script as a helper to build the environment to run the *image builder*
