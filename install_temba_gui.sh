@@ -17,3 +17,6 @@ apt-get install ${packagelist[@]}
 gem install bundle
 cd ror_app_form
 bundle install
+# probably you will reach problem:
+#   gem install nokogiri -v '1.10.3
+# do that and `bundle install` again
