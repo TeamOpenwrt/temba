@@ -26,7 +26,7 @@ Buildsystem to generate custom Openwrt-Firmware files for different nodes in a c
 
 At the moment this is serving postqMp community and eXO.cat with bmx6 (note that VLAN 12 on ethernet is untagged). I'm open to generalize the solution, but as this is just me working on this I will continue this way.
 
-If you want to control the build system my recomendation is to use [install_imagebuilder.sh]() script. Check documentation [here](docs/ib.md). there are other build systems like [lime-sdk](https://github.com/libremesh/lime-sdk), [notes on lime-sdk instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
+If you want to control the build system my recomendation is to use [install_imagebuilder.sh]() script. Check documentation [here](docs/imagebuilder.md). there are other build systems like [lime-sdk](https://github.com/libremesh/lime-sdk), [notes on lime-sdk instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
 
 [Check status of the project](./docs/status.md)
 
