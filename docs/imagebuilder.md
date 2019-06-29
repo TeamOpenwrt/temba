@@ -49,8 +49,8 @@ if you need to add custom feeds do `./scripts/feeds update -a` and `./scripts/fe
 
 then edit `.config`:
 
-    - interactive method: `make menuconfig`
-    - follow the `.config` edit method used in [install_imagebuilder.sh](../install_imagebuilder.sh) and after that do `make defconfig`
+- interactive method: `make menuconfig`
+- follow the `.config` edit method used in [install_imagebuilder.sh](../install_imagebuilder.sh) and after that do `make defconfig`
 
 compile everything again
 
