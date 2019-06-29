@@ -24,9 +24,9 @@ One liner definition: erb templates on config files per device (some files are s
 
 Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network.
 
-At the moment this is serving postqMp community with bmx6 (note that VLAN 12 on ethernet is untagged)
+At the moment this is serving postqMp community and eXO.cat with bmx6 (note that VLAN 12 on ethernet is untagged). I'm open to generalize the solution, but as this is just me working on this I will continue this way.
 
-If you want to control the build system my recomendation is to use [lime-sdk](https://github.com/libremesh/lime-sdk). [Instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
+If you want to control the build system my recomendation is to use [install_imagebuilder.sh]() script. Check documentation [here](docs/ib.md). there are other build systems like [lime-sdk](https://github.com/libremesh/lime-sdk), [notes on lime-sdk instructions](https://github.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md)
 
 [Check status of the project](./docs/status.md)
 
@@ -45,7 +45,7 @@ To avoid redundancy of information we use different yaml files, you can test yam
 
 ## Install
 
-Requires debian 9 stable
+Requires debian 9 stable ([plus 8 GB of RAM if you want to compile openwrt](https://openwrt.org/docs/guide-user/additional-software/beginners-build-guide))
 
 if you don't have a debian or you don't want to taint your debian you can use [docker](https://docker.com)
 
@@ -138,11 +138,10 @@ To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb
 
 Sometimes the commits are not done by the original authors
 
-@dyangol and @ces10 provided great help contributing with templates, configurations, bugfix and reviewing ideas here implemented
-
-The original idea is from [@yanosz](https://github.com/yanosz) and its repository https://github.com/yanosz/mesh_testbed_generator
-
-The inspiration to do the ruby on rails form app comes from chef.libremesh.org, thanks [@aparcar](https://github.com/aparcar)
+- @dyangol and @ces10 provided great help contributing with templates, configurations, bugfix and reviewing ideas here implemented
+- @ces10 did a great contribution showing an alternative method to compile from scratch the image builder
+- the original idea of using ruby as helper for openwrt buildroot comes from [@yanosz](https://github.com/yanosz) and [its repository](https://github.com/yanosz/mesh_testbed_generator)
+- the inspiration to do the ruby on rails form app comes from https://chef.libremesh.org, thanks [@aparcar](https://github.com/aparcar)
 
 ## Similar projects
 
