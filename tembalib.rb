@@ -277,7 +277,7 @@ def generate_firmware(node_cfg, myPath)
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
     FileUtils.mv(
       # TODO this differs from "else" situation because there is not "-#{profile_bin}", changes the final text, and there is no sysupgrade image (just one image)
-      Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-combined-ext4.img.gz")[0],
+      Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}*-combined-ext4.img.gz")[0],
       out_path)
 
     # this requires so much space and is slow
