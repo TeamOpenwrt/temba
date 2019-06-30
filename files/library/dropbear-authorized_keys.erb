@@ -1,2 +1,2 @@
 <%# inspired by https://ask.puppet.com/question/4195/joining-array-from-hieraconcat-other-value-in-erb/ %>
-<%= @node['ssh-keys'].map{ |agg| "#{agg}" }.join(",\n") %>
+<%= @node['ssh-keys'].map{ |agg| "#{agg}" }.join("\n") %>
