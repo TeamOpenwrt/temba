@@ -278,10 +278,15 @@ def generate_firmware(node_cfg, myPath)
   # different platforms different names in output file
   if "#{platform}-#{platform_type}" == "x86-64"
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
-    FileUtils.mv(
-      # TODO this differs from "else" situation because there is not "-#{profile_bin}", changes the final text, and there is no sysupgrade image (just one image)
-      Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}*-combined-ext4.img.gz")[0],
-      out_path)
+
+    src_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}*-combined-ext4.img.gz")[0]
+
+    if src_path.nil?
+      raise '  ~> Target file does not exist, read previous lines about what happened. Does firmware fit this device?'
+    end
+
+    # TODO this differs from "else" situation because there is not "-#{profile_bin}", changes the final text, and there is no sysupgrade image (just one image)
+    FileUtils.mv(src_path, out_path)
 
     # this requires so much space and is slow
     #system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
@@ -293,11 +298,15 @@ def generate_firmware(node_cfg, myPath)
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
 
+    src_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin")[0]
+
+    if src_path.nil?
+      raise '  ~> Target file does not exist, read previous lines about what happened. Does firmware fit this device?'
+    end
+
     # process sysupgrade image: move to a different directory and compact it
     # TODO in "path" situation (image builder from stratch) "-#{openwrt_version}" must not be there
-    FileUtils.mv(
-      Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin")[0],
-      out_path['sysupgrade'])
+    FileUtils.mv(src_path, out_path['sysupgrade'])
       # TODO recover this line for lime-sdk ?
       #"#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
       #out_path['sysupgrade'])
@@ -312,11 +321,9 @@ def generate_firmware(node_cfg, myPath)
     #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
     factory_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin")[0]
     if ! factory_path.nil?
-      FileUtils.mv(
-        factory_path,
-        out_path['factory'])
+      FileUtils.mv(factory_path, out_path['factory'])
         ##Archive::Zip.archive(zipfile, out_path['factory'])
-        system("zip -j -r #{zipfile} #{out_path['factory']}")
+      system("zip -j -r #{zipfile} #{out_path['factory']}")
     end
 
   end
