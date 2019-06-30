@@ -128,12 +128,11 @@ openwrt config files indented with tab and code indented by 2 spaces (as in [GNU
 
 Device configuration should be:
 
-* Consistent / [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
-* Revertible - especially using `first_boot`
-* Under version control
+- Consistent / [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+- Revertible - especially using `first_boot`
+- Under version control
 
-To archive these goals, a OpenWRT-configuration is generated based on Ruby `.erb` templates. A dedicated firmware file is generated for each node.
-
+To achieve these goals, a OpenWRT-configuration is generated based on Ruby `.erb` templates. A dedicated firmware file is generated for each node.
 
 ## Invisible credits
 

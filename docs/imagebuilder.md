@@ -11,6 +11,7 @@
     - [Reusing method (work in progress)](#reusing-method-work-in-progress)
       - [Another examples with another packages](#another-examples-with-another-packages)
   - [show (target) profile list](#show-target-profile-list)
+  - [image builder detect when you exceed space](#image-builder-detect-when-you-exceed-space)
 
 <!-- END doctoc.sh generated TOC please keep comment here to allow auto update -->
 
@@ -133,3 +134,9 @@ make: Entering directory '/home/music/dev/temba/lede-imagebuilder-17.01.4-ar71xx
 Profile "ALFA-NX" does not exist!
 Use "make info" to get a list of available profile names.
 ```
+
+### image builder detect when you exceed space
+
+for example:
+
+    [mktplinkfw] *** error: images are too big by 31468 bytes
