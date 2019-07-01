@@ -70,7 +70,7 @@ source:
 quickstart (assuming new temba)
 
     cp -i 10-globals.yml.example 10-globals.yml
-    cp -i 30-globals.yml.example 30-nodes.yml
+    cp -i 30-nodes.yml.example 30-nodes.yml
     rake
 
 ### temba gui (rails)
