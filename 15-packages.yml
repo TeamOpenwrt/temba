@@ -40,7 +40,7 @@ regular-packages: &regular-packages
     - *pkg-net-tools
     - *pkg-tun-tools
     - luci-ssl
-    # this is a custom tool not avaiable in official openwrt repos
+    # this is a custom tool not available in official openwrt repos
     # regular-packages are always compiled with custom image builder
     #- dtun
 
