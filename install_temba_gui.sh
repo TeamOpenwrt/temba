@@ -11,7 +11,7 @@ packagelist=(
   patch ruby-dev zlib1g-dev liblzma-dev nodejs rubygems-integration ruby
 )
 
-apt-get install ${packagelist[@]}
+sudo apt-get install ${packagelist[@]}
 
 # install rails with bundle
 gem install bundle

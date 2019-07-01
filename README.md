@@ -54,7 +54,7 @@ if you don't have a debian or you don't want to taint your debian you can use [d
 
 and
 
-    apt install git vim
+    apt install git vim sudo
     git clone https://gitlab.com/guifi-exo/temba
     cd temba
 
