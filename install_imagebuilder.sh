@@ -10,16 +10,18 @@ git clone https://github.com/Openwrt/Openwrt.git -b v18.06.2
 cd Openwrt
 
 cat > feeds.config.default <<EOF
-# default packages from 18.06.2
-src-git packages https://git.openwrt.org/feed/packages.git^911bbd6bb4856f1e28ae00af37df62e4fa3529e5
-src-git luci https://git.openwrt.org/project/luci.git^6f6641d97de2c85ee5d87beda92ae8437d1dbdf5
-src-git routing https://git.openwrt.org/feed/routing.git^ea345d16a6e27c2a8fdf67bf543cc36a5f189131
-src-git telephony https://git.openwrt.org/feed/telephony.git^cb939d9677d6e38c428f9f297641d07611edeb04
+src-git packages https://git.openwrt.org/feed/packages.git;openwrt-18.06
+src-git luci https://git.openwrt.org/project/luci.git;openwrt-18.06
+src-git routing https://git.openwrt.org/feed/routing.git;openwrt-18.06
+# example to stick to a specific commit
+#src-git telephony https://git.openwrt.org/feed/telephony.git^cb939d9677d6e38c428f9f297641d07611edeb04
+src-git telephony https://git.openwrt.org/feed/telephony.git;openwrt-18.06
 
 # a custom package we use
 src-git dtun https://gitlab.com/guifi-exo/dtun.git
 EOF
 
+# if you do changes on feeds you have to reapply patches
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
@@ -31,6 +33,7 @@ EOF
 
 # fixed bmx6 version (hard compatibility with qMp 3.2.1)
 # cp patches/bmx6_Makefile feeds/routing/bmx6/Makefile
+# mkdir -p feeds/routing/bmx6/patches/
 # cp patches/999-fix-bmx6_json.patch feeds/routing/bmx6/patches/999-fix-bmx6_json.patch
 # -------------------------
 
