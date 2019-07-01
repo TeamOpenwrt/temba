@@ -42,7 +42,7 @@ regular-packages: &regular-packages
     - luci-ssl
     # this is a custom tool not avaiable in official openwrt repos
     # regular-packages are always compiled with custom image builder
-    - dtun
+    #- dtun
 
 regular-packages-32ram: &regular-packages-32ram
   packages:
