@@ -5,9 +5,11 @@
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 # this is for 18.06.2 openwrt release
 
-git clone https://github.com/Openwrt/Openwrt.git -b v18.06.2
+#git clone https://github.com/Openwrt/Openwrt.git -b v18.06.2
+git clone https://github.com/Openwrt/Openwrt.git
 
 cd Openwrt
+git checkout openwrt-18.06
 
 cat > feeds.config.default <<EOF
 src-git packages https://git.openwrt.org/feed/packages.git;openwrt-18.06
