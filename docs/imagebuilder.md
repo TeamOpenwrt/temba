@@ -140,3 +140,7 @@ Use "make info" to get a list of available profile names.
 for example:
 
     [mktplinkfw] *** error: images are too big by 31468 bytes
+
+### cleaning up
+
+these methods from openwrt documentation are useful to apply to image builder: https://openwrt.org/docs/guide-developer/build-system/use-buildsystem#cleaning_up
