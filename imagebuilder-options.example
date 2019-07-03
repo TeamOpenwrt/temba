@@ -1,0 +1,4 @@
+feeds='y'  # specially important first time
+dtun='n'
+patches='n'
+arch='ar71xx'

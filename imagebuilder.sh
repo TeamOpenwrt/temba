@@ -1,0 +1,126 @@
+#!/bin/bash
+
+set -e
+
+# Use this script to build an image builder as community cooker
+# dependencies of image builder are in install_temba_cli.sh
+
+###
+# Default parameters
+# the most interesting architecture # for antennas is ar71xx
+arch='ar71xx'
+# do not create-update-install feeds
+feeds='n'
+
+# Load options if available
+[[ -f imagebuilder-options ]] && source imagebuilder-options
+
+# From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
+# this is for 18.06.2 openwrt release
+#[[ ! -d Openwrt ]] && git clone https://github.com/Openwrt/Openwrt.git -b v18.06.2
+[[ ! -d Openwrt ]] && git clone https://github.com/Openwrt/Openwrt.git
+cd Openwrt
+git checkout v18.06.2
+
+###
+# Custom packages - enable dtun package
+if [[ $dtun = 'y' ]]; then
+  dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git'
+  ! grep -q "$dtun_git" feeds.conf &> /dev/null && echo "$dtun_git     # dtun: a custom package we use" >> feeds.conf
+  # here-document with spaces -> src https://unix.stackexchange.com/questions/76481/cant-indent-heredoc-to-match-nestings-indent
+  dtun_config=$(cat << '  _EOF' || :
+# custom package to use gre with dynamic IPs
+CONFIG_PACKAGE_dtun=y
+  _EOF
+  )
+
+  # when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
+  # solve it in a incomplete but effective manner
+  git_aux='https://git.openwrt.org/feed/packages.git'
+  ! grep -q "$dgit_aux" feeds.conf && cat feeds.conf.default >> feeds.conf
+fi
+
+###
+# Feeds operations
+#   note: if you do changes on feeds you have to reapply patches
+if [[ $feeds = 'y' || ! -d feeds ]]; then
+  ./scripts/feeds update -a
+  ./scripts/feeds install -a
+fi
+
+###
+# Custom Patches
+if [[ $patches = 'y' ]]; then
+  #international waters behavior
+  cp ../patches/999-international-waters.patch package/firmware/wireless-regdb/patches/
+  #fixed bmx6 version (hard compatibility with qMp 3.2.1)
+  cp ../patches/bmx6_Makefile feeds/routing/bmx6/Makefile
+  mkdir -p feeds/routing/bmx6/patches/
+  cp ../patches/999-fix-bmx6_json.patch feeds/routing/bmx6/patches/999-fix-bmx6_json.patch
+fi
+
+###
+# Architecture: x86_64 or ar71xx ?
+if [[ $arch = 'x86_64' ]]; then
+  # save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
+  # https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
+  read -r -d '' arch_config << '  _EOF' || :
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_64=y
+  _EOF
+elif [[ $arch = 'ar71xx' ]]; then
+  read -r -d '' arch_config << '  _EOF' || :
+CONFIG_TARGET_ar71xx=y
+CONFIG_TARGET_ar71xx_generic=y
+CONFIG_TARGET_ar71xx_generic_DEVICE_ubnt-nano-m-xw=y
+  _EOF
+fi
+
+###
+# Apply non-interactive configuration
+#   note: if you add extra packages later you have to do `make clean` to recompile image builder
+cat > .config << _EOF
+$arch_config
+# it is better to specify a concrete target, if no targets are specified then all are compiled: slower process
+CONFIG_PACKAGE_bmx6-json=m
+CONFIG_PACKAGE_bmx6-sms=m
+CONFIG_PACKAGE_bmx6-uci-config=m
+CONFIG_PACKAGE_bmx6-table=m
+#CONFIG_PACKAGE_luci=m
+CONFIG_PACKAGE_luci-ssl=m
+CONFIG_PACKAGE_luci-app-bmx6=m
+CONFIG_PACKAGE_iperf3=m
+CONFIG_PACKAGE_mtr=m
+CONFIG_PACKAGE_netcat=m
+CONFIG_PACKAGE_netperf=m
+CONFIG_PACKAGE_tcpdump-mini=m
+#CONFIG_PACKAGE_iwinfo=m
+CONFIG_PACKAGE_xl2tpd=y
+CONFIG_PACKAGE_wireguard=m
+CONFIG_PACKAGE_luci-app-wireguard=m
+CONFIG_PACKAGE_gre=y
+$dtun_config
+# looks like is a requirement for gre (?)
+CONFIG_PACKAGE_kmod-usb-ohci=y
+# option to kstripped images to save more space
+CONFIG_LUCI_SRCDIET=y
+CONFIG_TARGET_ROOTFS_INITRAMFS=y
+#CONFIG_ATH_USER_REGD=y
+# configure image builder
+CONFIG_IB=y
+CONFIG_IB_STANDALONE=y
+_EOF
+
+make defconfig
+# detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
+if [[ $EUID -ne 0 ]]; then
+  make -j$(nproc)
+else
+  echo 'Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
+  FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
+fi
+
+# extract image builder
+# TODO: check if exists a previous image builder
+# at the moment this is commented to avoid destroying a useful image builder
+# tar xvf bin/targets/ar71xx/generic/openwrt-imagebuilder*tar.xz
