@@ -136,8 +136,8 @@ fi
 
 ###
 # Organize image builder(s)
-mkdir -p imagebuilder_output/
-cd imagebuilder_output/
+mkdir -p imagebuilder_local/
+cd imagebuilder_local/
 platform="$(echo $arch | cut -d'_' -f1)"
 platform_type="$(echo $arch | cut -d'_' -f2)"
 [[ $platform = $platform_type ]] && platform_type="generic"

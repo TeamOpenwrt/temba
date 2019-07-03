@@ -81,7 +81,7 @@ def prepare_global_variables(node_cfg, myPath)
   platform_type = node_cfg['platform_type']
   check_var('platform_type', platform_type)
   if node_cfg['image_base_type'] == 'local'
-    node_cfg['image_base'] = myPath + "imagebuilder_output/#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64"
+    node_cfg['image_base'] = myPath + "imagebuilder_local/#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64"
   elsif node_cfg['image_base_type'] == 'path'
     node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
