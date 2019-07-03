@@ -80,9 +80,8 @@ def prepare_global_variables(node_cfg, myPath)
   check_var('platform', platform)
   platform_type = node_cfg['platform_type']
   check_var('platform_type', platform_type)
-  if node_cfg['image_base_type'] == 'lime-sdk'
-    # this is the path given by lime-sdk
-    node_cfg['image_base'] = myPath + node_cfg['image_base_limesdk'] + '/' + "#{openwrt_version}/#{platform}/#{platform_type}/ib"
+  if node_cfg['image_base_type'] == 'local'
+    node_cfg['image_base'] = myPath + "imagebuilder_output/#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64"
   elsif node_cfg['image_base_type'] == 'path'
     node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
@@ -307,9 +306,6 @@ def generate_firmware(node_cfg, myPath)
     # process sysupgrade image: move to a different directory and compact it
     # TODO in "path" situation (image builder from stratch) "-#{openwrt_version}" must not be there
     FileUtils.mv(src_path, out_path['sysupgrade'])
-      # TODO recover this line for lime-sdk ?
-      #"#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-sysupgrade.bin",
-      #out_path['sysupgrade'])
 
     # compact sysupgrade files in a zip
     ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
@@ -317,8 +313,6 @@ def generate_firmware(node_cfg, myPath)
 
     # process factory image: move to a different directory and compact it
     # some devices does not have factory
-    # TODO recover this line for lime-sdk ?
-    #factory_path = "#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}-#{openwrt_version}-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin"
     factory_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin")[0]
     if ! factory_path.nil?
       FileUtils.mv(factory_path, out_path['factory'])

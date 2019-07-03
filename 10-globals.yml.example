@@ -6,9 +6,7 @@
 # mesh-globals:
 #   openwrt_version: what version is going to use your base firmware
 #   openwrt: 'openwrt' or 'lede' (this is a temp backward compatible measure)
-#   image_base_type: select between lime-sdk, custom path for image builder or official openwrt image builder
-#   image_base_limesdk: if image_base_type is 'lime-sdk' put the path to the lime-sdk git repository
-#   image_
+#   image_base_type: select between local, custom path to specific image builder or official openwrt image builder
 #   dns_server: name services
 #   ntp_server: sync clock
 #   wifi_country: choose your closest country to renounce to your freedom
@@ -33,8 +31,8 @@ globals: &globals
 
 mesh-globals: &mesh-globals
   <<: *globals
-  image_base_type: 'official' # all options: official, path, lime-sdk
-  image_base_limesdk: '../lime-sdk/' # suggested place (relative path)
+  image_base_type: 'official' # all options: official, path, local
+  # image_base: 'path/to/specific/ib'
   # wifi parameters -> src https://openwrt.org/docs/guide-user/network/wifi/basic
   wifi_hwmode: '11a'
   wifi_htmode: 'HT40'
