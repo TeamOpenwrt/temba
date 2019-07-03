@@ -126,7 +126,13 @@ else
   FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
 fi
 
-# extract image builder
-# TODO: check if exists a previous image builder
-# at the moment this is commented to avoid destroying a useful image builder
-# tar xvf bin/targets/ar71xx/generic/openwrt-imagebuilder*tar.xz
+###
+# Organize image builder(s)
+mkdir -p imagebuilder_output/
+cd imagebuilder_output/
+platform="$(arch | cut -d'_' -f1)"
+platform_type="$(arch | cut -d'_' -f2)"
+[[ -z $platform_type ]] && platform_type="generic"
+ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
+ln -sf ../Openwrt/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
+[[ ! -d "$ib_dir" ]] && tar xf "${ib_d}.tar.xz"
