@@ -27,12 +27,11 @@ git checkout v18.06.2
 if [[ $dtun = 'y' ]]; then
   dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git'
   ! grep -q "$dtun_git" feeds.conf &> /dev/null && echo "$dtun_git     # dtun: a custom package we use" >> feeds.conf
-  # here-document with spaces -> src https://unix.stackexchange.com/questions/76481/cant-indent-heredoc-to-match-nestings-indent
-  dtun_config=$(cat << '  _EOF' || :
+  dtun_config=$(cat << _EOF || :
 # custom package to use gre with dynamic IPs
 CONFIG_PACKAGE_dtun=y
-  _EOF
-  )
+_EOF
+)
 
   # when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
   # solve it in a incomplete but effective manner
@@ -61,20 +60,26 @@ fi
 
 ###
 # Architecture: x86_64 or ar71xx ?
-if [[ $arch = 'x86_64' ]]; then
-  # save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
-  # https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
-  read -r -d '' arch_config << '  _EOF' || :
+case $arch in
+  x86_64)
+    # save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
+    # https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
+    read -r -d '' arch_config << '_EOF' || :
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
-  _EOF
-elif [[ $arch = 'ar71xx' ]]; then
-  read -r -d '' arch_config << '  _EOF' || :
+_EOF
+  ;;
+  ar71xx)
+  read -r -d '' arch_config << '_EOF' || :
 CONFIG_TARGET_ar71xx=y
 CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_DEVICE_ubnt-nano-m-xw=y
-  _EOF
-fi
+_EOF
+  ;;
+  *)
+  echo 'architectures available are x86_64 or ar71xx'
+  exit 1
+  ;;
 
 ###
 # Apply non-interactive configuration
