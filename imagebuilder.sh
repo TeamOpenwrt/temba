@@ -130,9 +130,9 @@ fi
 # Organize image builder(s)
 mkdir -p imagebuilder_output/
 cd imagebuilder_output/
-platform="$(arch | cut -d'_' -f1)"
-platform_type="$(arch | cut -d'_' -f2)"
-[[ -z $platform_type ]] && platform_type="generic"
+platform="$(echo $arch | cut -d'_' -f1)"
+platform_type="$(echo $arch | cut -d'_' -f2)"
+[[ $platform = $platform_type ]] && platform_type="generic"
 ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
 ln -sf ../Openwrt/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
-[[ ! -d "$ib_dir" ]] && tar xf "${ib_d}.tar.xz"
+[[ ! -d "$ib_d" ]] && tar xf "${ib_d}.tar.xz"
