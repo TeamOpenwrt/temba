@@ -5,19 +5,26 @@ set -e
 # Use this script to build an image builder as community cooker
 # dependencies of image builder are in install_temba_cli.sh
 
+# From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
+
 ###
 # Default parameters
-# the most interesting architecture # for antennas is ar71xx
+#   the most interesting architecture # for antennas is ar71xx
 arch='ar71xx'
-# do not create-update-install feeds
+#   do not create-update-install feeds
 feeds='n'
 
-# Load options if available
-[[ -f imagebuilder-options ]] && source imagebuilder-options
+###
+# Load options and arguments
+if [[ ! -f imagebuilder-options ]]; then
+  echo 'imagebuilder-options does not exist.'
+  echo '  copying imagebuilder-options.example to imagebuilder-options'
+  cp imagebuilder-options.example imagebuilder-options
+fi
+source imagebuilder-options
 
-# From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
-# this is for 18.06.2 openwrt release
-#[[ ! -d Openwrt ]] && git clone https://github.com/Openwrt/Openwrt.git -b v18.06.2
+###
+# Get repo and appropriate version of Openwrt
 [[ ! -d Openwrt ]] && git clone https://github.com/Openwrt/Openwrt.git
 cd Openwrt
 git checkout v18.06.2
@@ -32,9 +39,8 @@ if [[ $dtun = 'y' ]]; then
 CONFIG_PACKAGE_dtun=y
 _EOF
 )
-
-  # when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
-  # solve it in a incomplete but effective manner
+  #  when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
+  #  solve it in a incomplete but effective manner
   git_aux='https://git.openwrt.org/feed/packages.git'
   ! grep -q "$dgit_aux" feeds.conf && cat feeds.conf.default >> feeds.conf
 fi
@@ -50,9 +56,9 @@ fi
 ###
 # Custom Patches
 if [[ $patches = 'y' ]]; then
-  #international waters behavior
+  #  international waters behavior
   cp ../patches/999-international-waters.patch package/firmware/wireless-regdb/patches/
-  #fixed bmx6 version (hard compatibility with qMp 3.2.1)
+  #  fixed bmx6 version (hard compatibility with qMp 3.2.1)
   cp ../patches/bmx6_Makefile feeds/routing/bmx6/Makefile
   mkdir -p feeds/routing/bmx6/patches/
   cp ../patches/999-fix-bmx6_json.patch feeds/routing/bmx6/patches/999-fix-bmx6_json.patch
@@ -62,8 +68,8 @@ fi
 # Architecture: x86_64 or ar71xx ?
 case $arch in
   x86_64)
-    # save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
-    # https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
+    #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
+    #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
     read -r -d '' arch_config << '_EOF' || :
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
@@ -83,8 +89,9 @@ _EOF
 esac
 
 ###
-# Apply non-interactive configuration
-#   note: if you add extra packages later you have to do `make clean` to recompile image builder
+# Make openwrt
+#   apply non-interactive configuration
+#     note: if you add extra packages later you have to do `make clean` to recompile image builder
 cat > .config << _EOF
 $arch_config
 # it is better to specify a concrete target, if no targets are specified then all are compiled: slower process
@@ -116,9 +123,10 @@ CONFIG_TARGET_ROOTFS_INITRAMFS=y
 CONFIG_IB=y
 CONFIG_IB_STANDALONE=y
 _EOF
-
+# Prepare-validate non-interactive configuration
 make defconfig
-# detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
+# Compile
+#   detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
 if [[ $EUID -ne 0 ]]; then
   make -j$(nproc)
 else
