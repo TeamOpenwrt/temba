@@ -20,3 +20,7 @@ community: good place to learn openwrt development in general https://forum.open
 use one core and show all raw output:
 
     make V=s -j1
+
+# how to write procd init script
+
+https://openwrt.org/docs/guide-developer/procd-init-scripts
