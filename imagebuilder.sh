@@ -80,6 +80,7 @@ _EOF
   echo 'architectures available are x86_64 or ar71xx'
   exit 1
   ;;
+esac
 
 ###
 # Apply non-interactive configuration
