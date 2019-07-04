@@ -12,7 +12,7 @@ set -e
 #   the most interesting architecture # for antennas is ar71xx
 arch='ar71xx'
 #   do not create-update-install feeds
-feeds='n'
+syncfeeds='n'
 
 ###
 # Load options and arguments
