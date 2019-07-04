@@ -17,8 +17,8 @@ syncfeeds='n'
 ###
 # Load options and arguments
 if [[ ! -f imagebuilder-options ]]; then
-  echo 'imagebuilder-options does not exist.'
-  echo '  copying imagebuilder-options.example to imagebuilder-options'
+  echo '  File imagebuilder-options does not exist.'
+  echo '    Copying imagebuilder-options.example to imagebuilder-options'
   cp imagebuilder-options.example imagebuilder-options
 fi
 source imagebuilder-options
@@ -50,7 +50,7 @@ fi
 #   note: if you do changes on feeds you have to reapply patches
 if [[ $syncfeeds = 'y' || ! -d feeds ]]; then
   if [[ $syncfeeds = 'n' ]]; then
-    echo 'Non existing feeds directory. Bootstrapping feeds'
+    echo '  Non existing feeds directory. Bootstrapping feeds'
   fi
   ./scripts/feeds update -a
   ./scripts/feeds install -a
@@ -96,10 +96,6 @@ _EOF
   esac
 done
 
-echo "$arch_config"
-
-exit
-
 ###
 # Make openwrt
 #   apply non-interactive configuration
@@ -142,7 +138,7 @@ make defconfig
 if [[ $EUID -ne 0 ]]; then
   make -j$(nproc)
 else
-  echo 'Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
+  echo '  Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
   FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
 fi
 
