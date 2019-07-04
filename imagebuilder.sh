@@ -161,8 +161,8 @@ for arch in ${archs[@]}; do
   [[ $platform = $platform_type ]] && platform_type="generic"
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
   ln -sf ../Openwrt/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
-  echo "Removing old image builder $(pwd)/$ib_d ..."
+  echo "  Removing old $arch image builder $(pwd)/$ib_d ..."
   rm -rf "$ib_d" # remove old archive
-  echo "Decompressing new image builder $(pwd)/$ib_d ..."
+  echo "  Decompressing new $arch image builder $(pwd)/$ib_d ..."
   tar xf "${ib_d}.tar.xz"
 done
