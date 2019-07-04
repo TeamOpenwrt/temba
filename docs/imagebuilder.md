@@ -5,6 +5,7 @@
 **Table of Contents**
 
 - [Introduction](#introduction)
+- [Compilation requirements](#compilation-requirements)
 - [Usage](#usage)
   - [Add package and prepare new image builder](#add-package-and-prepare-new-image-builder)
     - [From scratch method](#from-scratch-method)
@@ -12,6 +13,7 @@
       - [Another examples with another packages](#another-examples-with-another-packages)
   - [show (target) profile list](#show-target-profile-list)
   - [image builder detect when you exceed space](#image-builder-detect-when-you-exceed-space)
+  - [cleaning up](#cleaning-up)
 
 <!-- END doctoc.sh generated TOC please keep comment here to allow auto update -->
 
@@ -26,9 +28,11 @@ looks like that with image builder you can do everything
 
 extra feature: once you have done the image builder it works offline (without internet)
 
-## Requirements
+## Compilation requirements
 
-4 GB of RAM according to https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
+The required libraries and tools can be installed with the script [install_temba_cli.sh](../install_temba_cli.sh). More info, check [dependencies according to openwrt wiki](https://openwrt.org/docs/guide-developer/build-system/install-buildsystem#examples_of_package_installations)
+
+[The station that will perform the compilation requires 4 GB of RAM according to openwrt wiki](https://openwrt.org/docs/guide-developer/build-system/install-buildsystem#prerequisites)
 
 I discovered that I run out of RAM when I saw this message and this [forum post explaining something similar](https://forum.archive.openwrt.org/viewtopic.php?id=55367&p=17), then I remembered that my Virtual Machine only had 1 GB of RAM (!)
 
