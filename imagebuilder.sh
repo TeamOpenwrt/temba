@@ -8,11 +8,13 @@ set -e
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 
 ###
-# Default parameters
+# Default fallback parameters
 #   the most interesting architecture # for antennas is ar71xx
 arch='ar71xx'
 #   do not create-update-install feeds
 syncfeeds='n'
+#   a version that just works
+openwrt_version='v18.06.2'
 
 ###
 # Load options and arguments
@@ -27,7 +29,7 @@ source imagebuilder-options
 # Get repo and appropriate version of Openwrt
 [[ ! -d Openwrt ]] && git clone https://github.com/Openwrt/Openwrt.git
 cd Openwrt
-git checkout v18.06.2
+git checkout "$openwrt_version"
 
 ###
 # Custom packages - enable dtun package

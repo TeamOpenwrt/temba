@@ -7,6 +7,9 @@ dtun='n'
 # put 'y' if you want to install custom patches
 patches='n'
 
+# select openwrt version (do `cd Openwrt; git tag` to select another one)
+openwrt_version='v18.06.2'
+
 # select ar71xx, x86_64 or both
 archs=(
   ar71xx

@@ -18,3 +18,4 @@ Gemfile.lock
 
 # image builder
 Openwrt
+imagebuilder-options
