@@ -32,7 +32,7 @@ git checkout v18.06.2
 ###
 # Custom packages - enable dtun package
 if [[ $dtun = 'y' ]]; then
-  dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git'
+  dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git;master'
   ! grep -q "$dtun_git" feeds.conf &> /dev/null && echo "$dtun_git     # dtun: a custom package we use" >> feeds.conf
   dtun_config=$(cat << _EOF || :
 # custom package to use gre with dynamic IPs
@@ -42,7 +42,7 @@ _EOF
   #  when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
   #  solve it in a incomplete but effective manner
   git_aux='https://git.openwrt.org/feed/packages.git'
-  ! grep -q "$dgit_aux" feeds.conf && cat feeds.conf.default >> feeds.conf
+  ! grep -q "$git_aux" feeds.conf && cat feeds.conf.default >> feeds.conf
 fi
 
 ###
