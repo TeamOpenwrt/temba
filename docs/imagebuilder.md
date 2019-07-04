@@ -26,9 +26,37 @@ looks like that with image builder you can do everything
 
 extra feature: once you have done the image builder it works offline (without internet)
 
+## Requirements
+
+4 GB of RAM according to https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
+
+I discovered that I run out of RAM when I saw this message and this [forum post explaining something similar](https://forum.archive.openwrt.org/viewtopic.php?id=55367&p=17), then I remembered that my Virtual Machine only had 1 GB of RAM (!)
+
+```
+make[4]: Entering directory '/root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0-initial/gcc'
+build/genautomata /root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0/gcc/common.md /root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0/gcc/config/mips/mips.md \
+  insn-conditions.md > tmp-automata.c
+/bin/bash: line 1: 28896 Killed                  build/genautomata /root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0/gcc/common.md /root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0/gcc/config/mips/mips.md insn-conditions.md > tmp-automata.c
+Makefile:2278: recipe for target 's-automata' failed
+make[4]: *** [s-automata] Error 137
+make[4]: Leaving directory '/root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0-initial/gcc'
+Makefile:4210: recipe for target 'all-gcc' failed
+make[3]: *** [all-gcc] Error 2
+make[3]: Leaving directory '/root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0-initial'
+Makefile:36: recipe for target '/root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0-initial/.built' failed
+make[2]: *** [/root/temba/Openwrt/build_dir/toolchain-mips_24kc_gcc-7.3.0_musl/gcc-7.3.0-initial/.built] Error 2
+make[2]: Leaving directory '/root/temba/Openwrt/toolchain/gcc/initial'
+time: toolchain/gcc/initial/compile#5.06#0.81#6.49
+toolchain/Makefile:98: recipe for target 'toolchain/gcc/initial/compile' failed
+make[1]: *** [toolchain/gcc/initial/compile] Error 2
+make[1]: Leaving directory '/root/temba/Openwrt'
+/root/temba/Openwrt/include/toplevel.mk:216: recipe for target 'toolchain/gcc/initial/compile' failed
+make: *** [toolchain/gcc/initial/compile] Error 2
+```
+
 ## Usage
 
-use [install_imagebuilder.sh](../install_imagebuilder.sh) script as a helper to build the environment to run the *image builder*
+use [imagebuilder.sh](../imagebuilder.sh) script as a helper to build the environment to run the *image builder*
 
 This is an advanced topic, so it is preferred that you read the script and understand it. If you have questions ask (you can open an issue as a question), merge requests improving documentation are very welcome.
 
