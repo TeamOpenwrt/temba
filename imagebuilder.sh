@@ -149,12 +149,15 @@ fi
 cd ..
 mkdir -p imagebuilder_local/
 cd imagebuilder_local/
-platform="$(echo $arch | cut -d'_' -f1)"
-platform_type="$(echo $arch | cut -d'_' -f2)"
-[[ $platform = $platform_type ]] && platform_type="generic"
-ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
-ln -sf ../Openwrt/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
-echo "Removing old image builder $(pwd)/$ib_d ..."
-rm -rf "$ib_d" # remove old archive
-echo "Decompressing new image builder $(pwd)/$ib_d ..."
-tar xf "${ib_d}.tar.xz"
+
+for arch in ${archs[@]}; do
+  platform="$(echo $arch | cut -d'_' -f1)"
+  platform_type="$(echo $arch | cut -d'_' -f2)"
+  [[ $platform = $platform_type ]] && platform_type="generic"
+  ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
+  ln -sf ../Openwrt/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
+  echo "Removing old image builder $(pwd)/$ib_d ..."
+  rm -rf "$ib_d" # remove old archive
+  echo "Decompressing new image builder $(pwd)/$ib_d ..."
+  tar xf "${ib_d}.tar.xz"
+done
