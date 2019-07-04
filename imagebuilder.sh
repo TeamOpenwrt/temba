@@ -135,6 +135,11 @@ CONFIG_IB_STANDALONE=y
 _EOF
 # Prepare-validate non-interactive configuration
 make defconfig
+# Sanity check: RAM memory -> src https://stackoverflow.com/questions/29271593/bash-check-for-amount-of-memory-installed-on-a-system-as-sanity-check
+totalm=$(free -m | awk '/^Mem:/{print $2}')
+if [[ $totalm -lt 4096 ]]; then
+  echo '  WARNING: your system has less than 4 GB of RAM, compilation can fail. See https://gitlab.com/guifi-exo/temba/blob/master/docs/imagebuilder.md#compilation-requirements'
+fi
 # Compile
 #   detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
 if [[ $EUID -ne 0 ]]; then
