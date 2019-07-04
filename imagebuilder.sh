@@ -48,7 +48,10 @@ fi
 ###
 # Feeds operations
 #   note: if you do changes on feeds you have to reapply patches
-if [[ $feeds = 'y' || ! -d feeds ]]; then
+if [[ $syncfeeds = 'y' || ! -d feeds ]]; then
+  if [[ $syncfeeds = 'n' ]]; then
+    echo 'Non existing feeds directory. Bootstrapping feeds'
+  fi
   ./scripts/feeds update -a
   ./scripts/feeds install -a
 fi
@@ -66,27 +69,36 @@ fi
 
 ###
 # Architecture: x86_64 or ar71xx ?
-case $arch in
-  x86_64)
-    #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
-    #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
-    read -r -d '' arch_config << '_EOF' || :
+arch_config='# arch config'
+for arch in ${archs[@]}; do
+  case $arch in
+    x86_64)
+      #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
+      #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
+      read -r -d '' arch_config << _EOF || :
+$arch_config
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
 _EOF
-  ;;
-  ar71xx)
-  read -r -d '' arch_config << '_EOF' || :
+    ;;
+    ar71xx)
+    read -r -d '' arch_config << _EOF || :
+$arch_config
 CONFIG_TARGET_ar71xx=y
 CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_DEVICE_ubnt-nano-m-xw=y
 _EOF
-  ;;
-  *)
-  echo 'architectures available are x86_64 or ar71xx'
-  exit 1
-  ;;
-esac
+    ;;
+    *)
+    echo 'architectures available are x86_64 and/or ar71xx'
+    exit 1
+    ;;
+  esac
+done
+
+echo "$arch_config"
+
+exit
 
 ###
 # Make openwrt

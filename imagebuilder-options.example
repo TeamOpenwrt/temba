@@ -1,4 +1,14 @@
-feeds='y'  # specially important in bootstrap
+# put 'y' if you want to update feeds each time imagebuilder.sh starts
+syncfeeds='n'
+
+# put 'y' if you want to install custom package dtun
 dtun='n'
+
+# put 'y' if you want to install custom patches
 patches='n'
-arch='ar71xx'
+
+# select ar71xx, x86_64 or both
+archs=(
+  ar71xx
+  #x86_64
+)
