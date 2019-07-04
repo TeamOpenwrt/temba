@@ -10,7 +10,7 @@ set -e
 ###
 # Default fallback parameters
 #   the most interesting architecture # for antennas is ar71xx
-arch='ar71xx'
+archs=(ar71xx)
 #   do not create-update-install feeds
 syncfeeds='n'
 #   a version that just works
