@@ -13,5 +13,6 @@ openwrt_version='v18.06.4'
 # select ar71xx, x86_64 or both
 archs=(
   ar71xx
+  #ath79
   #x86_64
 )

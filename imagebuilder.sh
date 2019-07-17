@@ -69,10 +69,11 @@ if [[ $patches = 'y' ]]; then
   cp ../patches/999-fix-bmx6_json.patch feeds/routing/bmx6/patches/999-fix-bmx6_json.patch
 fi
 
-###
-# Architecture: x86_64 or ar71xx ?
-arch_config='# arch config'
+# the rest of the script apply all of this for each architecture
 for arch in ${archs[@]}; do
+  ###
+  # Fetch architecture
+  arch_config='# arch config'
   case $arch in
     x86_64)
       #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
@@ -91,18 +92,25 @@ CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_DEVICE_ubnt-nano-m-xw=y
 _EOF
     ;;
+    ath79)
+    read -r -d '' arch_config << _EOF || :
+$arch_config
+CONFIG_TARGET_ath79=y
+CONFIG_TARGET_ath79_generic=y
+CONFIG_TARGET_ath79_generic_DEVICE_ubnt_lap-120=y
+_EOF
+    ;;
     *)
-    echo 'architectures available are x86_64 and/or ar71xx'
+    echo 'architectures available are ar71xx, ath79, x86_64'
     exit 1
     ;;
   esac
-done
 
-###
-# Make openwrt
-#   apply non-interactive configuration
-#     note: if you add extra packages later you have to do `make clean` to recompile image builder
-cat > .config << _EOF
+  ###
+  # Make openwrt
+  #   apply non-interactive configuration
+  #     note: if you add extra packages later you have to do `make clean` to recompile image builder
+  cat > .config << _EOF
 $arch_config
 # it is better to specify a concrete target, if no targets are specified then all are compiled: slower process
 CONFIG_PACKAGE_bmx6-json=m
@@ -133,29 +141,28 @@ CONFIG_TARGET_ROOTFS_INITRAMFS=y
 CONFIG_IB=y
 CONFIG_IB_STANDALONE=y
 _EOF
-# Prepare-validate non-interactive configuration
-make defconfig
-# Sanity check: RAM memory -> src https://stackoverflow.com/questions/29271593/bash-check-for-amount-of-memory-installed-on-a-system-as-sanity-check
-totalm=$(free -m | awk '/^Mem:/{print $2}')
-if [[ $totalm -lt 4096 ]]; then
-  echo '  WARNING: your system has less than 4 GB of RAM, compilation can fail. See https://gitlab.com/guifi-exo/temba/blob/master/docs/imagebuilder.md#compilation-requirements'
-fi
-# Compile
-#   detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
-if [[ $EUID -ne 0 ]]; then
-  make -j$(nproc)
-else
-  echo '  Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
-  FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
-fi
+  # Prepare-validate non-interactive configuration
+  make defconfig
+  # Sanity check: RAM memory -> src https://stackoverflow.com/questions/29271593/bash-check-for-amount-of-memory-installed-on-a-system-as-sanity-check
+  totalm=$(free -m | awk '/^Mem:/{print $2}')
+  if [[ $totalm -lt 4096 ]]; then
+    echo '  WARNING: your system has less than 4 GB of RAM, compilation can fail. See https://gitlab.com/guifi-exo/temba/blob/master/docs/imagebuilder.md#compilation-requirements'
+  fi
+  # Compile
+  #   detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
+  if [[ $EUID -ne 0 ]]; then
+    make -j$(nproc)
+  else
+    echo '  Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
+    FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
+  fi
 
-###
-# Organize image builder(s)
-cd ..
-mkdir -p imagebuilder_local/
-cd imagebuilder_local/
+  ###
+  # Organize image builder(s)
+  cd .. # to temba directory
+  mkdir -p imagebuilder_local/
+  cd imagebuilder_local/
 
-for arch in ${archs[@]}; do
   platform="$(echo $arch | cut -d'_' -f1)"
   platform_type="$(echo $arch | cut -d'_' -f2)"
   [[ $platform = $platform_type ]] && platform_type="generic"
@@ -165,4 +172,5 @@ for arch in ${archs[@]}; do
   rm -rf "$ib_d" # remove old archive
   echo "  Decompressing new $arch image builder $(pwd)/$ib_d ..."
   tar xf "${ib_d}.tar.xz"
+  cd ../Openwrt
 done
