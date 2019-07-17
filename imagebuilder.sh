@@ -14,7 +14,7 @@ archs=(ar71xx)
 #   do not create-update-install feeds
 syncfeeds='n'
 #   a version that just works
-openwrt_version='v18.06.2'
+openwrt_version='v18.06.4'
 
 ###
 # Load options and arguments

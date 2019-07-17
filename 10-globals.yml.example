@@ -19,7 +19,7 @@
 
 globals: &globals
   passwd: 13f
-  openwrt_version: '18.06.2' # previous was '17.01.6'
+  openwrt_version: '18.06.4'
   openwrt: 'openwrt' # or 'lede' (this variable exist to have a temporary backward compatibility to lede)
   dns_server: '1.1.1.1' # bcn.guifi.net = 10.228.203.104
   ntp_server: '10.228.203.104' # bcn.guifi.net = 10.228.203.104

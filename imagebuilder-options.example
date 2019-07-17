@@ -8,7 +8,7 @@ dtun='n'
 patches='n'
 
 # select openwrt version (do `cd Openwrt; git tag` to select another one)
-openwrt_version='v18.06.2'
+openwrt_version='v18.06.4'
 
 # select ar71xx, x86_64 or both
 archs=(
