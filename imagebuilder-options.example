@@ -7,6 +7,9 @@ dtun='n'
 # put 'y' if you want to install custom patches
 patches='n'
 
+# put 'y' if you want to enable "compliance test" mode
+compliance_test='y'
+
 # select openwrt version (do `cd Openwrt; git tag` to select another one)
 openwrt_version='v18.06.4'
 

@@ -61,8 +61,13 @@ fi
 ###
 # Custom Patches
 if [[ $patches = 'y' ]]; then
-  #  international waters behavior
-  cp ../patches/999-international-waters.patch package/firmware/wireless-regdb/patches/
+  #  enable "compliance test" mode
+  if [[ $compliance_test = 'y' ]]; then
+    cp ../patches/999-compliance-test.patch package/firmware/wireless-regdb/patches/
+    # src https://dev.archive.openwrt.org/ticket/6923
+    compliance_test_config='CONFIG_ATH_USER_REGD=y'
+    # about 'CONFIG_PACKAGE_ATH_DFS=y' -> src https://lists.berlin.freifunk.net/pipermail/berlin/2014-July/025144.html
+  fi
   #  fixed bmx6 version (hard compatibility with qMp 3.2.1)
   cp ../patches/bmx6_Makefile feeds/routing/bmx6/Makefile
   mkdir -p feeds/routing/bmx6/patches/
@@ -140,6 +145,7 @@ CONFIG_TARGET_ROOTFS_INITRAMFS=y
 # configure image builder
 CONFIG_IB=y
 CONFIG_IB_STANDALONE=y
+$compliance_test_config
 _EOF
   # Prepare-validate non-interactive configuration
   make defconfig
