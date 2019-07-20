@@ -1,17 +1,19 @@
-# put 'y' if you want to update feeds each time imagebuilder.sh starts
+###
+# yes (y) and no (n) options
+  # to update feeds each time imagebuilder.sh starts
 syncfeeds='n'
-
-# put 'y' if you want to install custom package dtun
+  # to install custom package dtun
 dtun='n'
-
-# put 'y' if you want to install custom patches
+  # to install custom patches
 patches='n'
-
-# put 'y' if you want to enable "compliance test" mode
-compliance_test='y'
+    # to enable "compliance test" mode (requires patches to be 'y')
+compliance_test='n'
 
 # select openwrt version (do `cd Openwrt; git tag` to select another one)
 openwrt_version='v18.06.4'
+
+###
+# arrays
 
 # select one or many of the available architectures
 archs=(
