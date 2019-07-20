@@ -13,7 +13,7 @@ compliance_test='y'
 # select openwrt version (do `cd Openwrt; git tag` to select another one)
 openwrt_version='v18.06.4'
 
-# select ar71xx, x86_64 or both
+# select one or many of the available architectures
 archs=(
   ar71xx
   #ath79
