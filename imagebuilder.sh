@@ -34,7 +34,7 @@ git checkout "$openwrt_version"
 ###
 # Define packages available and installed in custom firmware for .config
 
-# unique elements in array
+# ensure unique elements in arrays -> src https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash/17562858#17562858
 available_packages_uniq=( $(printf "%s\n" "${available_packages[@]}" | sort -u) )
 installed_packages_uniq=( $(printf "%s\n" "${installed_packages[@]}" | sort -u) )
 # avoid same element in both arrays -> src https://stackoverflow.com/questions/7870230/array-intersection-in-bash/7870414#7870414
@@ -110,7 +110,7 @@ if [[ $patches = 'y' ]]; then
 fi
 
 # the rest of the script apply all of this for each architecture
-  # src https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash/17562858#17562858
+  # ensure unique elements
 archs_uniq=( $(printf "%s\n" "${archs[@]}" | sort -u) )
 for arch in ${archs_uniq[@]}; do
   ###
