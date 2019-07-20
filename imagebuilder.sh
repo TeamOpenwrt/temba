@@ -32,6 +32,41 @@ cd Openwrt
 git checkout "$openwrt_version"
 
 ###
+# Define packages available and installed in custom firmware for .config
+
+# unique elements in array
+available_packages_uniq=( $(printf "%s\n" "${available_packages[@]}" | sort -u) )
+installed_packages_uniq=( $(printf "%s\n" "${installed_packages[@]}" | sort -u) )
+# avoid same element in both arrays -> src https://stackoverflow.com/questions/7870230/array-intersection-in-bash/7870414#7870414
+for a in ${available_packages_uniq[@]}; do
+  for i in ${installed_packages_uniq[@]}; do
+    if [[ $a = $i ]]; then
+      echo -e "\nERROR: package $a is in both arrays available_packages and installed_packages. Review file imagebuilder-options" && exit 1
+    fi
+  done
+done
+
+available_packages_config='# available packages'
+for p in ${available_packages_uniq[@]}; do
+    #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
+    #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
+    a_p="CONFIG_PACKAGE_$p=m"
+    read -r -d '' available_packages_config << _EOF || :
+$available_packages_config
+$a_p
+_EOF
+done
+
+installed_packages_config='# installed packages'
+for p in ${installed_packages_uniq[@]}; do
+    i_p="CONFIG_PACKAGE_$p=y"
+    read -r -d '' installed_packages_config << _EOF || :
+$installed_packages_config
+$i_p
+_EOF
+done
+
+###
 # Custom packages - enable dtun package
 if [[ $dtun = 'y' ]]; then
   dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git;master'
@@ -75,14 +110,15 @@ if [[ $patches = 'y' ]]; then
 fi
 
 # the rest of the script apply all of this for each architecture
-for arch in ${archs[@]}; do
+  # src https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash/17562858#17562858
+archs_uniq=( $(printf "%s\n" "${archs[@]}" | sort -u) )
+for arch in ${archs_uniq[@]}; do
   ###
   # Fetch architecture
+      # note: the approach is to compile a concrete subtarget is specified to avoid compiling all subtargets
   arch_config='# arch config'
   case $arch in
     x86_64)
-      #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
-      #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
       read -r -d '' arch_config << _EOF || :
 $arch_config
 CONFIG_TARGET_x86=y
@@ -115,38 +151,26 @@ _EOF
   # Make openwrt
   #   apply non-interactive configuration
   #     note: if you add extra packages later you have to do `make clean` to recompile image builder
+  #     extra note: you can add custom lines to .config
   cat > .config << _EOF
 $arch_config
-# it is better to specify a concrete target, if no targets are specified then all are compiled: slower process
-CONFIG_PACKAGE_bmx6-json=m
-CONFIG_PACKAGE_bmx6-sms=m
-CONFIG_PACKAGE_bmx6-uci-config=m
-CONFIG_PACKAGE_bmx6-table=m
-#CONFIG_PACKAGE_luci=m
-CONFIG_PACKAGE_luci-ssl=m
-CONFIG_PACKAGE_luci-app-bmx6=m
-CONFIG_PACKAGE_iperf3=m
-CONFIG_PACKAGE_mtr=m
-CONFIG_PACKAGE_netcat=m
-CONFIG_PACKAGE_netperf=m
-CONFIG_PACKAGE_tcpdump-mini=m
-#CONFIG_PACKAGE_iwinfo=m
-CONFIG_PACKAGE_xl2tpd=y
-CONFIG_PACKAGE_wireguard=m
-CONFIG_PACKAGE_luci-app-wireguard=m
-CONFIG_PACKAGE_gre=y
+
+$available_packages_config
+
+$installed_packages_config
+
 $dtun_config
-# looks like is a requirement for gre (?)
-CONFIG_PACKAGE_kmod-usb-ohci=y
+
 # option to kstripped images to save more space
 CONFIG_LUCI_SRCDIET=y
 CONFIG_TARGET_ROOTFS_INITRAMFS=y
-#CONFIG_ATH_USER_REGD=y
 # configure image builder
 CONFIG_IB=y
 CONFIG_IB_STANDALONE=y
+
 $compliance_test_config
 _EOF
+  # this is the place to debug .config, because defconfig rewrites the file in another format
   # Prepare-validate non-interactive configuration
   make defconfig
   # Sanity check: RAM memory -> src https://stackoverflow.com/questions/29271593/bash-check-for-amount-of-memory-installed-on-a-system-as-sanity-check

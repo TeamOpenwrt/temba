@@ -19,3 +19,27 @@ archs=(
   #ath79
   #x86_64
 )
+
+# not installed but available packages in firmware
+available_packages=(
+  bmx6-json
+  bmx6-sms
+  bmx6-uci-config
+  bmx6-table
+  luci-ssl
+  luci-app-bmx6
+  iperf3
+  mtr
+  netcat
+  netperf
+  tcpdump-mini
+  xl2tpd
+  luci-app-wireguard
+)
+
+installed_packages=(
+  wireguard
+  gre
+  # looks like is a requirement for gre (?)
+  kmod-usb-ohci
+)
