@@ -176,3 +176,34 @@ for example:
 ### cleaning up
 
 these methods from openwrt documentation are useful to apply to image builder: https://openwrt.org/docs/guide-developer/build-system/use-buildsystem#cleaning_up
+
+### missing package
+
+I required a package in order to build firmware for *tplink_cpe510-v3* (or new devices ath79 in snapshot (?))
+
+This is how it looked the error message when using `rake` for that target
+
+```
+Collected errors:
+ * opkg_install_cmd: Cannot install package rssileds.
+Makefile:152: recipe for target 'package_install' failed
+make[2]: *** [package_install] Error 255
+Makefile:111: recipe for target '_call_image' failed
+make[1]: *** [_call_image] Error 2
+Makefile:195: recipe for target 'image' failed
+make: *** [image] Error 2
+make: Leaving directory '/root/temba/imagebuilder_local/openwrt-imagebuilder-ath79-generic.Linux-x86_64'
+rake aborted!
+Openwrt build error. Check dependencies and requirements. Check consistency of:
+    ./imagebuilder_local/openwrt-imagebuilder-ath79-generic.Linux-x86_64
+    or the archive where came from openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz
+tembalib.rb:256:in `generate_firmware'
+tembalib.rb:154:in `generate_node'
+tembalib.rb:63:in `block in generate_all'
+tembalib.rb:58:in `each'
+tembalib.rb:58:in `generate_all'
+/root/temba/Rakefile:8:in `block in <top (required)>'
+/var/lib/gems/2.3.0/gems/rake-12.3.2/exe/rake:27:in `<top (required)>'
+Tasks: TOP => default => generate_all
+(See full trace by running task with --trace)
+```
