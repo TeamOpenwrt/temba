@@ -91,6 +91,15 @@ devices:
     wifi_path: 'pci0000:00/0000:00:00.0'
     filebase: 'files/template__regular-ubnt-lap-120'
 
+  regular-tplink_cpe510-v3: &regular-tplink_cpe510-v3
+    <<: *mesh-globals
+    <<: *regular-packages
+    profile: tplink_cpe510-v3 # it should be ubnt-lap-120 as the others (!)
+    platform: ath79
+    platform_type: generic
+    wifi_path: 'platform/ahb/18100000.wmac'
+    filebase: 'files/template__regular-ubnt-lap-120'
+
   regular-ALFANX: &regular-ALFANX
     <<: *mesh-globals
     <<: *regular-packages-32ram
