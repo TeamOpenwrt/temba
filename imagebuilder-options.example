@@ -5,11 +5,11 @@ syncfeeds='n'
   # to hold custom feeds
 holdfeeds='n'
   # to install custom package dtun
-dtun='n'
-  # to install custom patches
-patches='n'
-    # to enable "compliance test" mode (requires patches to be 'y')
-compliance_test='n'
+dtun_package='n'
+  ###
+  # custom patches
+qmp321_compatibility_patch='y'
+compliance_test_patch='y'
 
 # select openwrt version (do `cd Openwrt; git tag` to select another one)
 openwrt_version='v18.06.4'

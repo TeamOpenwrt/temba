@@ -1,0 +1,35 @@
+# custom functions for imagebuider.sh
+
+function install_custom_packages {
+  if [[ $dtun_package = 'y' ]]; then
+    dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git;master'
+    ! grep -q "$dtun_git" feeds.conf &> /dev/null && echo "$dtun_git     # dtun: a custom package we use" >> feeds.conf
+    dtun_config=$(cat << _EOF || :
+# custom package to use gre with dynamic IPs
+CONFIG_PACKAGE_dtun=y
+_EOF
+    )
+  fi
+}
+
+# the principle is that if patch is not applied, then it is removed
+function install_custom_patches {
+  # bmx6 version of qmp 3.2.1 compatility patch
+  if [[ $qmp321_compatibility_patch = 'y' ]]; then
+    cp -v ../patches/bmx6_Makefile feeds/routing/bmx6/Makefile
+    mkdir -p feeds/routing/bmx6/patches/
+    cp -v ../patches/999-fix-bmx6_json.patch feeds/routing/bmx6/patches/
+  else
+    rm -fv feeds/routing/bmx6/Makefile/Makefile
+    rm -fv feeds/routing/bmx6/patches/999-fix-bmx6_json.patch
+  fi
+  # compliance test patch
+  if [[ $compliance_test_patch = 'y' ]]; then
+    cp -v ../patches/999-compliance-test.patch package/firmware/wireless-regdb/patches/
+    # src https://dev.archive.openwrt.org/ticket/6923
+    compliance_test_config='CONFIG_ATH_USER_REGD=y'
+    # about 'CONFIG_PACKAGE_ATH_DFS=y' -> src https://lists.berlin.freifunk.net/pipermail/berlin/2014-July/025144.html
+  else
+    rm -fv package/firmware/wireless-regdb/patches/999-compliance-test.patch
+  fi
+}

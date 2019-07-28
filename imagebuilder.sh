@@ -8,13 +8,16 @@ set -e
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 
 ###
-# Load options and arguments
-if [[ ! -f imagebuilder-options ]]; then
-  echo '  File imagebuilder-options does not exist.'
-  echo '    Copying imagebuilder-options.example to imagebuilder-options'
-  cp imagebuilder-options.example imagebuilder-options
-fi
-source imagebuilder-options
+# Custom options, arguments and functions (custom packages and patches)
+custom_files=(imagebuilder-options imagebuilder-customfuns.sh)
+for file in ${custom_files[@]}; do
+  if [[ ! -f "$file" ]]; then
+    echo "  File $file does not exist."
+    echo "    Copying ${file}.example to imagebuilder-options"
+    cp ${file}.example $file
+  fi
+  source "$file"
+done
 
 ###
 # Get repo and appropriate version of Openwrt
@@ -68,15 +71,8 @@ fi
 
 ###
 # Custom packages - enable dtun package
-if [[ $dtun = 'y' ]]; then
-  dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git;master'
-  ! grep -q "$dtun_git" feeds.conf &> /dev/null && echo "$dtun_git     # dtun: a custom package we use" >> feeds.conf
-  dtun_config=$(cat << _EOF || :
-# custom package to use gre with dynamic IPs
-CONFIG_PACKAGE_dtun=y
-_EOF
-)
-fi
+#  checks dtun_package
+install_custom_packages
 
 ###
 # Update and install feeds
@@ -91,19 +87,10 @@ fi
 
 ###
 # Custom Patches
-if [[ $patches = 'y' ]]; then
-  #  enable "compliance test" mode
-  if [[ $compliance_test = 'y' ]]; then
-    cp ../patches/999-compliance-test.patch package/firmware/wireless-regdb/patches/
-    # src https://dev.archive.openwrt.org/ticket/6923
-    compliance_test_config='CONFIG_ATH_USER_REGD=y'
-    # about 'CONFIG_PACKAGE_ATH_DFS=y' -> src https://lists.berlin.freifunk.net/pipermail/berlin/2014-July/025144.html
-  fi
-  #  fixed bmx6 version (hard compatibility with qMp 3.2.1)
-  cp ../patches/bmx6_Makefile feeds/routing/bmx6/Makefile
-  mkdir -p feeds/routing/bmx6/patches/
-  cp ../patches/999-fix-bmx6_json.patch feeds/routing/bmx6/patches/999-fix-bmx6_json.patch
-fi
+#  checks qmp321_compatibility_patch and compliance_test_patch
+install_custom_patches
+
+exit
 
 # the rest of the script apply all of this for each architecture
   # ensure unique elements
