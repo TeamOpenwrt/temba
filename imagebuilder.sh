@@ -8,15 +8,6 @@ set -e
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 
 ###
-# Default fallback parameters
-#   the most interesting architecture # for antennas is ar71xx
-archs=(ar71xx)
-#   do not create-update-install feeds
-syncfeeds='n'
-#   a version that just works
-openwrt_version='v18.06.4'
-
-###
 # Load options and arguments
 if [[ ! -f imagebuilder-options ]]; then
   echo '  File imagebuilder-options does not exist.'
