@@ -352,7 +352,8 @@ def generate_firmware(node_cfg, myPath)
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
 
   puts("\ntemba finished succesfully!")
-  puts("firmware generated: #{File.dirname(__FILE__)}/output/#{File.basename(zipfile)}\n\n")
+  # about __FILE__, __dir__ and expand_path -> src https://stackoverflow.com/questions/15358669/confusing-behavior-of-file-dirname
+  puts("firmware generated: #{File.dirname(__dir__)}/output/#{File.basename(zipfile)}\n\n")
   return zipfile
 end
 
