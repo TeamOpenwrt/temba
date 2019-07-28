@@ -2,6 +2,8 @@
 # yes (y) and no (n) options
   # to update feeds each time imagebuilder.sh starts
 syncfeeds='n'
+  # to hold custom feeds
+holdfeeds='n'
   # to install custom package dtun
 dtun='n'
   # to install custom patches

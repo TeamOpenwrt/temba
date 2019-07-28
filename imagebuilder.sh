@@ -67,6 +67,15 @@ _EOF
 done
 
 ###
+# Feed repos
+  # when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
+  # default action is to always get new ones from feeds.conf
+  # set holdfeeds to no if you want to freeze custom feeds
+if [[ $holdfeeds = 'n' ]]; then
+  cat feeds.conf.default > feeds.conf
+fi
+
+###
 # Custom packages - enable dtun package
 if [[ $dtun = 'y' ]]; then
   dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git;master'
@@ -76,14 +85,10 @@ if [[ $dtun = 'y' ]]; then
 CONFIG_PACKAGE_dtun=y
 _EOF
 )
-  #  when using feeds.conf (because of custom packages) feeds.conf.default is ignored according to https://openwrt.org/docs/guide-developer/feeds#feed_configuration
-  #  solve it in a incomplete but effective manner
-  git_aux='https://git.openwrt.org/feed/packages.git'
-  ! grep -q "$git_aux" feeds.conf && cat feeds.conf.default >> feeds.conf
 fi
 
 ###
-# Feeds operations
+# Update and install feeds
 #   note: if you do changes on feeds you have to reapply patches
 if [[ $syncfeeds = 'y' || ! -d feeds ]]; then
   if [[ $syncfeeds = 'n' ]]; then
