@@ -90,7 +90,7 @@ quickstart (assuming new temba)
 
 demo
 
-![temba_cli_demo](/uploads/befbcb3a1e1ffac5b428d201d2569051/temba_cli_demo.gif)
+![temba_cli_demo](/uploads/0245f5f2da8347f03246f9609036773e/temba_cli_demo.gif)
 
 ### temba gui (rails)
 
@@ -105,7 +105,7 @@ quickstart: run `cd ror_app_form; ./run_rails.sh`
 
 demo
 
-![temba_gui_demo](/uploads/13134b66ba8613921fdcee995c75735f/temba_gui_demo.gif)
+![temba_gui_demo](/uploads/8b65848fc2742d0e24bd1d9354b4dcd0/temba_gui_demo.gif)
 
 ## Usage
 
