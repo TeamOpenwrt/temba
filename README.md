@@ -20,7 +20,9 @@
 
 # Temba
 
-One liner definition: erb templates on config files per device (some files are shared) evaluated from inherited yaml files with two interfaces: rake and rubyonrails form.
+what is it: is a tool to build openwrt firmware
+
+how it works: erb templates on config files per device (some files are shared) evaluated from inherited yaml files with two interfaces: rake and rubyonrails form.
 
 Buildsystem to generate custom Openwrt-Firmware files for different nodes in a community network.
 
@@ -86,6 +88,10 @@ quickstart (assuming new temba)
     cp -i 30-nodes.yml.example 30-nodes.yml
     rake
 
+demo
+
+![temba_cli_demo](/uploads/befbcb3a1e1ffac5b428d201d2569051/temba_cli_demo.gif)
+
 ### temba gui (rails)
 
 Read and execute instructions of [install_temba_gui.sh](install_temba_gui.sh)
@@ -96,6 +102,10 @@ source:
 - *tembalib.rb*
 
 quickstart: run `cd ror_app_form; ./run_rails.sh`
+
+demo
+
+![temba_gui_demo](/uploads/13134b66ba8613921fdcee995c75735f/temba_gui_demo.gif)
 
 ## Usage
 
