@@ -54,14 +54,22 @@ end
 def generate_all(myPath)
   nodes = read_vars(myPath)
 
+  # init firmware paths
+  fw_paths = []
   # src https://stackoverflow.com/a/32230037
   nodes['network'].each {|k, v|
     # convert key of the entire subarray as value node_name
     v['node_name'] = k
     # we want all nodes to include these variables (they can be overridden)
     v_n = prepare_global_variables(v, myPath)
-    generate_node(v_n, myPath)
+    zipfile = generate_node(v_n, myPath)
+    fw_paths.push(zipfile)
   }
+  if fw_paths.length > 1
+    puts("------------------------------------------------")
+    puts("\nSUMMARY of all temba nodes generated\n\n")
+    fw_paths.map { |p| puts "  #{File.dirname(__dir__)}/output/#{File.basename(p)}" }
+  end
 end
 
 def prepare_global_variables(node_cfg, myPath)
@@ -351,9 +359,8 @@ def generate_firmware(node_cfg, myPath)
   # when the file is ready, put it in the place to be downloaded
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
 
-  puts("\ntemba finished succesfully!")
-  # about __FILE__, __dir__ and expand_path -> src https://stackoverflow.com/questions/15358669/confusing-behavior-of-file-dirname
-  puts("firmware generated: #{File.dirname(__dir__)}/output/#{File.basename(zipfile)}\n\n")
+  puts("\ntemba firmware generated: #{File.dirname(__dir__)}/output/#{File.basename(zipfile)}\n\n")
+
   return zipfile
 end
 
