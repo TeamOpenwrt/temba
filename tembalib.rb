@@ -69,6 +69,7 @@ def generate_all(myPath)
     puts("------------------------------------------------")
     puts("\nSUMMARY of all temba nodes generated\n\n")
     fw_paths.map { |p| puts "  #{File.dirname(__dir__)}/output/#{File.basename(p)}" }
+    puts("\n")
   end
 end
 
