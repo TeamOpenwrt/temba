@@ -68,7 +68,7 @@ def generate_all(myPath)
   if fw_paths.length > 1
     puts("------------------------------------------------")
     puts("\nSUMMARY of all temba nodes generated\n\n")
-    fw_paths.map { |p| puts "  #{File.dirname(__dir__)}/output/#{File.basename(p)}" }
+    fw_paths.map { |p| puts "  #{__dir__}/output/#{File.basename(p)}" }
     puts("\n")
   end
 end
@@ -360,7 +360,7 @@ def generate_firmware(node_cfg, myPath)
   # when the file is ready, put it in the place to be downloaded
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
 
-  puts("\ntemba firmware generated: #{File.dirname(__dir__)}/output/#{File.basename(zipfile)}\n\n")
+  puts("\ntemba firmware generated: #{__dir__}/output/#{File.basename(zipfile)}\n\n")
 
   return zipfile
 end
