@@ -90,8 +90,6 @@ fi
 #  checks qmp321_compatibility_patch and compliance_test_patch
 install_custom_patches
 
-exit
-
 # the rest of the script apply all of this for each architecture
   # ensure unique elements
 archs_uniq=( $(printf "%s\n" "${archs[@]}" | sort -u) )
