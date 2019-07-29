@@ -8,8 +8,8 @@ holdfeeds='n'
 dtun_package='n'
   ###
   # custom patches
-qmp321_compatibility_patch='y'
-compliance_test_patch='y'
+qmp321_compatibility_patch='n'
+compliance_test_patch='n'
 
 # select openwrt version (do `cd Openwrt; git tag` to select another one)
 openwrt_version='v18.06.4'
