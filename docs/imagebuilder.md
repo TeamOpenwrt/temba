@@ -14,6 +14,8 @@
   - [show (target) profile list](#show-target-profile-list)
   - [image builder detect when you exceed space](#image-builder-detect-when-you-exceed-space)
   - [cleaning up](#cleaning-up)
+  - [missing package](#missing-package)
+- [Architectures](#architectures)
 
 <!-- END doctoc.sh generated TOC please keep comment here to allow auto update -->
 
@@ -207,3 +209,11 @@ tembalib.rb:58:in `generate_all'
 Tasks: TOP => default => generate_all
 (See full trace by running task with --trace)
 ```
+
+# Other details
+
+## Architectures
+
+From https://openwrt.org/docs/techref/targets/ath79 -> "ath79 is the successor of ar71xx. It's modernization under the hood, with the main goal to bring the code into a form that is acceptable for Linux upstream, so that all (most) of the whole ar71xx supported devices can be handled by an upstream, unpatched Linux kernel"
+
+At the moment is unclear what will happen with 19.07. Some people says that It was decided this way: "ships ar71xx and ath79 source-only", after that release "ships ath79 and ar71xx source-only", the reason is to save space in linux kernel image for the small devices
