@@ -94,11 +94,11 @@ devices:
   regular-tplink_cpe510-v3: &regular-tplink_cpe510-v3
     <<: *mesh-globals
     <<: *regular-packages
-    profile: tplink_cpe510-v3 # it should be ubnt-lap-120 as the others (!)
+    profile: tplink_cpe510-v3 # it should be tplink-cpe510-v3 as the others (!)
     platform: ath79
     platform_type: generic
     wifi_path: 'platform/ahb/18100000.wmac'
-    filebase: 'files/template__regular-ubnt-lap-120'
+    filebase: 'files/template__regular-tplink-cpe510-v3'
 
   regular-ALFANX: &regular-ALFANX
     <<: *mesh-globals
