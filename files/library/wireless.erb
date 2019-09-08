@@ -1,3 +1,4 @@
+<%# Config file for one wireless antenna -%>
 config wifi-device 'radio0'
 	option type 'mac80211'
 	option hwmode '<%= @node.fetch('wifi_hwmode') %>'
@@ -6,11 +7,14 @@ config wifi-device 'radio0'
 	option country '<%= @node.fetch('wifi_country') %>'
 <%# detect nil -> src https://softwareengineering.stackexchange.com/questions/302530/ruby-if-variable-vs-if-variable-nil -%>
 <%# when txpower is null, it is in auto mode -%>
-<% if ! @node['wifi_path'].nil? -%>
+<% if ! @node['wifi_txpower'].nil? -%>
 	option txpower '<%= @node.fetch('wifi_txpower') %>'
 <% end -%>
 <%# devices seems that always require this; leaving it null let's openwrt autocomplete it -%>
-<% if ! @node['wifi_path'].nil? -%>
+<% if @node['wifi_path'].nil? -%>
+	# autogenerate phy for wireless iface -> src https://forum.openwrt.org/t/pre-configure-wireless-configuration-into-firmware-and-automatically-generate-path-phy-option/23479
+	option phy 'phy0'
+<% else -%>
 	option path '<%= @node.fetch('wifi_path') %>'
 <% end -%>
 	# two common options useful for mesh networks
