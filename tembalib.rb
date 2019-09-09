@@ -2,8 +2,7 @@ require 'pry' # for debugging use a line as `binding.pry` src https://stackoverf
 require 'erb' # config templates
 require 'yaml' # DB in a file
 require 'ipaddress' # ip validation
-# wait debian 10 -> https://packages.debian.org/search?keywords=ruby-archive-zip
-#require 'archive/zip' # zip stuff
+require 'archive/zip' # zip stuff
 
 # global variables https://stackoverflow.com/questions/12112765/how-to-reference-global-variables-and-class-variables
 
@@ -304,9 +303,7 @@ def generate_firmware(node_cfg, myPath)
     # this requires so much space and is slow
     #system("gunzip -f -k #{out_dir}/#{node_name}-combined-ext4.img.gz")
 
-    ##Archive::Zip.archive(zipfile, out_path)
-    # create zip - ignore directory structure -> src https://stackoverflow.com/questions/9710141/create-zip-ignore-directory-structure
-    system("zip -j -r #{zipfile} #{out_path}")
+    Archive::Zip.archive(zipfile, out_path)
   else
     out_path = {'sysupgrade' => "#{out_dir}/#{node_name}#{notes}-sysupgrade.bin",
                 'factory'    => "#{out_dir}/#{node_name}#{notes}-factory.bin"}
@@ -322,16 +319,14 @@ def generate_firmware(node_cfg, myPath)
     FileUtils.mv(src_path, out_path['sysupgrade'])
 
     # compact sysupgrade files in a zip
-    ##Archive::Zip.archive(zipfile, out_path['sysupgrade'])
-    system("zip -j -r #{zipfile} #{out_path['sysupgrade']}")
+    Archive::Zip.archive(zipfile, out_path['sysupgrade'])
 
     # process factory image: move to a different directory and compact it
     # some devices does not have factory
     factory_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}-#{platform_type}-#{profile_bin}-squashfs-factory.bin")[0]
     if ! factory_path.nil?
       FileUtils.mv(factory_path, out_path['factory'])
-        ##Archive::Zip.archive(zipfile, out_path['factory'])
-      system("zip -j -r #{zipfile} #{out_path['factory']}")
+      Archive::Zip.archive(zipfile, out_path['factory'])
     end
 
   end
@@ -346,20 +341,16 @@ def generate_firmware(node_cfg, myPath)
 - files: all files that are inside this firmware
 - files_template: all files without applying variables.yml (in case you want to know what is exactly templating)
 ')
-  ##Archive::Zip.archive(zipfile, out_dir + '/README.txt')
-  system("zip -j -r #{zipfile} #{out_dir + '/README.txt'}")
+  Archive::Zip.archive(zipfile, out_dir + '/README.txt')
   # add etc
   FileUtils.cp_r "#{image_base}/files/", out_dir + '/files'
-  ##Archive::Zip.archive(zipfile, out_dir + '/etc')
-  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./files'}")
+  Archive::Zip.archive(zipfile, out_dir + '/files')
   # add files_template
   FileUtils.cp_r "#{image_base}/files_template/", out_dir + '/files_template'
-  ##Archive::Zip.archive(zipfile, out_dir + '/etc-template')
-  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./files_template'}")
+  Archive::Zip.archive(zipfile, out_dir + '/files_template')
   # add variables.yml
   File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
-  ##Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
-  system("zip -j -r #{zipfile} #{out_dir + '/variables.yml'}")
+  Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
 
   # when the file is ready, put it in the place to be downloaded
   FileUtils.mv(zipfile, "#{out_dir_base}/..")

@@ -6,7 +6,7 @@ packagelist=(
   # openwrt build requirements
   build-essential file python gawk zlib1g-dev libncurses5-dev rsync subversion
   # temba cli (rake) requirements
-  wget zip xz-utils rake
+  wget zip ruby-archive-zip xz-utils rake
   # use debian stable packages
   pry ruby-ipaddress
 )
