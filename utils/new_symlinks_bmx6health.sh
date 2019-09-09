@@ -16,14 +16,13 @@ fi
 
 DIR="../files/" # template directory
 TARGETS="template__regular*" # match symbolic link affected
-SRC="library/regular/etc-crontabs-root-bmx6health"
-DST_FILE="/etc/crontabs/root" # what is the substitution you want to apply
+SRC="library/usr-local-bin-bmx6health.sh"
+DST_FILE="/usr/local/bin/bmx6health.sh" # what is the substitution you want to apply
 DST_PATH="$(dirname $DST_FILE)"
 
 # why ln-nsf -> src https://superuser.com/questions/81164/why-create-a-link-like-this-ln-nsf
-# TODO a way to guess number of jumps (../../)
 find $DIR -iname "$TARGETS" -printf \
-  'mkdir -p "%p'"$DST_PATH"'"; ln -nsf "../../../'"$SRC"'" "%p'"$DST_FILE"'"\n' \
+  'mkdir -p "%p'"$DST_PATH"'"; ln -nsf "../../../../'"$SRC"'" "%p'"$DST_FILE"'"\n' \
   > do_new_symlinks.sh
 
 chmod +x do_new_symlinks.sh
