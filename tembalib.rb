@@ -109,6 +109,9 @@ def prepare_global_variables(node_cfg, myPath)
   end
   check_var('image_base', node_cfg['image_base'])
 
+  # quit last '/' if exists -> src https://stackoverflow.com/questions/4209384/ruby-remove-last-n-characters-from-a-string/4209502#4209502
+  node_cfg['file_base'] = node_cfg['filebase'].chomp('/')
+
   return node_cfg
 end
 
@@ -127,7 +130,7 @@ def generate_node(node_cfg, myPath)
   if $debug_erb
     dir_name = myPath + "debug-" + node_name
   else
-    dir_name = "#{node_cfg['image_base']}/files_generated"
+    dir_name = "#{node_cfg['image_base']}/files"
   end
 
   prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files', node_cfg)
@@ -158,7 +161,7 @@ def generate_node(node_cfg, myPath)
   end
 
   #Evaluate templates
-  locate_erb(dir_name + '/etc', node_cfg)
+  locate_erb(dir_name, node_cfg)
 
   return generate_firmware(node_cfg, myPath)
 
@@ -168,7 +171,8 @@ def prepare_directory(dir_name,filebase, node_cfg)
 
   # Clean up
   FileUtils.rm_r dir_name if File.exists? dir_name
-  FileUtils.rm_r dir_name + '-template' if File.exists? dir_name + '-template'
+  dir_name_template = File.dirname(dir_name) + '/files_template'
+  FileUtils.rm_r dir_name_template if File.exists? dir_name_template
 
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
   system('cp -rpL ' + filebase + ' ' + dir_name)
@@ -205,7 +209,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   File.write( dir_name + '/etc/temba_vars.yml', node_cfg.to_yaml)
 
   # duplicate directory in order to maintain a copy of erb variables
-  FileUtils.cp_r dir_name + '/etc', dir_name + '/etc-template'
+  FileUtils.cp_r dir_name, File.dirname(dir_name) + '/files_template'
 end
 
 def locate_erb(dir_name, node_cfg)
@@ -260,9 +264,9 @@ def generate_firmware(node_cfg, myPath)
 
   image_base = node_cfg['image_base']
 
-  puts("\n\n\n\n\n    >>> make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated\n\n\n\n\n")
+  puts("\n\n\n\n\n    >>> make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files\n\n\n\n\n")
   # throw error on system call -> src https://stackoverflow.com/a/18728161
-  system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files_generated") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    or the archive where came from #{File.basename(image_base)}.tar.xz"
+  system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    or the archive where came from #{File.basename(image_base)}.tar.xz"
 
   # notes for the output file
   notes = node_cfg['notes']
@@ -339,19 +343,19 @@ def generate_firmware(node_cfg, myPath)
 - *sysupgrade.bin: use it if you are comming from openwrt firmware
 - *factory.bin: use it if you are comming from stock/OEM/factory firmware
 - variables.yml: the variables that defined the firmware you got
-- etc: /etc directory that is inside this firmware
-- etc-template: /etc directory without applying variables.yml (in case you want to know what is exactly templating)
+- files: all files that are inside this firmware
+- files_template: all files without applying variables.yml (in case you want to know what is exactly templating)
 ')
   ##Archive::Zip.archive(zipfile, out_dir + '/README.txt')
   system("zip -j -r #{zipfile} #{out_dir + '/README.txt'}")
   # add etc
-  FileUtils.cp_r "#{image_base}/files_generated/etc", out_dir
+  FileUtils.cp_r "#{image_base}/files/", out_dir + '/files'
   ##Archive::Zip.archive(zipfile, out_dir + '/etc')
-  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./etc'}")
-  # add etc-template
-  FileUtils.cp_r "#{image_base}/files_generated/etc-template", out_dir + '/etc-template'
+  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./files'}")
+  # add files_template
+  FileUtils.cp_r "#{image_base}/files_template/", out_dir + '/files_template'
   ##Archive::Zip.archive(zipfile, out_dir + '/etc-template')
-  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./etc-template'}")
+  system("cd #{out_dir}; zip -r #{'../' + File.basename(zipfile)} #{'./files_template'}")
   # add variables.yml
   File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
   ##Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
