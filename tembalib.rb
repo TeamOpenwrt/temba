@@ -172,7 +172,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   FileUtils.rm_r dir_name_template if File.exists? dir_name_template
 
   # Prepare (copy recursively the directory preserving permissions and dereferencing symlinks)
-  system('cp -rpL ' + filebase + ' ' + dir_name)
+  system('cp -rpL ' + filebase + ' ' + dir_name) or raise "\n\nERROR: Template failed to be copied. Maybe there is a broken symlink\n\n"
 
 
   # temba dynamic pseudorelease that appears as banner
