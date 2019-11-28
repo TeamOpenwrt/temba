@@ -182,8 +182,9 @@ def prepare_directory(dir_name,filebase, node_cfg)
   # create dinamically a file to identify temba firmware with specific branch and commit
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
 
+  # directory exists -> src https://stackoverflow.com/questions/1085218/how-to-check-if-a-given-directory-exists-in-ruby/1085260#1085260
   puts "\n\nWARNING! looks like there is no etc directory inside filebase path. That does not look good!\n\n" unless Dir.exists? node_cfg['filebase'] + '/etc/'
-  # temba always put some files in /etc (independently of the template used) -> src https://stackoverflow.com/a/19280532
+  # temba always put some files in /etc (independently of the template used) -> src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby/19280532#19280532
   FileUtils.mkdir_p dir_name + '/etc/'
 
   File.write(dir_name + '/etc/temba_commit', get_current_temba_commit())
