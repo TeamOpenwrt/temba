@@ -27,6 +27,18 @@ devices:
     bmx6_main_iface: 'mesh_12'
     filebase: 'files/template__regular-x86_64'
 
+  # alix
+  #   https://openwrt.org/toh/pcengines/alix
+  #   https://openwrt.org/toh/start?dataflt%5BModel*%7E%5D=alix&dataflt%5BBrand*%7E%5D=
+  alix: &alix
+    <<: *mesh-globals
+    <<: *regular-packages
+    platform: x86
+    profile: Generic
+    platform_type: geode
+    # TODO: filebase missing (!)
+    #filebase:
+
   border-x86_64: &bordertb-x86_64
     <<: *mesh-globals
     <<: *border-packages
