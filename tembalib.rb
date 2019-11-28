@@ -108,9 +108,6 @@ def prepare_global_variables(node_cfg, myPath)
   end
   check_var('image_base', node_cfg['image_base'])
 
-  # quit last '/' if exists -> src https://stackoverflow.com/questions/4209384/ruby-remove-last-n-characters-from-a-string/4209502#4209502
-  node_cfg['file_base'] = node_cfg['filebase'].chomp('/')
-
   return node_cfg
 end
 
@@ -132,7 +129,8 @@ def generate_node(node_cfg, myPath)
     dir_name = "#{node_cfg['image_base']}/files"
   end
 
-  prepare_directory(dir_name, myPath + node_cfg['filebase'] || 'files', node_cfg)
+  raise "\n\nERROR: filebase variable is empty\n\n" if node_cfg['filebase'].nil?
+  prepare_directory(dir_name, myPath + node_cfg['filebase'], node_cfg)
 
   # SSID is guifi.net/node_name, truncated to the ssid limit (32 characters)
   wifi_ssid_base = node_cfg['wifi_ssid_base']
@@ -183,6 +181,11 @@ def prepare_directory(dir_name,filebase, node_cfg)
 
   # create dinamically a file to identify temba firmware with specific branch and commit
   # src https://stackoverflow.com/questions/2777802/how-to-write-to-file-in-ruby#comment24941014_2777863
+
+  puts "\n\nWARNING! looks like there is no etc directory inside filebase path. That does not look good!\n\n" unless Dir.exists? node_cfg['filebase'] + '/etc/'
+  # temba always put some files in /etc (independently of the template used) -> src https://stackoverflow.com/a/19280532
+  FileUtils.mkdir_p dir_name + '/etc/'
+
   File.write(dir_name + '/etc/temba_commit', get_current_temba_commit())
   File.write(dir_name + '/etc/temba_banner', temba_version + temba_hline)
 
@@ -274,9 +277,11 @@ def generate_firmware(node_cfg, myPath)
   )
   end
 
-  puts("\n\n\n\n\n    >>> make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files\n\n\n\n\n")
+  make_cmd="make -C #{image_base} image PROFILE=#{profile} PACKAGES='#{packages}' FILES=./files"
+
+  puts("\n\n\n\n\n    >>> #{make_cmd}\n\n\n\n\n")
   # throw error on system call -> src https://stackoverflow.com/a/18728161
-  system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    or the archive where came from #{File.basename(image_base)}.tar.xz"
+  system(make_cmd) or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    or the archive where came from #{File.basename(image_base)}.tar.xz"
 
   # notes for the output file
   notes = node_cfg['notes']
@@ -299,7 +304,8 @@ def generate_firmware(node_cfg, myPath)
 
   # TODO all this if block section should be highly refactored
   # different platforms different names in output file
-  if "#{platform}-#{platform_type}" == "x86-64"
+  #if "#{platform}-#{platform_type}" == "x86-64"
+  if "#{platform}" == "x86"
     out_path = "#{out_dir}/#{node_name}#{notes}-combined-ext4.img.gz"
 
     src_path = Dir.glob("#{image_base}/bin/targets/#{platform}/#{platform_type}/#{openwrt}*-#{platform}*-combined-ext4.img.gz")[0]
@@ -380,7 +386,7 @@ def prepare_official_ib(node_cfg)
 
   unless $debug_erb
     # rails case: ensure basename of ib_archive for concatenation, but place in the same place as temba cli
-    system("wget -c #{download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Incorrect URL. Variables: download_base=#{download_base}; ib_archive=#{ib_archive}\n \n"
+    system("wget -c #{download_base}#{File.basename(ib_archive)} -O #{ib_archive}") or raise "ERROR. Internet is unreachable or URL is incorrect. Variables: download_base=#{download_base}; ib_archive=#{ib_archive}\n \n"
     unless File.exists? image_base
       # tar to specific directory -> src https://www.tecmint.com/extract-tar-files-to-specific-or-different-directory-in-linux/
       system("tar xf #{ib_archive} --directory #{File.dirname(ib_archive)}") or raise "ERROR processing system call"
