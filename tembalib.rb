@@ -263,6 +263,17 @@ def generate_firmware(node_cfg, myPath)
 
   image_base = node_cfg['image_base']
 
+  # do small images in x86 architectures -> src https://stackoverflow.com/questions/7290871/ruby-how-to-replace-text-in-a-file/18913856#18913856
+  if node_cfg['small_rootfs'].nil? || node_cfg['small_rootfs'] == false
+  ib_config_path=node_cfg['image_base'] + '/.config'
+  IO.write(ib_config_path, File.open(ib_config_path) do |f|
+      #f.read.gsub(/CONFIG_TARGET_ROOTFS_PARTSIZE=.*$/, "CONFIG_TARGET_ROOTFS_PARTSIZE=32")
+      # quits the default value (reduces from ~300 MB to ~50 MB) -> src https://forum.openwrt.org/t/how-to-set-root-filesystem-partition-size-on-x86-imabebuilder/4765
+      f.read.gsub(/CONFIG_TARGET_ROOTFS_PARTSIZE=256/, "CONFIG_TARGET_ROOTFS_PARTSIZE=32")
+    end
+  )
+  end
+
   puts("\n\n\n\n\n    >>> make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files\n\n\n\n\n")
   # throw error on system call -> src https://stackoverflow.com/a/18728161
   system("make -C #{image_base}  image PROFILE=#{profile} PACKAGES='#{packages}'  FILES=./files") or raise "Openwrt build error. Check dependencies and requirements. Check consistency of:\n    #{image_base}\n    or the archive where came from #{File.basename(image_base)}.tar.xz"
