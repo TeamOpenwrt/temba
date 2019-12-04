@@ -96,7 +96,7 @@ devices:
 
   # https://openwrt.org/toh/hwdata/ubiquiti/ubiquiti_routerstation
   # https://openwrt.org/toh/ubiquiti/routerstation
-  regular-ubnt-rs:
+  regular-ubnt-rs: &regular-ubnt-rs
     <<: *mesh-globals
     <<: *regular-packages
     profile: ubnt-rs
