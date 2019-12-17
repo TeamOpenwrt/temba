@@ -1,3 +1,8 @@
+# in general you want to use one openwrt path
+# but when you have one in production and you want to run
+# experiments, you would require more
+openwrt_relpath="Openwrt"
+
 ###
 # yes (y) and no (n) options
   # to update feeds each time imagebuilder.sh starts
@@ -22,6 +27,7 @@ archs=(
   ar71xx
   #ath79
   #x86_64
+  #ramips
 )
 
 # not installed but available packages in firmware

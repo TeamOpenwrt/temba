@@ -21,8 +21,8 @@ done
 
 ###
 # Get repo and appropriate version of Openwrt
-[[ ! -d Openwrt ]] && git clone https://github.com/Openwrt/Openwrt.git
-cd Openwrt
+[[ ! -d "$openwrt_relpath" ]] && git clone https://github.com/Openwrt/Openwrt.git "$openwrt_relpath"
+cd "$openwrt_relpath"
 git checkout "$openwrt_version"
 
 ###
@@ -178,10 +178,10 @@ _EOF
   platform_type="$(echo $arch | cut -d'_' -f2)"
   [[ $platform = $platform_type ]] && platform_type="generic"
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
-  ln -sf ../Openwrt/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
+  ln -sf ../"$openwrt_relpath"/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
   echo "  Removing old $arch image builder $(pwd)/$ib_d ..."
   rm -rf "$ib_d" # remove old archive
   echo "  Decompressing new $arch image builder $(pwd)/$ib_d ..."
   tar xf "${ib_d}.tar.xz"
-  cd ../Openwrt
+  cd ../"$openwrt_relpath"
 done
