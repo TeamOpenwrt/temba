@@ -103,13 +103,6 @@ for arch in ${archs_uniq[@]}; do
       # note: the approach is to compile a concrete subtarget is specified to avoid compiling all subtargets
   arch_config='# arch config'
   case $arch in
-    x86_64)
-      read -r -d '' arch_config << _EOF || :
-$arch_config
-CONFIG_TARGET_x86=y
-CONFIG_TARGET_x86_64=y
-_EOF
-    ;;
     ar71xx)
     read -r -d '' arch_config << _EOF || :
 $arch_config
@@ -126,8 +119,23 @@ CONFIG_TARGET_ath79_generic=y
 CONFIG_TARGET_ath79_generic_DEVICE_ubnt_lap-120=y
 _EOF
     ;;
+    ramips)
+    read -r -d '' arch_config << _EOF || :
+$arch_config
+CONFIG_TARGET_ramips=y
+CONFIG_TARGET_ramips_mt7621=y
+CONFIG_TARGET_ramips_mt7621_Default=y
+_EOF
+    ;;
+    x86_64)
+      read -r -d '' arch_config << _EOF || :
+$arch_config
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_64=y
+_EOF
+    ;;
     *)
-    echo 'architectures available are ar71xx, ath79, x86_64'
+    echo 'architectures available are ar71xx, ath79, x86_64, ramips'
     exit 1
     ;;
   esac
