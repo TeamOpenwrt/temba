@@ -7,9 +7,13 @@ set -e
 
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 
+# allow to use custom image builder options (for example, to maintain different versions)
+ib_opt="$1"
+[ -z "$ib_opt" ] && ib_opt='imagebuilder-options'
+
 ###
 # Custom options, arguments and functions (custom packages and patches)
-custom_files=(imagebuilder-options imagebuilder-customfuns.sh)
+custom_files=("$ib_opt" imagebuilder-customfuns.sh)
 for file in ${custom_files[@]}; do
   if [[ ! -f "$file" ]]; then
     echo "  File $file does not exist."
