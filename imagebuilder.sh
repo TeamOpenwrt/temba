@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# checked with `shellcheck -x imagebuilder.sh`
+
 set -e
 
 # Use this script to build an image builder as community cooker
@@ -14,12 +16,15 @@ ib_opt="$1"
 ###
 # Custom options, arguments and functions (custom packages and patches)
 custom_files=("$ib_opt" imagebuilder-customfuns.sh)
-for file in ${custom_files[@]}; do
+for file in "${custom_files[@]}"; do
   if [[ ! -f "$file" ]]; then
     echo "  File $file does not exist."
     echo "    Copying ${file}.example to imagebuilder-options"
-    cp ${file}.example $file
+    cp "$file".example "$file"
   fi
+  # TODO: include source with shellcheck appropriatelly
+  # # shellcheck source=imagebuilder-options
+  # # shellcheck source=imagebuilder-customfuns.sh
   source "$file"
 done
 
@@ -36,16 +41,16 @@ git checkout "$openwrt_version"
 available_packages_uniq=( $(printf "%s\n" "${available_packages[@]}" | sort -u) )
 installed_packages_uniq=( $(printf "%s\n" "${installed_packages[@]}" | sort -u) )
 # avoid same element in both arrays -> src https://stackoverflow.com/questions/7870230/array-intersection-in-bash/7870414#7870414
-for a in ${available_packages_uniq[@]}; do
-  for i in ${installed_packages_uniq[@]}; do
-    if [[ $a = $i ]]; then
+for a in "${available_packages_uniq[@]}"; do
+  for i in "${installed_packages_uniq[@]}"; do
+    if [[ $a = "$i" ]]; then
       echo -e "\nERROR: package $a is in both arrays available_packages and installed_packages. Review file imagebuilder-options" && exit 1
     fi
   done
 done
 
 available_packages_config='# available packages'
-for p in ${available_packages_uniq[@]}; do
+for p in "${available_packages_uniq[@]}"; do
     #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
     #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
     a_p="CONFIG_PACKAGE_$p=m"
@@ -56,7 +61,7 @@ _EOF
 done
 
 installed_packages_config='# installed packages'
-for p in ${installed_packages_uniq[@]}; do
+for p in "${installed_packages_uniq[@]}"; do
     i_p="CONFIG_PACKAGE_$p=y"
     read -r -d '' installed_packages_config << _EOF || :
 $installed_packages_config
@@ -97,7 +102,7 @@ install_custom_patches
 # the rest of the script apply all of this for each architecture
   # ensure unique elements
 archs_uniq=( $(printf "%s\n" "${archs[@]}" | sort -u) )
-for arch in ${archs_uniq[@]}; do
+for arch in "${archs_uniq[@]}"; do
   ###
   # Fetch architecture
       # note: the approach is to compile a concrete subtarget is specified to avoid compiling all subtargets
@@ -135,7 +140,7 @@ CONFIG_TARGET_x86_64=y
 _EOF
     ;;
     *)
-    echo 'architectures available are ar71xx, ath79, x86_64, ramips'
+    echo "architectures available are ar71xx, ath79, x86_64, ramips"
     exit 1
     ;;
   esac
@@ -174,10 +179,10 @@ _EOF
   # Compile
   #   detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
   if [[ $EUID -ne 0 ]]; then
-    make -j$(nproc)
+    make -j"$(nproc)"
   else
     echo '  Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
-    FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
+    FORCE_UNSAFE_CONFIGURE=1 make -j"$(nproc)"
   fi
 
   ###
@@ -186,11 +191,11 @@ _EOF
   mkdir -p imagebuilder_local/
   cd imagebuilder_local/
 
-  platform="$(echo $arch | cut -d'_' -f1)"
-  platform_type="$(echo $arch | cut -d'_' -f2)"
-  [[ $platform = $platform_type ]] && platform_type="generic"
+  platform="$(echo "$arch" | cut -d'_' -f1)"
+  platform_type="$(echo "$arch" | cut -d'_' -f2)"
+  [[ $platform = "$platform_type" ]] && platform_type="generic"
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
-  ln -sf ../"$openwrt_relpath"/bin/targets/${platform}/${platform_type}/${ib_d}.tar.xz
+  ln -sf ../"$openwrt_relpath"/bin/targets/"$platform"/"$platform_type"/"$ib_d".tar.xz .
   echo "  Removing old $arch image builder $(pwd)/$ib_d ..."
   rm -rf "$ib_d" # remove old archive
   echo "  Decompressing new $arch image builder $(pwd)/$ib_d ..."
