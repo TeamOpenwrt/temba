@@ -185,6 +185,7 @@ _EOF
     make_env='export FORCE_UNSAFE_CONFIGURE=1'
   fi
 
+  # run compilation process, if it fails, runs compilation in debug mode to see errors
   $make_env; make -j$(nproc) || $make_env; make V=s
 
   ###
