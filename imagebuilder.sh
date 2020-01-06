@@ -179,11 +179,13 @@ _EOF
   # Compile
   #   detect script running as root -> src https://askubuntu.com/questions/15853/how-can-a-script-check-if-its-being-run-as-root
   if [[ $EUID -ne 0 ]]; then
-    make -j"$(nproc)"
+    make_env=''
   else
     echo '  Warning: `tar` do not want to run configure as root, using FORCE_UNSAFE_CONFIGURE to make imagebuilder'
-    FORCE_UNSAFE_CONFIGURE=1 make -j"$(nproc)"
+    make_env='export FORCE_UNSAFE_CONFIGURE=1'
   fi
+
+  $make_env; make -j$(nproc) || $make_env; make V=s
 
   ###
   # Organize image builder(s)
