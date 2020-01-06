@@ -113,6 +113,14 @@ devices:
     wifi_path: 'pci0000:00/0000:00:00.0'
     filebase: 'files/template__regular-ubnt-lap-120'
 
+  regular-cpe510-520-v1: &regular-cpe510-520-v1
+    <<: *mesh-globals
+    <<: *regular-packages
+    profile: cpe510-520-v1
+    platform: ar71xx
+    platform_type: generic
+    filebase: 'files/template__regular-cpe510-520-v1'
+
   regular-tplink_cpe510-v2: &regular-tplink_cpe510-v2
     <<: *mesh-globals
     <<: *regular-packages

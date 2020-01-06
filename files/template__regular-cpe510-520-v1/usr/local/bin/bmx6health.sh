@@ -1,0 +1,1 @@
+../../../../library/regular/usr-local-bin-bmx6health.sh
