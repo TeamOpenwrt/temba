@@ -39,7 +39,8 @@ regular-packages: &regular-packages
     - *pkg-bmx6-luci
     - *pkg-net-tools
     - *pkg-tun-tools
-    - luci-ssl
+    # luci-ssl disabled, discuss here https://gitlab.com/guifi-exo/temba/issues/108
+    #- luci-ssl
     # this is a custom tool not available in official openwrt repos
     # regular-packages are always compiled with custom image builder
     #- dtun
@@ -63,12 +64,14 @@ border-packages: &border-packages
     - *pkg-net-tools
     - *pkg-tun-tools
     - *pkg-bird4-luci
-    - luci-ssl
+    # luci-ssl disabled, discuss here https://gitlab.com/guifi-exo/temba/issues/108
+    #- luci-ssl
 
 wifipro-packages: &wifipro-packages
   packages:
     - *pkg-net-tools
-    - luci-ssl
+    # luci-ssl disabled, discuss here https://gitlab.com/guifi-exo/temba/issues/108
+    #- luci-ssl
 
 # basic l2tp packages, compatible with 4 MB flash devices
 l2tp-packages: &l2tp-packages
@@ -81,4 +84,5 @@ l2tp-extra-packages: &l2tp-extra-packages
     - *pkg-net-tools
     - *pkg-tun-tools
     - luci
-    - luci-ssl
+    # luci-ssl disabled, discuss here https://gitlab.com/guifi-exo/temba/issues/108
+    #- luci-ssl
