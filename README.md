@@ -126,6 +126,21 @@ in root of buildroot file `.config` gives you details of variables used in yaml 
 
 alternatively use `cooker` as described in [lime-sdk](https://gitlab.com/guifi-exo/wiki/blob/master/howto/lime-sdk.md#qa)
 
+## parallel imagebuilders
+
+temba allows you to manage multiple imagebuilders:
+
+- on `imagebuilder.sh` the `openwrt_relpath` variable adds a suffix to the imagebuilder, by default it is `Openwrt`.
+- on proposed `10-globals.yml.example` through `tembalib.rb` the `image_base_local_sufix` allows you to put a more general variable for imagebuilder to be used, or to override for a specific moment in *cli mode*
+- TODO make different forms that point to different image builders
+
+why you would like to have simultaneous and different imagebuilders:
+
+- development: testing a patch
+- test new devices supported on a specific commit in snapshot
+- testing a new stable release or RC
+- still maintaining an image builder that works and let others to use it while experimenting what I said above and so on
+
 ## Run x86_64 in qemu
 
     qemu-system-x86_64 -M q35 -drive file=bin/hostname-x86_64-combined-ext4.img,id=d0,if=none,bus=0,unit=0 -device ide-hd,drive=d0,bus=ide.0

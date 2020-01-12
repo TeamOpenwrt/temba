@@ -9,7 +9,7 @@ set -e
 
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 
-# allow to use custom image builder options (for example, to maintain different versions)
+# allow to use custom image builder options (for example, to maintain different image builders in parallel)
 ib_opt="$1"
 [ -z "$ib_opt" ] && ib_opt='imagebuilder-options'
 
@@ -201,11 +201,16 @@ _EOF
   platform="$(echo "$arch" | cut -d'_' -f1)"
   platform_type="$(echo "$arch" | cut -d'_' -f2)"
   [[ $platform = "$platform_type" ]] && platform_type="generic"
+  # image builder directory in openwrt
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
-  ln -sf ../"$openwrt_relpath"/bin/targets/"$platform"/"$platform_type"/"$ib_d".tar.xz .
-  echo "  Removing old $arch image builder $(pwd)/$ib_d ..."
-  rm -rf "$ib_d" # remove old archive
-  echo "  Decompressing new $arch image builder $(pwd)/$ib_d ..."
-  tar xf "${ib_d}.tar.xz"
+  # image builder custom directory for temba usage
+  ib_cd="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64__$openwrt_relpath"
+  ln -sf ../"$openwrt_relpath"/bin/targets/"$platform"/"$platform_type"/"$ib_d".tar.xz "$ib_cd".tar.xz
+  echo "  Removing old $arch custom image builder $(pwd)/$ib_cd ..."
+  rm -rf "$ib_cd" # remove previous custom directory
+  echo "  Decompressing new $arch custom image builder $(pwd)/$ib_cd ..."
+  # custom extraction of directory -> src https://askubuntu.com/questions/45349/how-to-extract-files-to-another-directory-using-tar-command/792063#792063
+  mkdir -p "${ib_cd}"
+  tar xf "${ib_cd}.tar.xz" -C "${ib_cd}" --strip-components=1
   cd ../"$openwrt_relpath"
 done
