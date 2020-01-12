@@ -130,7 +130,7 @@ alternatively use `cooker` as described in [lime-sdk](https://gitlab.com/guifi-e
 
 temba allows you to manage multiple imagebuilders:
 
-- on `imagebuilder.sh` the `openwrt_relpath` variable adds a suffix to the imagebuilder, by default it is `Openwrt`.
+- on `imagebuilder.sh` the `openwrt_relpath` variable adds a suffix to the imagebuilder, by default it is `__Openwrt`.
 - on proposed `10-globals.yml.example` through `tembalib.rb` the `image_base_local_sufix` allows you to put a more general variable for imagebuilder to be used, or to override for a specific moment in *cli mode*
 - TODO make different forms that point to different image builders
 
