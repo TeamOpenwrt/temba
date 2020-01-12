@@ -52,6 +52,6 @@ installed_packages=(
   gre
   # looks like is a requirement for gre (?)
   kmod-usb-ohci
-  # required by target tplink_cpe510-v3
+  # required by devices https://openwrt.org/toh/tp-link/cpe510
   rssileds
 )
