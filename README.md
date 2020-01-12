@@ -1,22 +1,21 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<!-- START doctoc.sh generated TOC please keep comment here to allow auto update -->
+<!-- DO NOT EDIT THIS SECTION, INSTEAD RE-RUN doctoc.sh TO UPDATE -->
 **Table of Contents**
 
-- [Temba](#temba)
-  - [Structure](#structure)
-  - [Install](#install)
-    - [temba cli (rake)](#temba-cli-rake)
-    - [temba gui (rails)](#temba-gui-rails)
-  - [Usage](#usage)
-    - [20-devices.yml](#20-devicesyml)
-  - [Run x86_64 in qemu](#run-x86_64-in-qemu)
-  - [Testbed](#testbed)
-  - [Notation & coding style](#notation--coding-style)
-  - [Motivation](#motivation)
-  - [Invisible credits](#invisible-credits)
-  - [Similar projects](#similar-projects)
+- [Structure](#structure)
+- [Install](#install)
+  - [temba cli (rake)](#temba-cli-rake)
+  - [temba gui (rails)](#temba-gui-rails)
+- [Usage](#usage)
+  - [20-devices.yml](#20-devicesyml)
+- [Run x86_64 in qemu](#run-x86_64-in-qemu)
+- [Testbed](#testbed)
+- [Notation & coding style](#notation--coding-style)
+- [Motivation](#motivation)
+- [Invisible credits](#invisible-credits)
+- [Similar projects](#similar-projects)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- END doctoc.sh generated TOC please keep comment here to allow auto update -->
 
 # Temba
 
