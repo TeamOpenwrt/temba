@@ -44,7 +44,7 @@ installed_packages_uniq=( $(printf "%s\n" "${installed_packages[@]}" | sort -u) 
 for a in "${available_packages_uniq[@]}"; do
   for i in "${installed_packages_uniq[@]}"; do
     if [[ $a = "$i" ]]; then
-      echo -e "\nERROR: package $a is in both arrays available_packages and installed_packages. Review file imagebuilder-options" && exit 1
+      echo -e "\n  ERROR: package $a is in both arrays available_packages and installed_packages. Review file imagebuilder-options" && exit 1
     fi
   done
 done
@@ -140,7 +140,7 @@ CONFIG_TARGET_x86_64=y
 _EOF
     ;;
     *)
-    echo "architectures available are ar71xx, ath79, x86_64, ramips"
+    echo "  architectures available are ar71xx, ath79, x86_64, ramips"
     exit 1
     ;;
   esac
