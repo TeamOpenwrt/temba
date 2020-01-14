@@ -9,24 +9,19 @@ set -e
 
 # From openwrt source to the image builder that lets us to build custom files and package for the same base customized firmware
 
+# copy example files as production files if they do not exist -> src https://stackoverflow.com/questions/9392735/linux-how-to-copy-but-not-overwrite/9392784#9392784
+cp -vn 'imagebuilder-options'{.example,}
+cp -vn 'imagebuilder-customfuns.sh'{.example,}
+
 # allow to use custom image builder options (for example, to maintain different image builders in parallel)
 ib_opt="$1"
 [ -z "$ib_opt" ] && ib_opt='imagebuilder-options'
 
-###
-# Custom options, arguments and functions (custom packages and patches)
-custom_files=("$ib_opt" imagebuilder-customfuns.sh)
-for file in "${custom_files[@]}"; do
-  if [[ ! -f "$file" ]]; then
-    echo "  File $file does not exist."
-    echo "    Copying ${file}.example to imagebuilder-options"
-    cp "$file".example "$file"
-  fi
-  # TODO: include source with shellcheck appropriatelly
-  # # shellcheck source=imagebuilder-options
-  # # shellcheck source=imagebuilder-customfuns.sh
-  source "$file"
-done
+source "$ib_opt"
+
+# custom functions for imagebuilder can be defined in ib_opt, if not, put another one
+[ -z "$ib_fun" ] && ib_opt='imagebuilder-customfuns.sh'
+source "$ib_fun"
 
 ###
 # Get repo and appropriate version of Openwrt

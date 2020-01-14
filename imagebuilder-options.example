@@ -1,7 +1,7 @@
-# in general you want to use one openwrt path
-# but when you have one in production and you want to run
-# experiments, you would require more
-openwrt_relpath="Openwrt"
+# the next two variables allows you to customize some openwrt imagebuilders in
+# parallel, hence different git repos, options and patches
+openwrt_relpath='Openwrt'
+ib_fun='imagebuilder-customfuns.sh'
 
 ###
 # yes (y) and no (n) options
