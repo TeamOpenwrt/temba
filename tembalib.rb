@@ -88,6 +88,7 @@ def prepare_global_variables(node_cfg, myPath)
   check_var('platform', platform)
   platform_type = node_cfg['platform_type']
   check_var('platform_type', platform_type)
+  # process the imagebuilder to use
   if node_cfg['image_base_type'] == 'local'
     ib_losu = node_cfg['image_base_local_suffix']
     if ! ib_losu.nil?
@@ -95,7 +96,6 @@ def prepare_global_variables(node_cfg, myPath)
     else
       ib_losu = ''
     end
-
     node_cfg['image_base'] = myPath + "imagebuilder_local/#{openwrt}-imagebuilder-#{platform}-#{platform_type}.Linux-x86_64#{ib_losu}"
   elsif node_cfg['image_base_type'] == 'path'
     node_cfg['image_base'] = myPath + node_cfg['image_base']
@@ -115,6 +115,8 @@ def prepare_global_variables(node_cfg, myPath)
   end
   check_var('image_base', node_cfg['image_base'])
 
+  # check that the imagebuilder to use is found
+  raise "\nERROR: #{node_cfg['image_base']} not found\n\n" if ! Dir.exists? node_cfg['image_base']
   return node_cfg
 end
 
