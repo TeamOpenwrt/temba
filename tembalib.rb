@@ -265,6 +265,7 @@ def generate_firmware(node_cfg, myPath)
   packages = node_cfg['packages']
   check_var('packages', packages)
 
+  # TODO this looks like that can be moved to a previous location (moving templating thing outside this function)
   if $debug_erb
     print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
     return
