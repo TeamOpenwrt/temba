@@ -89,9 +89,9 @@ def prepare_global_variables(node_cfg, myPath)
   platform_type = node_cfg['platform_type']
   check_var('platform_type', platform_type)
   if node_cfg['image_base_type'] == 'local'
-    ib_losu = node_cfg['image_base_local_sufix']
+    ib_losu = node_cfg['image_base_local_suffix']
     if ! ib_losu.nil?
-      ib_losu = "__#{node_cfg['image_base_local_sufix']}"
+      ib_losu = "__#{node_cfg['image_base_local_suffix']}"
     else
       ib_losu = ''
     end
