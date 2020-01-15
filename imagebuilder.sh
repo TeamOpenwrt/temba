@@ -199,8 +199,8 @@ _EOF
   cd imagebuilder_local/
 
   platform="$(echo "$arch" | cut -d'_' -f1)"
-  platform_type="$(echo "$arch" | cut -d'_' -f2)"
-  [[ $platform = "$platform_type" ]] && platform_type="generic"
+  # get platform: part alphanumeric after separator '_'
+  platform_type=$(echo $arch_config | sed 's/.*'$platform'_\([a-zA-Z0-9]*\).*/\1/g')
   # image builder directory in openwrt
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
   # image builder custom directory for temba usage
