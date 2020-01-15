@@ -17,10 +17,12 @@ cp -vn 'imagebuilder-customfuns.sh'{.example,}
 ib_opt="$1"
 [ -z "$ib_opt" ] && ib_opt='imagebuilder-options'
 
+# shellcheck source=imagebuilder-options
 source "$ib_opt"
 
 # custom functions for imagebuilder can be defined in ib_opt, if not, put another one
 [ -z "$ib_fun" ] && ib_opt='imagebuilder-customfuns.sh'
+# shellcheck source=imagebuilder-customfuns.sh
 source "$ib_fun"
 
 ###
@@ -181,7 +183,7 @@ _EOF
   # run compilation process, if it fails, runs compilation in debug mode to see errors
   (
     echo -e "\n\n  do: \`make -j$(nproc)\`\n\n"
-    make -j$(nproc)
+    make -j"$(nproc)"
   ) || (
     echo -e "\n\n  common compilation failed, debug: \`make V=s\`\n\n"
     make V=s
@@ -195,7 +197,7 @@ _EOF
 
   platform="$(echo "$arch" | cut -d'_' -f1)"
   # get platform: part alphanumeric after separator '_'
-  platform_type=$(echo $arch_config | sed 's/.*'$platform'_\([a-zA-Z0-9]*\).*/\1/g')
+  platform_type=$(echo "$arch_config" | sed 's/.*'"$platform"'_\([a-zA-Z0-9]*\).*/\1/g')
   # image builder directory in openwrt
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
   # image builder custom directory for temba usage
