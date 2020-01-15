@@ -24,10 +24,10 @@ openwrt_version='v18.06.4'
 
 # select one or many of the available architectures
 archs=(
-  ar71xx
-  #ath79
+  ar71xx_generic
+  #ath79_generic
+  #ramips_mt7621 # just phicomm device
   #x86_64
-  #ramips
 )
 
 # not installed but available packages in firmware

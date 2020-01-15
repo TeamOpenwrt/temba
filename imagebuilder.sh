@@ -105,7 +105,7 @@ for arch in "${archs_uniq[@]}"; do
       # note: the approach is to compile a concrete subtarget is specified to avoid compiling all subtargets
   arch_config='# arch config'
   case $arch in
-    ar71xx)
+    ar71xx_generic)
     read -r -d '' arch_config << _EOF || :
 $arch_config
 CONFIG_TARGET_ar71xx=y
@@ -113,7 +113,7 @@ CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_DEVICE_ubnt-nano-m-xw=y
 _EOF
     ;;
-    ath79)
+    ath79_generic)
     read -r -d '' arch_config << _EOF || :
 $arch_config
 CONFIG_TARGET_ath79=y
@@ -121,7 +121,7 @@ CONFIG_TARGET_ath79_generic=y
 CONFIG_TARGET_ath79_generic_DEVICE_ubnt_lap-120=y
 _EOF
     ;;
-    ramips)
+    ramips_mt7621)
     read -r -d '' arch_config << _EOF || :
 $arch_config
 CONFIG_TARGET_ramips=y
@@ -196,8 +196,7 @@ _EOF
   cd imagebuilder_local/
 
   platform="$(echo "$arch" | cut -d'_' -f1)"
-  # get platform: part alphanumeric after separator '_'
-  platform_type=$(echo "$arch_config" | sed 's/.*'"$platform"'_\([a-zA-Z0-9]*\).*/\1/g')
+  platform_type="$(echo "$arch" | cut -d'_' -f2)"
   # image builder directory in openwrt
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
   # image builder custom directory for temba usage
