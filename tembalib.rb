@@ -156,6 +156,12 @@ def generate_node(node_cfg, myPath)
   #Evaluate templates
   locate_erb(dir_name, node_cfg)
 
+  # end function here when you are just debugging templating
+  if $debug_erb
+    print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
+    return
+  end
+
   return generate_firmware(node_cfg, myPath)
 
 end
@@ -248,12 +254,6 @@ def generate_firmware(node_cfg, myPath)
   # next is probably the situation for all target/linux/ar71xx/image/legacy.mk -> src https://bugs.openwrt.org/index.php?do=details&task_id=2061
   profile_bin = profile if node_cfg['profile_bin'].nil?
   packages = node_cfg.fetch('packages')
-
-  # TODO this looks like that can be moved to a previous location (moving templating thing outside this function)
-  if $debug_erb
-    print('Directory debug-', node_cfg['node_name'], "...  Done!\n")
-    return
-  end
 
   image_base = node_cfg['image_base']
 
