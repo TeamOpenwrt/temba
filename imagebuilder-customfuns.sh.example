@@ -33,7 +33,8 @@ function install_custom_patches {
     rm -fv package/firmware/wireless-regdb/patches/999-compliance-test.patch
   fi
 
-  # ## pespin patch (dirty patch example)
+  # TODO: add to the docs
+  # ## notes on dirty patch example (based on the pespin patch and inspired by marec's workflow)
   # # tp = target path
   # tp='package/network/config/netifd/patches/vlan-priority-pespin.patch'
   # # pu = patch url (this method works for gitlab and github)
@@ -43,4 +44,6 @@ function install_custom_patches {
   # #cp -v ../patches/vlan-priority-pespin.patch package/network/config/netifd/patches/
   # wget "$pu" -O "$tp" -nc || :
   # ##rm -v package/network/config/netifd/patches/vlan-priority-pespin.patch
+  # # to do a fast compilation while developing:
+  # #   make package/netifd/{clean,compile} V=s
 }
