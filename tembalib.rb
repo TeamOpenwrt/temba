@@ -247,7 +247,6 @@ def generate_firmware(node_cfg, myPath)
   # src https://stackoverflow.com/questions/5020710/copy-a-file-creating-directories-as-necessary-in-ruby
   FileUtils.mkdir_p out_dir_base
 
-  # check variables TODO improve
   node_name = node_cfg.fetch('node_name')
   profile = node_cfg.fetch('profile')
   profile_bin = node_cfg['profile_bin']
