@@ -1,6 +1,6 @@
 # custom functions for imagebuider.sh
 
-function install_custom_packages {
+install_custom_packages() {
   if [[ $dtun_package = 'y' ]]; then
     dtun_git='src-git dtun https://gitlab.com/guifi-exo/dtun.git;master'
     ! grep -q "$dtun_git" feeds.conf &> /dev/null && echo "$dtun_git     # dtun: a custom package we use" >> feeds.conf
@@ -13,7 +13,7 @@ _EOF
 }
 
 # the principle is that if patch is not applied, then it is removed
-function install_custom_patches {
+install_custom_patches() {
   # bmx6 version of qmp 3.2.1 compatility patch
   if [[ $qmp321_compatibility_patch = 'y' ]]; then
     cp -v ../patches/bmx6_Makefile feeds/routing/bmx6/Makefile
