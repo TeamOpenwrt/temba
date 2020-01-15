@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# src https://openwrt.org/docs/guide-developer/quickstart-build-images
+
 # multiline with comments -> src https://stackoverflow.com/a/12814475
 
 packagelist=(
