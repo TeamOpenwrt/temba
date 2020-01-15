@@ -251,12 +251,8 @@ def generate_firmware(node_cfg, myPath)
 
   # everything goes to tmp. when zip file is finished it goes to parent directory
   out_dir_base = myPath + 'output/tmp'
-
-  # src https://stackoverflow.com/questions/19280341/create-directory-if-it-doesnt-exist-with-ruby
-  unless File.exists? out_dir_base
-    # src https://stackoverflow.com/questions/5020710/copy-a-file-creating-directories-as-necessary-in-ruby
-    FileUtils.mkdir_p out_dir_base
-  end
+  # src https://stackoverflow.com/questions/5020710/copy-a-file-creating-directories-as-necessary-in-ruby
+  FileUtils.mkdir_p out_dir_base
 
   # check variables TODO improve
   node_name = node_cfg['node_name']
