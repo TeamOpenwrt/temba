@@ -73,21 +73,17 @@ def generate_all(myPath)
 end
 
 def prepare_global_variables(node_cfg, myPath)
-  openwrt_version = node_cfg['openwrt_version']
-  check_var('openwrt_version', openwrt_version)
+  openwrt_version = node_cfg.fetch('openwrt_version')
   openwrt_number = openwrt_version.split('.')[0]
   node_cfg['openwrt_number'] = openwrt_number
-  openwrt = node_cfg['openwrt']
-  check_var('openwrt', openwrt)
+  openwrt = node_cfg.fetch('openwrt')
   # check coherence between name and number
   if (openwrt_number == '17' && openwrt == 'openwrt') or (openwrt_number != '17' && openwrt == 'lede')
     puts "ERROR Mismatch:\n  Given openwrt_version=#{openwrt_version} openwrt=#{openwrt}\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
     abort
   end
-  platform = node_cfg['platform']
-  check_var('platform', platform)
-  platform_type = node_cfg['platform_type']
-  check_var('platform_type', platform_type)
+  platform = node_cfg.fetch('platform')
+  platform_type = node_cfg.fetch('platform_type')
   # process the imagebuilder to use
   if node_cfg['image_base_type'] == 'local'
     ib_losu = node_cfg['image_base_local_suffix']
@@ -113,19 +109,10 @@ def prepare_global_variables(node_cfg, myPath)
     #end
     prepare_official_ib(node_cfg)
   end
-  check_var('image_base', node_cfg['image_base'])
 
   # check that the imagebuilder to use is found
   raise "\nERROR: #{node_cfg['image_base']} not found\n\n" if ! Dir.exists? node_cfg['image_base']
   return node_cfg
-end
-
-# TODO check all varaibles with a for statement?
-def check_var(varname, var)
-  #unless defined? varname # TODO test this
-  if var == '' || var.nil?
-    raise varname + ' variable is empty'
-  end
 end
 
 def generate_node(node_cfg, myPath)
@@ -255,15 +242,12 @@ def generate_firmware(node_cfg, myPath)
   FileUtils.mkdir_p out_dir_base
 
   # check variables TODO improve
-  node_name = node_cfg['node_name']
-  check_var('node_name', node_name)
-  profile = node_cfg['profile']
+  node_name = node_cfg.fetch('node_name')
+  profile = node_cfg.fetch('profile')
   profile_bin = node_cfg['profile_bin']
   # next is probably the situation for all target/linux/ar71xx/image/legacy.mk -> src https://bugs.openwrt.org/index.php?do=details&task_id=2061
   profile_bin = profile if node_cfg['profile_bin'].nil?
-  check_var('profile', profile)
-  packages = node_cfg['packages']
-  check_var('packages', packages)
+  packages = node_cfg.fetch('packages')
 
   # TODO this looks like that can be moved to a previous location (moving templating thing outside this function)
   if $debug_erb
