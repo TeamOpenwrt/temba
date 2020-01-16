@@ -45,6 +45,7 @@ available_packages=(
   tcpdump-mini
   xl2tpd
   luci-app-wireguard
+  strace
 )
 
 installed_packages=(
