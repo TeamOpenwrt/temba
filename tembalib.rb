@@ -63,7 +63,7 @@ def generate_all(myPath)
     v_n = prepare_global_variables(v, myPath)
     # TODO this way, when we are in no file provisioning we are not getting
     # nice temba vars inside fw
-    if v['file_provision'] == 'no'
+    if v['file_provision'] == 'nofilebase'
       zipfile = generate_firmware(v_n, myPath)
     else
       zipfile = generate_node(v_n, myPath)
@@ -83,7 +83,7 @@ def prepare_global_variables(node_cfg, myPath)
   #   web form already did the timestamp
   node_cfg['timestamp'] = gen_timestamp() if node_cfg['timestamp'].nil?
   # check file provision mode -> src https://stackoverflow.com/questions/1986386/check-if-a-value-exists-in-an-array-in-ruby/1986398#1986398
-  ['template','static','no'].include? node_cfg.fetch('file_provision')
+  ['template','static','nofilebase'].include? node_cfg.fetch('file_provision')
   # packages are generated through a merge of yaml arrays -> src https://stackoverflow.com/questions/24090177/how-to-merge-yaml-arrays
   # it is required to postprocess with flatten function in ruby, and to put the array as a string separated by whitespaces
   # packages can be repeated by different sets of 15-packages.yml
@@ -276,7 +276,7 @@ def generate_firmware(node_cfg, myPath)
   end
 
   make_cmd="make -C #{image_base} image PROFILE=#{profile} PACKAGES='#{packages}'"
-  if node_cfg['file_provision'] != 'no'
+  if node_cfg['file_provision'] != 'nofilebase'
     make_cmd="#{make_cmd} FILES=./files"
   end
 
@@ -348,7 +348,7 @@ def generate_firmware(node_cfg, myPath)
 
   end
 
-  if node_cfg['file_provision'] != 'no'
+  if node_cfg['file_provision'] != 'nofilebase'
     # add README to explain the contents of the zipfile)
     File.write( out_dir + '/README.txt', 'Contained files:
 
