@@ -33,6 +33,7 @@ mesh-globals: &mesh-globals
   <<: *globals
   image_base_type: 'official' # all options: official, path, local
   image_base_local_suffix: 'Openwrt' # matches variable `openwrt_relpath` from imagebuilder.sh (switch it to another image builder as needed)
+  file_provision: 'template' # all options: template (first mode of temba), static (not tested yet!), no (don't upload files to generated firmware)
   # image_base: 'path/to/specific/ib'
   # wifi parameters -> src https://openwrt.org/docs/guide-user/network/wifi/basic
   wifi_hwmode: '11a'

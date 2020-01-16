@@ -61,7 +61,13 @@ def generate_all(myPath)
     v['node_name'] = k
     # we want all nodes to include these variables (they can be overridden)
     v_n = prepare_global_variables(v, myPath)
-    zipfile = generate_node(v_n, myPath)
+    # TODO this way, when we are in no file provisioning we are not getting
+    # nice temba vars inside fw
+    if v['file_provision'] == 'no'
+      zipfile = generate_firmware(v_n, myPath)
+    else
+      zipfile = generate_node(v_n, myPath)
+    end
     fw_paths.push(zipfile)
   }
   if fw_paths.length > 1
@@ -73,6 +79,16 @@ def generate_all(myPath)
 end
 
 def prepare_global_variables(node_cfg, myPath)
+  # timestamp to uniquely identify this build
+  #   web form already did the timestamp
+  node_cfg['timestamp'] = gen_timestamp() if node_cfg['timestamp'].nil?
+  # check file provision mode -> src https://stackoverflow.com/questions/1986386/check-if-a-value-exists-in-an-array-in-ruby/1986398#1986398
+  ['template','static','no'].include? node_cfg.fetch('file_provision')
+  # packages are generated through a merge of yaml arrays -> src https://stackoverflow.com/questions/24090177/how-to-merge-yaml-arrays
+  # it is required to postprocess with flatten function in ruby, and to put the array as a string separated by whitespaces
+  # packages can be repeated by different sets of 15-packages.yml
+  node_cfg['packages'] = node_cfg['packages'].flatten.uniq.join(' ')
+  # check openwrt release
   openwrt_version = node_cfg.fetch('openwrt_version')
   openwrt_number = openwrt_version.split('.')[0]
   node_cfg['openwrt_number'] = openwrt_number
@@ -192,11 +208,7 @@ def prepare_directory(dir_name,filebase, node_cfg)
   File.write(dir_name + '/etc/temba_commit', get_current_temba_commit())
   File.write(dir_name + '/etc/temba_banner', temba_version + temba_hline)
 
-  if node_cfg.key? 'timestamp'
-    timestamp = node_cfg['timestamp']
-  else
-    timestamp = gen_timestamp()
-  end
+  timestamp = node_cfg.fetch('timestamp')
 
   # include variables in the yaml
   node_cfg['timestamp'] = timestamp
@@ -206,10 +218,6 @@ def prepare_directory(dir_name,filebase, node_cfg)
   node_cfg['passwd'] = '13f' if node_cfg['passwd'].nil?
   # format password for /etc/shadow
   node_cfg['hashed_passwd'] = node_cfg['passwd'].crypt('$1$md5Salt$')
-  # packages are generated through a merge of yaml arrays -> src https://stackoverflow.com/questions/24090177/how-to-merge-yaml-arrays
-  # it is required to postprocess with flatten function in ruby, and to put the array as a string separated by whitespaces
-  # packages can be repeated by different sets of 15-packages.yml
-  node_cfg['packages'] = node_cfg['packages'].flatten.uniq.join(' ')
 
   File.write( dir_name + '/etc/temba_vars.yml', node_cfg.to_yaml)
 
@@ -267,7 +275,10 @@ def generate_firmware(node_cfg, myPath)
   )
   end
 
-  make_cmd="make -C #{image_base} image PROFILE=#{profile} PACKAGES='#{packages}' FILES=./files"
+  make_cmd="make -C #{image_base} image PROFILE=#{profile} PACKAGES='#{packages}'"
+  if node_cfg['file_provision'] != 'no'
+    make_cmd="#{make_cmd} FILES=./files"
+  end
 
   puts("\n\n\n\n\n    >>> #{make_cmd}\n\n\n\n\n")
   # throw error on system call -> src https://stackoverflow.com/a/18728161
@@ -282,7 +293,6 @@ def generate_firmware(node_cfg, myPath)
   end
 
   timestamp = node_cfg['timestamp']
-
   out_dir = out_dir_base + '/' + node_name + '_' + timestamp
   Dir.mkdir out_dir
 
@@ -338,27 +348,28 @@ def generate_firmware(node_cfg, myPath)
 
   end
 
-  # add README to explain the contents of the zipfile)
-  File.write( out_dir + '/README.txt', 'Contained files:
+  if node_cfg['file_provision'] != 'no'
+    # add README to explain the contents of the zipfile)
+    File.write( out_dir + '/README.txt', 'Contained files:
 
-- *combined-ext4.img.gz: special image in case you built x86_64 architecture. You have to uncompress it (warning: 7 MB => 200 MB)
-- *sysupgrade.bin: use it if you are comming from openwrt firmware
-- *factory.bin: use it if you are comming from stock/OEM/factory firmware
-- variables.yml: the variables that defined the firmware you got
-- files: all files that are inside this firmware
-- files_template: all files without applying variables.yml (in case you want to know what is exactly templating)
+-   *combined-ext4.img.gz: special image in case you built x86_64 architecture. You have to uncompress it (warning: 7 MB => 200 MB)
+-   *sysupgrade.bin: use it if you are comming from openwrt firmware
+-   *factory.bin: use it if you are comming from stock/OEM/factory firmware
+-   variables.yml: the variables that defined the firmware you got
+-   files: all files that are inside this firmware
+-   files_template: all files without applying variables.yml (in case you want to know what is exactly templating)
 ')
-  Archive::Zip.archive(zipfile, out_dir + '/README.txt')
-  # add etc
-  FileUtils.cp_r "#{image_base}/files/", out_dir + '/files'
-  Archive::Zip.archive(zipfile, out_dir + '/files')
-  # add files_template
-  FileUtils.cp_r "#{image_base}/files_template/", out_dir + '/files_template'
-  Archive::Zip.archive(zipfile, out_dir + '/files_template')
-  # add variables.yml
-  File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
-  Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
-
+    Archive::Zip.archive(zipfile, out_dir + '/README.txt')
+    # add etc
+    FileUtils.cp_r "#{image_base}/files/", out_dir + '/files'
+    Archive::Zip.archive(zipfile, out_dir + '/files')
+    # add files_template
+    FileUtils.cp_r "#{image_base}/files_template/", out_dir + '/files_template'
+    Archive::Zip.archive(zipfile, out_dir + '/files_template')
+    # add variables.yml
+    File.write( out_dir + '/variables.yml', node_cfg.to_yaml)
+    Archive::Zip.archive(zipfile, out_dir + '/variables.yml')
+  end
   # when the file is ready, put it in the place to be downloaded
   FileUtils.mv(zipfile, "#{out_dir_base}/..")
 

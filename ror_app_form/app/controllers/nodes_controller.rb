@@ -40,8 +40,10 @@ class NodesController < ApplicationController
       device['ip4_cidr'] = @node.ip4_cidr
 
       device['timestamp'] = gen_timestamp()
+      # force file provision to be template
+      device['file_provision'] = 'template'
 
-      # Use thread pool as compilation process must be on at a time
+      # Use thread pool as compilation process must be one at a time
       # To enqueue a job to be performed as soon as the queueing system is free:
       CompileJob.perform_later(device)
 
