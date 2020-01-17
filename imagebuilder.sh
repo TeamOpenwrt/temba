@@ -182,10 +182,10 @@ _EOF
 
   # run compilation process, if it fails, runs compilation in debug mode to see errors
   (
-    echo -e "\n\n  do: \`make -j$(nproc)\`\n\n"
+    echo -e "\n\n  [$arch] do: \`make -j$(nproc)\`\n\n"
     make -j"$(nproc)"
   ) || (
-    echo -e "\n\n  common compilation failed, debug: \`make V=s\`\n\n"
+    echo -e "\n\n  [$arch] common compilation failed, debug: \`make V=s\`\n\n"
     make V=s
   )
 
