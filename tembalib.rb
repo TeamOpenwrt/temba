@@ -268,9 +268,8 @@ def generate_firmware(node_cfg, myPath)
   if node_cfg['small_rootfs'].nil? || node_cfg['small_rootfs'] == false
   ib_config_path=node_cfg['image_base'] + '/.config'
   IO.write(ib_config_path, File.open(ib_config_path) do |f|
-      #f.read.gsub(/CONFIG_TARGET_ROOTFS_PARTSIZE=.*$/, "CONFIG_TARGET_ROOTFS_PARTSIZE=32")
-      # quits the default value (reduces from ~300 MB to ~50 MB) -> src https://forum.openwrt.org/t/how-to-set-root-filesystem-partition-size-on-x86-imabebuilder/4765
-      f.read.gsub(/CONFIG_TARGET_ROOTFS_PARTSIZE=256/, "CONFIG_TARGET_ROOTFS_PARTSIZE=32")
+      # quits the default value (reduces from any number to ~50 MB) -> src https://forum.openwrt.org/t/how-to-set-root-filesystem-partition-size-on-x86-imabebuilder/4765
+      f.read.gsub(/CONFIG_TARGET_ROOTFS_PARTSIZE=[0-9]*/, "CONFIG_TARGET_ROOTFS_PARTSIZE=32")
     end
   )
   end
