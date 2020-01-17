@@ -88,16 +88,6 @@ def prepare_global_variables(node_cfg, myPath)
   # it is required to postprocess with flatten function in ruby, and to put the array as a string separated by whitespaces
   # packages can be repeated by different sets of 15-packages.yml
   node_cfg['packages'] = node_cfg['packages'].flatten.uniq.join(' ')
-  # check openwrt release
-  openwrt_version = node_cfg.fetch('openwrt_version')
-  openwrt_number = openwrt_version.split('.')[0]
-  node_cfg['openwrt_number'] = openwrt_number
-  openwrt = node_cfg.fetch('openwrt')
-  # check coherence between name and number
-  if (openwrt_number == '17' && openwrt == 'openwrt') or (openwrt_number != '17' && openwrt == 'lede')
-    puts "ERROR Mismatch:\n  Given openwrt_version=#{openwrt_version} openwrt=#{openwrt}\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
-    abort
-  end
   platform = node_cfg.fetch('platform')
   platform_type = node_cfg.fetch('platform_type')
   # process the imagebuilder to use
@@ -112,8 +102,18 @@ def prepare_global_variables(node_cfg, myPath)
   elsif node_cfg['image_base_type'] == 'path'
     node_cfg['image_base'] = myPath + node_cfg['image_base']
   elsif node_cfg['image_base_type'] == 'official'
-    node_cfg['download_base'] = "https://downloads.openwrt.org/releases/#{openwrt_version}/targets/#{platform}/#{platform_type}/"
+    # check openwrt release
+    openwrt_version = node_cfg.fetch('openwrt_version')
+    openwrt_number = openwrt_version.split('.')[0]
+    node_cfg['openwrt_number'] = openwrt_number
+    openwrt = node_cfg.fetch('openwrt')
+    # check coherence between name and number
+    if (openwrt_number == '17' && openwrt == 'openwrt') or (openwrt_number != '17' && openwrt == 'lede')
+      puts "ERROR Mismatch:\n  Given openwrt_version=#{openwrt_version} openwrt=#{openwrt}\n  Expected openwrt_version=17.x openwrt=lede OR openwrt_version=18+ openwrt=openwrt"
+      abort
+    end
 
+    node_cfg['download_base'] = "https://downloads.openwrt.org/releases/#{openwrt_version}/targets/#{platform}/#{platform_type}/"
     node_cfg['image_base'] = myPath + "#{openwrt}-imagebuilder-#{openwrt_version}-#{platform}-#{platform_type}.Linux-x86_64"
 
     # DEBUG
@@ -380,8 +380,8 @@ end
 
 # user should check consistency of image_base file and directory by itself
 def prepare_official_ib(node_cfg)
-  image_base = node_cfg['image_base']
-  download_base = node_cfg['download_base']
+  image_base = node_cfg.fetch('image_base')
+  download_base = node_cfg.fetch('download_base')
 
   ib_archive = "#{image_base}.tar.xz"
 
