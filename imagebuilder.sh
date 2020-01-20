@@ -51,7 +51,7 @@ for p in "${available_packages_uniq[@]}"; do
     #  save multiline in variable -> src https://stackoverflow.com/questions/23929235/multi-line-string-with-extra-space-preserved-indentation
     #  https://stackoverflow.com/questions/42501480/why-bash-stops-with-parameter-e-set-e-when-it-meets-read-command
     a_p="CONFIG_PACKAGE_$p=m"
-    read -r -d '' available_packages_config << _EOF || :
+    read -r -d '' available_packages_config << _EOF || true
 $available_packages_config
 $a_p
 _EOF
@@ -60,7 +60,7 @@ done
 installed_packages_config='# installed packages'
 for p in "${installed_packages_uniq[@]}"; do
     i_p="CONFIG_PACKAGE_$p=y"
-    read -r -d '' installed_packages_config << _EOF || :
+    read -r -d '' installed_packages_config << _EOF || true
 $installed_packages_config
 $i_p
 _EOF
@@ -106,7 +106,7 @@ for arch in "${archs_uniq[@]}"; do
   arch_config='# arch config'
   case $arch in
     ar71xx_generic)
-    read -r -d '' arch_config << _EOF || :
+    read -r -d '' arch_config << _EOF || true
 $arch_config
 CONFIG_TARGET_ar71xx=y
 CONFIG_TARGET_ar71xx_generic=y
@@ -114,7 +114,7 @@ CONFIG_TARGET_ar71xx_generic_DEVICE_ubnt-nano-m-xw=y
 _EOF
     ;;
     ath79_generic)
-    read -r -d '' arch_config << _EOF || :
+    read -r -d '' arch_config << _EOF || true
 $arch_config
 CONFIG_TARGET_ath79=y
 CONFIG_TARGET_ath79_generic=y
@@ -122,7 +122,7 @@ CONFIG_TARGET_ath79_generic_DEVICE_ubnt_lap-120=y
 _EOF
     ;;
     ramips_mt7621)
-    read -r -d '' arch_config << _EOF || :
+    read -r -d '' arch_config << _EOF || true
 $arch_config
 CONFIG_TARGET_ramips=y
 CONFIG_TARGET_ramips_mt7621=y
@@ -130,7 +130,7 @@ CONFIG_TARGET_ramips_mt7621_Default=y
 _EOF
     ;;
     x86_64)
-      read -r -d '' arch_config << _EOF || :
+      read -r -d '' arch_config << _EOF || true
 $arch_config
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
