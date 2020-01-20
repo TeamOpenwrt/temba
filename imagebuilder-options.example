@@ -16,13 +16,15 @@ dtun_package='n'
 qmp321_compatibility_patch='n'
 compliance_test_patch='n'
 
-# select openwrt version (do `cd Openwrt; git tag` to select another one)
+# select openwrt version (do `cd Openwrt; git tag` to select another one, you
+# can also choose an snapshot commit)
 openwrt_version='v18.06.4'
 
 ###
 # arrays
 
 # select one or many of the available architectures
+# the format is platform and platform_type separated by `_`
 archs=(
   ar71xx_generic
   #ath79_generic
@@ -32,27 +34,36 @@ archs=(
 
 # not installed but available packages in firmware
 available_packages=(
+  # bmx6 routing
   bmx6-json
   bmx6-sms
   bmx6-uci-config
   bmx6-table
+  # luci
   luci-ssl
   luci-app-bmx6
+  # network tools
   iperf3
   mtr
   netcat
   netperf
   tcpdump-mini
+  # common tunnels used
   xl2tpd
   luci-app-wireguard
+  # development tools
   strace
+  # hardware needs
+    # required by https://openwrt.org/toh/tp-link/cpe510
+  rssileds
+    # required by alix geode
+  kmod-hwmon-core
 )
 
 installed_packages=(
+  # common tunnels used
   wireguard
   gre
-  # looks like is a requirement for gre (?)
+    # looks like is a requirement for gre (?)
   kmod-usb-ohci
-  # required by devices https://openwrt.org/toh/tp-link/cpe510
-  rssileds
 )
