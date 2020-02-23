@@ -54,6 +54,9 @@ available_packages=(
   # development tools
   strace
   gdb
+  tmux
+  screen
+  jq
   # hardware needs
     # required by https://openwrt.org/toh/tp-link/cpe510
   rssileds
