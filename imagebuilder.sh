@@ -121,6 +121,12 @@ CONFIG_TARGET_ath79_generic=y
 CONFIG_TARGET_ath79_generic_DEVICE_ubnt_lap-120=y
 _EOF
     ;;
+    octeon_generic)
+    read -r -d '' arch_config << _EOF || :
+$arch_config
+CONFIG_TARGET_octeon=y
+_EOF
+    ;;
     ramips_mt7621)
     read -r -d '' arch_config << _EOF || true
 $arch_config
@@ -134,6 +140,13 @@ _EOF
 $arch_config
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
+_EOF
+    ;;
+    x86_geode)
+      read -r -d '' arch_config << _EOF || :
+$arch_config
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_geode=y
 _EOF
     ;;
     *)
@@ -199,12 +212,14 @@ _EOF
   platform_type="$(echo "$arch" | cut -d'_' -f2)"
   # image builder directory in openwrt
   ib_d="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64"
+  # alternate location if not found -> src https://stackoverflow.com/questions/8049132/how-can-i-detect-whether-a-symlink-is-broken-in-bash/8049186#8049186
+  [[ ! -e "$ib_d" ]] && ib_d="openwrt-imagebuilder-${platform}.Linux-x86_64"
   # image builder custom directory for temba usage
   ib_cd="openwrt-imagebuilder-${platform}-${platform_type}.Linux-x86_64__$openwrt_relpath"
   ln -sf ../"$openwrt_relpath"/bin/targets/"$platform"/"$platform_type"/"$ib_d".tar.xz "$ib_cd".tar.xz
   echo "  Removing old $arch custom image builder $(pwd)/$ib_cd ..."
   rm -rf "$ib_cd" # remove previous custom directory
-  echo "  Decompressing new $arch custom image builder $(pwd)/$ib_cd ..."
+  echo "  Decompressing new $arch custom image builder $(pwd)/${ib_cd}.tar.xz ..."
   # custom extraction of directory -> src https://askubuntu.com/questions/45349/how-to-extract-files-to-another-directory-using-tar-command/792063#792063
   mkdir -p "${ib_cd}"
   tar xf "${ib_cd}.tar.xz" -C "${ib_cd}" --strip-components=1
